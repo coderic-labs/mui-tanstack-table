@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { DateRangeFilterValue } from '@coderic/mui-tanstack-table';
+import { DateRangeFilterValue } from '@coderic-labs/mui-tanstack-table';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import orderBy from 'lodash/orderBy';

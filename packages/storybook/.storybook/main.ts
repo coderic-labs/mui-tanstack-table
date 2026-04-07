@@ -25,7 +25,7 @@ const config: StorybookConfig = {
 		return mergeConfig(config, {
 			resolve: {
 				alias: {
-					"@coderic/mui-tanstack-table": resolve( __dirname, "../../mui-tanstack-table/src"),
+					"@coderic-labs/mui-tanstack-table": resolve( __dirname, "../../mui-tanstack-table/src"),
 				}
 			},
 			build: {

@@ -1,5 +1,5 @@
 {
-	"name": "@coderic/mui-tanstack-table-monorepo",
+	"name": "@coderic-labs/mui-tanstack-table-monorepo",
 	"version": "0.0.1",
 	"description": "Mui tanstack table monorepo.",
 	"scripts": {
@@ -9,7 +9,7 @@
 		"lint-fix": "eslint ./packages --fix",
 		"tsc": "npm run tsc --ws"
 	},
-	"author": "coderic",
+	"author": "coderic-labs",
 	"workspaces": [
 		"packages/mui-tanstack-table",
 		"packages/storybook"

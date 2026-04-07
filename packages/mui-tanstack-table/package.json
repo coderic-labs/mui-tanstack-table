@@ -1,9 +1,9 @@
 {
-	"name": "@coderic/mui-tanstack-table",
+	"name": "@coderic-labs/mui-tanstack-table",
 	"version": "0.0.1",
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
-	"types": "./dist/mui-tanstack-table/src/index.d.ts",
+	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "vite build",
 		"tsc": "tsc --noEmit --skipLibCheck"
@@ -27,7 +27,6 @@
 		"react-intl": "^7.1.10"
 	},
 	"files": [
-		"dist",
-		"src/lib/table.extension.d.ts"
+		"dist"
 	]
 }

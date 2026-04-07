@@ -1,5 +1,5 @@
 {
-	"name": "@coderic/mui-tanstack-table-storybook",
+	"name": "@coderic-labs/mui-tanstack-table-storybook",
 	"version": "0.0.1",
 	"description": "",
 	"main": "index.js",
@@ -10,7 +10,7 @@
 		"chromatic": "npx chromatic --project-token=248109c2255b --exit-zero-on-changes",
 		"tsc": "tsc --noEmit --skipLibCheck"
 	},
-	"author": "coderic",
+	"author": "coderic-labs",
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.4",
 		"@storybook/addon-essentials": "^8.5.3",
@@ -30,6 +30,6 @@
 		"@mui/material": "^6.4.6",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"@coderic/mui-tanstack-table": "0.0.1"
+		"@coderic-labs/mui-tanstack-table": "0.0.1"
 	}
 }

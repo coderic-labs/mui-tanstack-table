@@ -1,1 +1,0 @@
-import 'mui-tanstack-table/src/table.extension';

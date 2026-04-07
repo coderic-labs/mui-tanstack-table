@@ -1,4 +1,4 @@
-import { useConfirmDialog } from '@coderic/mui-tanstack-table';
+import { useConfirmDialog } from '@coderic-labs/mui-tanstack-table';
 import { Button, Chip, Stack } from '@mui/material';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useCallback, useEffect, useState } from 'react';

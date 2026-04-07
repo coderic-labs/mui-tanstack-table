@@ -1,4 +1,4 @@
-import { ReactTable } from '@coderic/mui-tanstack-table';
+import { ReactTable } from '@coderic-labs/mui-tanstack-table';
 import type { Meta, StoryFn } from '@storybook/react';
 import { ServerSideTableDemo } from './demoComponents/table/serverSide';
 import { ClientSideTableDemo } from './demoComponents/table/clientSide';
