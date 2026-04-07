@@ -1,5 +1,5 @@
 import { Button, Chip, Stack } from '@mui/material';
-import { useConfirmDialog } from '@coderic/mui-tanstack-table';
+import { useConfirmDialog } from '@coderic-labs/mui-tanstack-table';
 import { useState } from 'react';
 
 export const ConfirmDialogDemo = () => {

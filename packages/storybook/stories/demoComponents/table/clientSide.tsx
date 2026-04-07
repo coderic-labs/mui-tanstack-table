@@ -10,7 +10,7 @@ import {
 	ReactTableToolbarInfo,
 	RowExpansionCell, RowExpansionHeader, RowSelectionCell, RowSelectionHeader,
 	useConfirmDialog
-} from '@coderic/mui-tanstack-table';
+} from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Stack, TableContainer } from '@mui/material';
 import type { ColumnPinningState } from '@tanstack/react-table';
