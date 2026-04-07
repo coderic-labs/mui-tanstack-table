@@ -6,4 +6,3 @@ export * from './components/react-table';
 export * from './utils/dayJsToISOString';
 
 import './table.extension.d.ts';
-//test
