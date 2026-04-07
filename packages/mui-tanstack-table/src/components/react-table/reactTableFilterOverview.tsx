@@ -23,7 +23,7 @@ export const ReactTableFilterOverview = <T, >(props: ReactTableFilterOverviewPro
 				{formatMessage({ id: 'components.tableToolbar.filters' })}
 			</Typography >
 			{columnFilters.map((filter) => (
-				<Zoom in>
+				<Zoom in key={filter.id}>
 					<Chip
 						key={filter.id}
 						size="small"

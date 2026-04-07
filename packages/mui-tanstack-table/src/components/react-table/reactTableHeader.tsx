@@ -10,6 +10,7 @@ import { ReactTableSortingOrderBadge } from './reactTableSortingOrderBadge';
  * @param context tanstack table header context
  */
 export function ReactTableHeader<TData, TValue>(context: HeaderContext<TData, TValue> & StackProps) {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { header, column, table, ...rest } = context;
 	const canFilter = column.getCanFilter();
 	const canSort = column.getCanSort();
