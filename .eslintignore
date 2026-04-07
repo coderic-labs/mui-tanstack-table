@@ -1,0 +1,8 @@
+# Common module ignores
+
+node_modules
+packages/*/node_modules
+packages/*/lib
+packages/*/build
+packages/*/storybook-static
+packages/*/coverage
