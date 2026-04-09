@@ -24,7 +24,7 @@ import {
 	useReactTable
 } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
-import { employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
+import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
 import { Developer, useItems } from './_data';
 import { DemoTableProps } from './_types';
 
@@ -128,10 +128,9 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	const { data, totalCount, deleteItems } = useItems({ columnFilters, sorting, pagination });
 
 	// confirm delete dialog
-	const { confirmDialog, showConfirmDialog } = useConfirmDialog<Developer[]>({
-		dialogContent: rows => `Delete ${rows.length} rows`,
-		dialogTitle: 'Delete',
-		onConfirm: rows => deleteItems(rows.map(row => row.id))
+	const { showConfirmDialog, confirmDialog } = useConfirmDialog({
+		Component: ConfirmDeleteDialog,
+		onConfirm: (items) => deleteItems(items.map(item => item.id))
 	});
 
 	const table = useReactTable<Developer>({

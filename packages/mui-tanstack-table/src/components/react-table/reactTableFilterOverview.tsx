@@ -1,7 +1,7 @@
 import { Clear } from '@mui/icons-material';
 import { Box, Chip, Stack, styled, Typography, TypographyProps, Zoom } from '@mui/material';
 import { ColumnFilter, Table } from '@tanstack/react-table';
-import { useComponentsIntl } from '../../context/componentsIntl';
+import { useTableIntl } from '../../context/tableIntl';
 
 export type ReactTableFilterOverviewProps<T> = Omit<TypographyProps, 'children'> & {
 	table: Table<T>,
@@ -12,7 +12,7 @@ export const ReactTableFilterOverview = <T, >(props: ReactTableFilterOverviewPro
 	const { table, formatFilterValue, ...rest } = props;
 	const columnFilters = table.getState().columnFilters;
 	const filtersCount = columnFilters.length;
-	const { formatMessage } = useComponentsIntl();
+	const { formatMessage } = useTableIntl();
 
 	if (!filtersCount)
 		return null;
@@ -20,7 +20,7 @@ export const ReactTableFilterOverview = <T, >(props: ReactTableFilterOverviewPro
 	return (
 		<Stack direction="row" gap={1} rowGap={0.5} flexWrap="wrap" alignItems="center">
 			<Typography variant="body1" color="textSecondary" display={'flex'} flexDirection={'row'} gap={1} mt={-0.5} {...rest}>
-				{formatMessage({ id: 'components.tableToolbar.filters' })}
+				{formatMessage({ id: 'tableToolbar.filters' })}
 			</Typography >
 			{columnFilters.map((filter) => (
 				<Zoom in key={filter.id}>
@@ -37,7 +37,7 @@ export const ReactTableFilterOverview = <T, >(props: ReactTableFilterOverviewPro
 			))}
 			<ResetFiltersButton
 				onClick={() => table.resetColumnFilters()} >
-				{formatMessage({ id: 'components.tableToolbar.filtersReset' })}
+				{formatMessage({ id: 'tableToolbar.filtersReset' })}
 				<Clear fontSize="small" sx={{ marginLeft: 0.2, marginBottom: '-3px', cursor: 'pointer' }} />
 			</ResetFiltersButton>
 		</Stack>

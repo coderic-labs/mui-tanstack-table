@@ -1,4 +1,4 @@
-export * from './context/componentsIntl';
+export * from './context/tableIntl';
 export * from './components/confirmDialog';
 export * from './components/filtering';
 export * from './components/infoTooltip';

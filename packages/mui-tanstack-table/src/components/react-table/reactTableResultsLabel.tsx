@@ -1,15 +1,15 @@
 import { Typography, TypographyProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
-import { useComponentsIntl } from '../../context/componentsIntl';
+import { useTableIntl } from '../../context/tableIntl';
 
 export type ReactTableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
 	table: Table<T>,
 }
 
-export const ReactTableResultsLabel = <T, >(props: ReactTableResultsLabelProps<T>) => {
+export const ReactTableResultsLabel = <T,>(props: ReactTableResultsLabelProps<T>) => {
 	const { table, ...rest } = props;
 
-	const { formatMessage } = useComponentsIntl();
+	const { formatMessage } = useTableIntl();
 
 	const selectedRows = table.getSelectedRowModel().rows.map(row => row.original);
 	const selectedCount = selectedRows.length;
@@ -21,7 +21,7 @@ export const ReactTableResultsLabel = <T, >(props: ReactTableResultsLabelProps<T
 
 	return (
 		<Typography {...rest}>
-			{formatMessage({ id: 'components.tableToolbar.results' }, { values, selectedCount, totalCount })}
+			{formatMessage({ id: 'tableToolbar.results' }, { values, selectedCount, totalCount })}
 		</Typography>
 	);
 };

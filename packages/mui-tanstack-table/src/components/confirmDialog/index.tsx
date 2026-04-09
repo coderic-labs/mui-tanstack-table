@@ -1,21 +1,21 @@
-import { Button, ButtonProps, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
-import React, { useCallback, useState } from 'react';
-import { useComponentsIntl } from '../../context/componentsIntl';
+import { useCallback, useState } from "react";
 
-export type UseConfirmDialogArgs<TData> = Omit<DialogProps, 'open' | 'onClose' | 'children'> & {
-	onConfirm: (data: TData) => void;
-	dialogTitle: React.ReactNode;
-	dialogContent: (data: TData) => React.ReactNode;
-	buttonCancelProps?: Omit<ButtonProps, 'onClick'>;
-	buttonConfirmProps?: Omit<ButtonProps, 'onClick'>;
+export type ConfirmDialogProps<TData,> = {
+	open: boolean;
+	data: TData;
+	onClose: () => void;
+	onConfirm: () => void;
 }
 
-export const useConfirmDialog = <TData, >(args: UseConfirmDialogArgs<TData>) => {
-	const { onConfirm, dialogContent, dialogTitle, buttonCancelProps, buttonConfirmProps, ...rest } = args;
+export type ConfirmDialogArgs<TData> = {
+	Component: React.ComponentType<ConfirmDialogProps<TData>>,
+	onConfirm: (data: TData) => void;
+}
+
+export const useConfirmDialog = <TData,>(props: ConfirmDialogArgs<TData>) => {
+	const { Component, onConfirm } = props;
 	const [open, setOpen] = useState(false);
 	const [data, setData] = useState<TData>();
-
-	const { formatMessage } = useComponentsIntl();
 
 	const showConfirmDialog = useCallback((data: TData) => {
 		setData(data);
@@ -23,32 +23,12 @@ export const useConfirmDialog = <TData, >(args: UseConfirmDialogArgs<TData>) => 
 	}, [setData, setOpen]);
 
 	const confirmDialog = (
-		<Dialog
+		<Component
 			open={open}
+			data={data as TData}
 			onClose={() => setOpen(false)}
-			{...rest}>
-			<DialogTitle>
-				{dialogTitle}
-			</DialogTitle>
-			<DialogContent>
-				{data && dialogContent(data as TData)}
-			</DialogContent>
-			<DialogActions>
-				<Button
-					onClick={() => { setOpen(false); }}
-					{...buttonCancelProps}>
-					{formatMessage({ id: 'common.cancel' })}
-				</Button>
-				<Button
-					onClick={() => { setOpen(false); onConfirm(data as TData); }}
-					color="error"
-					variant="contained"
-					{...buttonConfirmProps}>
-					{formatMessage({ id: 'common.delete' })}
-				</Button>
-			</DialogActions>
-		</Dialog>
+			onConfirm={() => { onConfirm(data as TData); setOpen(false); }} />
 	);
 
 	return { confirmDialog, showConfirmDialog };
-};
+}
