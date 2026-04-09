@@ -11,7 +11,7 @@ const TableIntlContext = React.createContext(fallbackIntl);
 
 export type LocalizationProviderProps = {
 	locale: string;
-	messages: Record<string, string>;
+	messages: Partial<typeof enMessages>;
 	children: React.ReactNode;
 }
 
