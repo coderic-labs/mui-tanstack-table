@@ -1,6 +1,6 @@
 {
 	"name": "@coderic-labs/mui-tanstack-table-storybook",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -29,7 +29,7 @@
 		"@mui/material": "^6.4.6",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"@coderic-labs/mui-tanstack-table": "0.0.1",
+		"@coderic-labs/mui-tanstack-table": "0.0.2",
 		"dayjs": "^1.11.19",
 		"@faker-js/faker": "10.1.0"
 	}
