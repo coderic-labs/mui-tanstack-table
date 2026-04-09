@@ -1,53 +1,48 @@
 import { Stack } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
-import dayjs, { Dayjs } from 'dayjs';
+import { HeaderContext } from '@tanstack/react-table';
 import { useCallback } from 'react';
 import { DateRangeFilterProps, DateRangeFilterValue } from '../../types';
-import { HeaderContext } from '@tanstack/react-table';
-import { dayJsToISOString } from '../../../../utils/dayJsToISOString';
 
-export function DateFilter<T>(props: HeaderContext<T, string | Date> & { datePickerProps: DatePickerProps<Dayjs> }) {
+export function DateFilter<T, DT>(props: HeaderContext<T, DT> & { datePickerProps: DatePickerProps<DT> }) {
 	const { datePickerProps, ...headerContext } = props;
 	const { column } = headerContext;
 	const { setFilterValue, getFilterValue } = column;
 
-	const value = getFilterValue() as string;
-	const valueDayjs = value ? dayjs(value) : undefined;
+	const value = getFilterValue() as DT;
 
 	return (
 		<DatePicker
-			value={valueDayjs}
+			value={value}
 			slotProps={{ textField: { variant: 'standard' } }}
-			onChange={(value: Dayjs | undefined | null) => setFilterValue(value?.toISOString())}
+			onChange={setFilterValue}
 			{...datePickerProps}
 		/>
 	);
 }
 
-export function DateRangeFilter<T>(props: HeaderContext<T, string | Date> & DateRangeFilterProps) {
+export function DateRangeFilter<T, DT>(props: HeaderContext<T, DT> & DateRangeFilterProps<DT>) {
 	const { fromProps, toProps, ...headerContext } = props;
 	const { column } = headerContext;
 
-	const { from, to }: DateRangeFilterValue = column.getFilterValue() ?? {};
-	const valueFrom = from ? dayjs(from) : null;
-	const valueTo = to ? dayjs(to) : null;
+	const { from, to }: DateRangeFilterValue<DT> = column.getFilterValue() ?? {};
 
-	const handleChange = useCallback((newValue: Dayjs | null, which: 'from' | 'to') =>
-		column.setFilterValue((prev: DateRangeFilterValue = {}) => ({ ...prev, [which]: dayJsToISOString(newValue) })),
-	[column]);
+	const handleChange = useCallback((newValue: DT | null, which: 'from' | 'to') =>
+		column.setFilterValue((prev: DateRangeFilterValue<DT> = {}) => ({ ...prev, [which]: newValue })),
+		[column]);
 
 	return (
 		<Stack direction='row' gap={1}>
 			<DatePicker
 				sx={{ minWidth: 150 }}
-				value={valueFrom}
+				value={from}
 				slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
 				onChange={(value) => handleChange(value, 'from')}
 				{...fromProps}
 			/>
 			<DatePicker
 				sx={{ minWidth: 150 }}
-				value={valueTo}
+				value={to}
 				slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
 				onChange={(value) => handleChange(value, 'to')}
 				{...toProps}

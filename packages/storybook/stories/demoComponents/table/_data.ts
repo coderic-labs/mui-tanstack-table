@@ -1,7 +1,7 @@
-import { faker } from '@faker-js/faker';
 import { DateRangeFilterValue } from '@coderic-labs/mui-tanstack-table';
+import { faker } from '@faker-js/faker';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import orderBy from 'lodash/orderBy';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -30,7 +30,7 @@ export const allTechs = [Techs.react, Techs.redux, Techs.mui, Techs.angular, Tec
 export type Developer = {
 	id: number;
 	name: string;
-	hireDate: string;
+	hireDate: Dayjs;
 	employmentType: EmploymentType;
 	verified: boolean;
 	city: string;
@@ -42,7 +42,7 @@ export type Developer = {
 
 export type Filter = {
 	name?: string;
-	hireDate?: DateRangeFilterValue;
+	hireDate?: DateRangeFilterValue<Dayjs>;
 	employmentType?: EmploymentType;
 	verified?: boolean;
 	city?: string;
@@ -62,7 +62,7 @@ export type Query = {
 const _items = Array.from<unknown, Developer>({ length: 200 }, (_, index) => ({
 	id: 1000 + index,
 	name: faker.person.fullName(),
-	hireDate: faker.date.past({ refDate: new Date(2020, 0, 1), years: 20 }).toISOString(),
+	hireDate: dayjs(faker.date.past({ refDate: new Date(2020, 0, 1), years: 20 })),
 	employmentType: faker.helpers.arrayElement(allEmploymentTypes),
 	verified: faker.datatype.boolean(),
 	city: faker.location.city(),
@@ -95,8 +95,8 @@ export const getItems = (items: Developer[], query: Query) => {
 const filterItems = (items: Developer[], filters: Filter) => {
 	let result = [...items];
 	const { hireDate, city, mail, name, phone, projects, technologies, employmentType, verified } = filters;
-	if (hireDate?.from) result = result.filter(item => dayjs(item.hireDate).isAfter(dayjs(hireDate.from)));
-	if (hireDate?.to) result = result.filter(item => dayjs(item.hireDate).isBefore(dayjs(hireDate.to)));
+	if (hireDate?.from) result = result.filter(item => item.hireDate.isAfter(hireDate.from));
+	if (hireDate?.to) result = result.filter(item => item.hireDate.isBefore(hireDate.to));
 	if (city) result = result.filter(item => item.city.toLowerCase().includes(city.toLowerCase()));
 	if (mail) result = result.filter(item => item.mail.toLowerCase().includes(mail.toLowerCase()));
 	if (name) result = result.filter(item => item.name.toLowerCase().includes(name.toLowerCase()));
@@ -110,7 +110,6 @@ const filterItems = (items: Developer[], filters: Filter) => {
 
 export const toFilters = (columnFiltersState: ColumnFiltersState): Filter =>
 	columnFiltersState.reduce((prev, curr) => ({ ...prev, [curr.id]: curr.value }), {} as Filter);
-
 
 export const useItems = (query: Query = {}) => {
 	const { columnFilters, filters, pagination, sorting } = query;

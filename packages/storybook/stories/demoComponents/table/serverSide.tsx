@@ -14,7 +14,7 @@ import {
 	useConfirmDialog
 } from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
-import { Button, Chip, IconButton, Stack, TableContainer } from '@mui/material';
+import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
 import type { ColumnFiltersState, ColumnPinningState, PaginationState, SortingState } from '@tanstack/react-table';
 import {
 	createColumnHelper,
@@ -65,7 +65,7 @@ const columns = [
 		title: 'hire date',
 		header: ReactTableHeader,
 		filter: DateRangeFilter,
-		cell: ({ getValue }) => new Date(getValue()).toLocaleDateString()
+		cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
 	}),
 	columnHelper.accessor('employmentType', {
 		title: 'employment type',
@@ -99,17 +99,15 @@ const columns = [
 				<Stack direction='row' gap={1}>
 					<IconButton
 						color="secondary"
-						size='small'
 						onClick={() => alert('edit: ' + JSON.stringify(row.original))}
 					>
-						<Edit fontSize="small" />
+						<Edit />
 					</IconButton>
 					<IconButton
-						color="secondary"
-						size='small'
+						color="error"
 						onClick={() => getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}
 					>
-						<Delete fontSize="small" />
+						<Delete />
 					</IconButton>
 				</Stack>
 			);
@@ -165,21 +163,22 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	});
 
 	return (
-		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2 }}>
+		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
 			<ReactTableToolbar mb={2}>
 				<ReactTableToolbarInfo>
 					<ReactTableResultsLabel table={table} />
 				</ReactTableToolbarInfo>
 				<ReactTableToolbarActions>
 					<Button
-						color='secondary'
-						variant='outlined'
+						color='primary'
+						variant='contained'
 						onClick={() => alert('Add something')}>
 						Add
 					</Button>
 					<ReactTableBulkActionButton
 						table={table}
 						color='error'
+						variant='contained'
 						onClick={showConfirmDialog}>
 						Remove selected
 					</ReactTableBulkActionButton>
@@ -187,14 +186,16 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 						table={table} />
 				</ReactTableToolbarActions>
 			</ReactTableToolbar>
-			<TableContainer>
-				<ReactTable
-					table={table}
-					rowDetail={RowDetail}
-					{...baseTableProps}
-				/>
-			</TableContainer>
-			<ReactTablePaginationV2 table={table} />
+			<Stack component={Paper} overflow='auto'>
+				<TableContainer>
+					<ReactTable
+						table={table}
+						rowDetail={RowDetail}
+						{...baseTableProps}
+					/>
+				</TableContainer>
+				<ReactTablePaginationV2 table={table} />
+			</Stack>
 			{confirmDialog}
 		</Stack>
 	);
