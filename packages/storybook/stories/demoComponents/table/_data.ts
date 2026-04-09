@@ -40,7 +40,7 @@ export type Developer = {
 	projects: number;
 }
 
-export type Filter = {
+type Filter = {
 	name?: string;
 	hireDate?: DateRangeFilterValue<Dayjs>;
 	employmentType?: EmploymentType;
@@ -54,7 +54,6 @@ export type Filter = {
 
 export type Query = {
 	columnFilters?: ColumnFiltersState;
-	filters?: Filter;
 	pagination?: PaginationState;
 	sorting?: SortingState;
 }
@@ -73,8 +72,10 @@ const _items = Array.from<unknown, Developer>({ length: 200 }, (_, index) => ({
 }));
 
 export const getItems = (items: Developer[], query: Query) => {
+	console.log('request query', query);
+	
 	const { pagination, sorting } = query;
-	const filters = query.filters ?? toFilters(query.columnFilters ?? []);
+	const filters = toFilters(query.columnFilters ?? []);
 
 	let result = filterItems(items, filters);
 
@@ -112,12 +113,12 @@ export const toFilters = (columnFiltersState: ColumnFiltersState): Filter =>
 	columnFiltersState.reduce((prev, curr) => ({ ...prev, [curr.id]: curr.value }), {} as Filter);
 
 export const useItems = (query: Query = {}) => {
-	const { columnFilters, filters, pagination, sorting } = query;
+	const { columnFilters, pagination, sorting } = query;
 	const [items, setItems] = useState<Developer[]>(_items);
 
 	const { data, totalCount } = useMemo(() => {
-		return getItems(items, { columnFilters, sorting, pagination, filters });
-	}, [items, filters, columnFilters, pagination, sorting]);
+		return getItems(items, { columnFilters, sorting, pagination });
+	}, [items, columnFilters, pagination, sorting]);
 
 	const deleteItems = useCallback((ids: number[]) => {
 		const newItems = items.filter(item => !ids.includes(item.id));
