@@ -14,8 +14,8 @@ import {
 	useConfirmDialog
 } from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
-import { Button, Chip, IconButton, Stack, TableContainer } from '@mui/material';
-import type { ColumnFiltersState, ColumnPinningState, PaginationState, SortingState } from '@tanstack/react-table';
+import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
+import type { ColumnFiltersState, ColumnPinningState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
 import {
 	createColumnHelper,
 	getCoreRowModel,
@@ -23,7 +23,7 @@ import {
 	RowSelectionState,
 	useReactTable
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
 import { Developer, useItems } from './_data';
 import { DemoTableProps } from './_types';
@@ -65,7 +65,7 @@ const columns = [
 		title: 'hire date',
 		header: ReactTableHeader,
 		filter: DateRangeFilter,
-		cell: ({ getValue }) => new Date(getValue()).toLocaleDateString()
+		cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
 	}),
 	columnHelper.accessor('employmentType', {
 		title: 'employment type',
@@ -99,17 +99,15 @@ const columns = [
 				<Stack direction='row' gap={1}>
 					<IconButton
 						color="secondary"
-						size='small'
 						onClick={() => alert('edit: ' + JSON.stringify(row.original))}
 					>
-						<Edit fontSize="small" />
+						<Edit />
 					</IconButton>
 					<IconButton
-						color="secondary"
-						size='small'
+						color="error"
 						onClick={() => getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}
 					>
-						<Delete fontSize="small" />
+						<Delete />
 					</IconButton>
 				</Stack>
 			);
@@ -120,14 +118,16 @@ const columns = [
 export const ServerSideTableDemo = (props: DemoTableProps) => {
 	const { enableMultiSort, maxMultiSortColCount, ...baseTableProps } = props;
 
-	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
-	const [sorting, setSorting] = useState<SortingState>([]);
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-	const [columnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
+	// table state
+	const {
+		pagination, sorting, columnFilters, rowSelection, columnPinning,
+		onColumnFiltersChange, onSortingChange, onPaginationChange, onColumnPinningChange, onRowSelectionChange
+	} = useTableState();
 
+	// data fetching
 	const { data, totalCount, deleteItems } = useItems({ columnFilters, sorting, pagination });
 
+	// confirm delete dialog
 	const { confirmDialog, showConfirmDialog } = useConfirmDialog<Developer[]>({
 		dialogContent: rows => `Delete ${rows.length} rows`,
 		dialogTitle: 'Delete',
@@ -148,10 +148,11 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 		enableExpanding: true,
 		getRowCanExpand: () => true,
 		getRowId: (row) => row.id.toString(),
-		onPaginationChange: setPagination,
-		onColumnFiltersChange: setColumnFilters,
-		onSortingChange: setSorting,
-		onRowSelectionChange: setRowSelection,
+		onPaginationChange,
+		onColumnFiltersChange,
+		onSortingChange,
+		onRowSelectionChange,
+		onColumnPinningChange,
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
 		meta: makeMeta<TableMeta>({ showConfirmDialog }),
@@ -165,21 +166,22 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	});
 
 	return (
-		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2 }}>
+		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
 			<ReactTableToolbar mb={2}>
 				<ReactTableToolbarInfo>
 					<ReactTableResultsLabel table={table} />
 				</ReactTableToolbarInfo>
 				<ReactTableToolbarActions>
 					<Button
-						color='secondary'
-						variant='outlined'
+						color='primary'
+						variant='contained'
 						onClick={() => alert('Add something')}>
 						Add
 					</Button>
 					<ReactTableBulkActionButton
 						table={table}
 						color='error'
+						variant='contained'
 						onClick={showConfirmDialog}>
 						Remove selected
 					</ReactTableBulkActionButton>
@@ -187,15 +189,56 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 						table={table} />
 				</ReactTableToolbarActions>
 			</ReactTableToolbar>
-			<TableContainer>
-				<ReactTable
-					table={table}
-					rowDetail={RowDetail}
-					{...baseTableProps}
-				/>
-			</TableContainer>
-			<ReactTablePaginationV2 table={table} />
+			<Stack component={Paper} overflow='auto'>
+				<TableContainer>
+					<ReactTable
+						table={table}
+						rowDetail={RowDetail}
+						{...baseTableProps}
+					/>
+				</TableContainer>
+				<ReactTablePaginationV2 table={table} />
+			</Stack>
 			{confirmDialog}
 		</Stack>
 	);
 };
+
+/**
+ * Provides state and update handlers for server side tanstack table demo.
+ * Your implementation may vary depending on how you fetch data and handle state in your app.
+ * @returns table state and update handlers
+ */
+const useTableState = () => {
+	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+	const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
+
+	// table pagination update handler
+	const onPaginationChange: OnChangeFn<PaginationState> = useCallback(updater => setPagination(updater), [setPagination]);
+
+	// table sorting update handler, also resets pagination on sorting change
+	const onSortingChange: OnChangeFn<SortingState> = useCallback(updater => {
+		setSorting(updater);
+		setPagination(prev => ({ ...prev, pageIndex: 0 }));
+	}, [setSorting, setPagination]);
+
+	// table column filters update handler, also resets pagination on filter change
+	const onColumnFiltersChange: OnChangeFn<ColumnFiltersState> = useCallback(updater => {
+		setColumnFilters(updater);
+		setPagination(prev => ({ ...prev, pageIndex: 0 }));
+	}, [setColumnFilters, setPagination]);
+
+	// table row selection update handler
+	const onRowSelectionChange: OnChangeFn<RowSelectionState> = useCallback(updater => setRowSelection(updater), [setRowSelection]);
+
+	// table column pinning update handler
+	const onColumnPinningChange: OnChangeFn<ColumnPinningState> = useCallback(updater => setColumnPinning(updater), [setColumnPinning]);
+
+	return {
+		pagination, sorting, columnFilters, rowSelection, columnPinning,
+		onPaginationChange, onSortingChange, onColumnFiltersChange, onRowSelectionChange, onColumnPinningChange
+	};
+}

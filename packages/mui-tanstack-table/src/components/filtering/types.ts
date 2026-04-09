@@ -1,12 +1,11 @@
-import { DatePickerProps } from '@mui/x-date-pickers';
-import { Dayjs } from 'dayjs';
+import { DatePickerProps, PickerValidDate } from '@mui/x-date-pickers';
 
-export type DateRangeFilterValue = {
-	from?: string,
-	to?: string
+export type DateRangeFilterValue<TDate extends PickerValidDate> = {
+	from?: TDate,
+	to?: TDate
 }
 
-export type DateRangeFilterProps = {
-	fromProps?: DatePickerProps<Dayjs>;
-	toProps?: DatePickerProps<Dayjs>;
+export type DateRangeFilterProps<TDate extends PickerValidDate> = {
+	fromProps?: DatePickerProps<TDate>;
+	toProps?: DatePickerProps<TDate>;
 }

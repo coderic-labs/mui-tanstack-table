@@ -41,16 +41,14 @@ export function ReactTableColumnVisibilityToggle<T>(props: ReactTableColumnVisib
 				<MenuItem onClick={toggleAll}>
 					<Checkbox
 						checked={allVisible}
-						indeterminate={!allVisible && someVisible}
-						sx={{ padding: 0 }} />
+						indeterminate={!allVisible && someVisible} />
 					<ListItemText primary="All columns" />
 				</MenuItem>
 				<Divider />
 				{columns.map(column => (
 					<MenuItem key={column.id} onClick={column.getToggleVisibilityHandler()}>
 						<Checkbox
-							checked={column.getIsVisible()}
-							sx={{ padding: 0 }} />
+							checked={column.getIsVisible()} />
 						<ListItemText
 							primary={column.columnDef.title ?? column.id} />
 					</MenuItem>

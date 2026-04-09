@@ -23,13 +23,14 @@
 		"@storybook/test": "^8.5.3",
 		"chromatic": "^11.3.0",
 		"prop-types": "^15.8.1",
-		"storybook": "^8.5.3",
-		"@faker-js/faker": "10.1.0"
+		"storybook": "^8.5.3"
 	},
 	"dependencies": {
 		"@mui/material": "^6.4.6",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"@coderic-labs/mui-tanstack-table": "0.0.1"
+		"@coderic-labs/mui-tanstack-table": "0.0.1",
+		"dayjs": "^1.11.19",
+		"@faker-js/faker": "10.1.0"
 	}
 }
