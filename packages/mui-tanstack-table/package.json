@@ -1,6 +1,20 @@
 {
 	"name": "@coderic-labs/mui-tanstack-table",
 	"version": "0.0.2",
+	"description": "Material-UI rendering components for TanStack Table, with modular UI pieces and headless table integration.",
+	"author": "Coderic Labs",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/coderic-labs/mui-tanstack-table.git"
+	},
+	"bugs": {
+		"url": "https://github.com/coderic-labs/mui-tanstack-table/issues"
+	},
+	"homepage": "https://github.com/coderic-labs/mui-tanstack-table#readme",
+	"publishConfig": {
+		"access": "public"
+	},
 	"keywords": [
 		"mui",
 		"material-ui",
