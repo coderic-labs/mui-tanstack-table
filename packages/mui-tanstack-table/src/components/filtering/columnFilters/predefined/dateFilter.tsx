@@ -1,15 +1,15 @@
 import { Stack } from '@mui/material';
-import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
+import { DatePicker, DatePickerProps, PickerValidDate } from '@mui/x-date-pickers';
 import { HeaderContext } from '@tanstack/react-table';
 import { useCallback } from 'react';
 import { DateRangeFilterProps, DateRangeFilterValue } from '../../types';
 
-export function DateFilter<T, DT>(props: HeaderContext<T, DT> & { datePickerProps: DatePickerProps<DT> }) {
+export function DateFilter<TData, TDate extends PickerValidDate>(props: HeaderContext<TData, unknown> & { datePickerProps: DatePickerProps<TDate> }) {
 	const { datePickerProps, ...headerContext } = props;
 	const { column } = headerContext;
 	const { setFilterValue, getFilterValue } = column;
 
-	const value = getFilterValue() as DT;
+	const value = getFilterValue() as PickerValidDate;
 
 	return (
 		<DatePicker
@@ -21,14 +21,14 @@ export function DateFilter<T, DT>(props: HeaderContext<T, DT> & { datePickerProp
 	);
 }
 
-export function DateRangeFilter<T, DT>(props: HeaderContext<T, DT> & DateRangeFilterProps<DT>) {
+export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: HeaderContext<TData, unknown> & DateRangeFilterProps<TDate>) {
 	const { fromProps, toProps, ...headerContext } = props;
 	const { column } = headerContext;
 
-	const { from, to }: DateRangeFilterValue<DT> = column.getFilterValue() ?? {};
+	const { from, to }: DateRangeFilterValue<TDate> = column.getFilterValue() ?? {};
 
-	const handleChange = useCallback((newValue: DT | null, which: 'from' | 'to') =>
-		column.setFilterValue((prev: DateRangeFilterValue<DT> = {}) => ({ ...prev, [which]: newValue })),
+	const handleChange = useCallback((newValue: TDate | null, which: 'from' | 'to') =>
+		column.setFilterValue((prev: DateRangeFilterValue<TDate> = {}) => ({ ...prev, [which]: newValue })),
 		[column]);
 
 	return (

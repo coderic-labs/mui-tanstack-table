@@ -1,11 +1,11 @@
-import { DatePickerProps } from '@mui/x-date-pickers';
+import { DatePickerProps, PickerValidDate } from '@mui/x-date-pickers';
 
-export type DateRangeFilterValue<DT> = {
-	from?: DT,
-	to?: DT
+export type DateRangeFilterValue<TDate extends PickerValidDate> = {
+	from?: TDate,
+	to?: TDate
 }
 
-export type DateRangeFilterProps<DT> = {
-	fromProps?: DatePickerProps<DT>;
-	toProps?: DatePickerProps<DT>;
+export type DateRangeFilterProps<TDate extends PickerValidDate> = {
+	fromProps?: DatePickerProps<TDate>;
+	toProps?: DatePickerProps<TDate>;
 }
