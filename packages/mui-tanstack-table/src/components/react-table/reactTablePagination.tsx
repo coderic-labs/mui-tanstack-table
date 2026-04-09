@@ -1,6 +1,6 @@
 import { MenuItem, Pagination, Select, Stack, StackProps, Typography } from '@mui/material';
 import { Table } from '@tanstack/react-table';
-import { useComponentsIntl } from '../../context/componentsIntl';
+import { useTableIntl } from '../../context/tableIntl';
 
 const defaultOptions = [10, 25, 50, 100];
 
@@ -13,7 +13,7 @@ export const ReactTablePagination = <TData, >(props: ReactTablePaginationProps<T
 	const { table, options = defaultOptions, ...rest } = props;
 	const pageOptions = table.getPageOptions();
 	const { pagination } = table.getState();
-	const { formatMessage } = useComponentsIntl();
+	const { formatMessage } = useTableIntl();
 
 	return (
 		<Stack direction="row" justifyContent="space-between" alignItems="center" {...rest}>
@@ -29,7 +29,7 @@ export const ReactTablePagination = <TData, >(props: ReactTablePaginationProps<T
 			/>
 			<Stack direction="row" spacing={1} alignItems="center">
 				<Typography variant="body2" color='textSecondary'>
-					{formatMessage({ id: 'components.tablePagination.rowPerPage' })}
+					{formatMessage({ id: 'tablePagination.rowPerPage' })}
 				</Typography>
 				<Select
 					id="demo-controlled-open-select"

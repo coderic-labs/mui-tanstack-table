@@ -1,6 +1,6 @@
 import { Stack, TableCell, TableRow, Typography } from '@mui/material';
 import { flexRender, Row, Table } from '@tanstack/react-table';
-import { useComponentsIntl } from '../../context/componentsIntl';
+import { useTableIntl } from '../../context/tableIntl';
 import { RowDetailComponent } from './reactTable';
 import { getPinnedColumnStyle } from './styleUtils';
 
@@ -50,7 +50,8 @@ export type ReactTableEmptyRowProps<T> = {
 
 export const ReactTableEmptyRow = <T, >(props: ReactTableEmptyRowProps<T>) => {
 	const { table } = props;
-	const { formatMessage } = useComponentsIntl();
+	const { formatMessage } = useTableIntl();
+	
 	return (
 		<TableRow>
 			<TableCell colSpan={table.getVisibleLeafColumns().length}>
