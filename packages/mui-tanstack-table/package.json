@@ -1,6 +1,13 @@
 {
 	"name": "@coderic-labs/mui-tanstack-table",
 	"version": "0.0.2",
+	"keywords": [
+		"mui",
+		"material-ui",
+		"tanstack-table",
+		"react-table",
+		"table"
+	],
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
