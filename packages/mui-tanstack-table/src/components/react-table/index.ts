@@ -1,5 +1,5 @@
 export * from './cells';
-export * from './columnVisibilityToggle';
+export * from './tableColumnVisibilityToggle';
 export * from './table';
 export * from './tableBulkActionButton';
 export * from './tableFilterOverview';
@@ -9,7 +9,7 @@ export * from './tablePagination';
 export * from './tablePaginationV2';
 export * from './tableResultsLabel';
 export * from './tableToolbar';
-export * from './resetTable';
-export * from './rowExpansion';
-export * from './rowSelection';
+export * from './tableResetHeader';
+export * from './tableRowExpansion';
+export * from './tableRowSelection';
 export * from './utils';
