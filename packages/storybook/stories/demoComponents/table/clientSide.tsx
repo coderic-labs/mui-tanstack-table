@@ -1,14 +1,14 @@
 import {
-	BooleanCell,
-	getTableMeta, makeMeta, predefinedColumnFilters, ReactTable, ReactTableBulkActionButton,
-	ReactTableColumnVisibilityToggle,
-	ReactTableHeader,
-	ReactTablePaginationV2,
-	ReactTableResultsLabel,
-	ReactTableToolbar,
-	ReactTableToolbarActions,
-	ReactTableToolbarInfo,
-	RowExpansionCell, RowExpansionHeader, RowSelectionCell, RowSelectionHeader,
+	getTableMeta, makeMeta, predefinedColumnFilters, Table, TableBulkActionButton,
+	TableColumnVisibilityToggle,
+	TableHeader,
+	TablePaginationV2,
+	TableResultsLabel,
+	TableToolbar,
+	TableToolbarActions,
+	TableToolbarInfo,
+	TableRowExpansionCell, TableRowExpansionHeader, TableRowSelectionCell, TableRowSelectionHeader,
+	TableBooleanCell,
 	useConfirmDialog
 } from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
@@ -54,27 +54,27 @@ const columns = [
 		tableCellProps: { style: { minWidth: 'unset' } },
 		header: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
-				<RowExpansionHeader {...context} />
-				<RowSelectionHeader {...context} />
+				<TableRowExpansionHeader {...context} />
+				<TableRowSelectionHeader {...context} />
 			</Stack>,
 		cell: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
-				<RowExpansionCell {...context} />
-				<RowSelectionCell {...context} />
+				<TableRowExpansionCell {...context} />
+				<TableRowSelectionCell {...context} />
 			</Stack>
 	}),
 	columnHelper.accessor('id', {
-		header: ReactTableHeader,
-		footer: ReactTableHeader
+		header: TableHeader,
+		footer: TableHeader
 	}),
 	columnHelper.accessor('name', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		filter: TextFilter,
 		filterFn: 'includesString',
 		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('hireDate', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		title: 'Hire date',
 		cell: ({ getValue }) => getValue().toDate().toLocaleDateString(),
 		filter: DateRangeFilter,
@@ -82,14 +82,14 @@ const columns = [
 		sortingFn: 'datetime'
 	}),
 	columnHelper.accessor('employmentType', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		title: 'Employment type',
 		filter: (context) => <SelectFilter {...context} options={employmentOptions} />,
 		filterFn: 'equals',
 		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('technologies', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
 		cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
 		tooltip: 'Last updated 1.1.2025',
@@ -97,22 +97,22 @@ const columns = [
 		sortingFn: 'auto'
 	}),
 	columnHelper.accessor('projects', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		filter: TextFilter,
 		cell: ({ getValue }) => <Chip size='small' label={getValue()} />,
 		filterFn: 'weakEquals',
 		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('verified', {
-		header: ReactTableHeader,
+		header: TableHeader,
 		filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
-		cell: BooleanCell,
+		cell: TableBooleanCell,
 		filterFn: 'equals',
 		sortingFn: 'auto'
 	}),
 	columnHelper.display({
 		id: 'actions',
-		header: ReactTableHeader,
+		header: TableHeader,
 		enableHiding: false,
 		tableCellProps: { style: { minWidth: 'unset' } },
 		cell: ({ row, table }) => {
@@ -173,37 +173,37 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 
 	return (
 		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
-			<ReactTableToolbar mb={2}>
-				<ReactTableToolbarInfo>
-					<ReactTableResultsLabel table={table} />
-				</ReactTableToolbarInfo>
-				<ReactTableToolbarActions>
+			<TableToolbar mb={2}>
+				<TableToolbarInfo>
+					<TableResultsLabel table={table} />
+				</TableToolbarInfo>
+				<TableToolbarActions>
 					<Button
 						color='secondary'
 						variant='contained'
 						onClick={() => alert('Add something')}>
 						Add
 					</Button>
-					<ReactTableBulkActionButton
+					<TableBulkActionButton
 						table={table}
 						color='error'
 						variant='contained'
 						onClick={showConfirmDialog}>
 						Remove selected
-					</ReactTableBulkActionButton>
-					<ReactTableColumnVisibilityToggle
+					</TableBulkActionButton>
+					<TableColumnVisibilityToggle
 						table={table} />
-				</ReactTableToolbarActions>
-			</ReactTableToolbar>
+				</TableToolbarActions>
+			</TableToolbar>
 			<Stack component={Paper} overflow='auto'>
 				<TableContainer>
-					<ReactTable
+					<Table
 						table={table}
 						rowDetail={RowDetail}
 						{...baseTableProps}
 					/>
 				</TableContainer>
-				<ReactTablePaginationV2 table={table} />
+				<TablePaginationV2 table={table} />
 			</Stack>
 			{confirmDialog}
 		</Stack>

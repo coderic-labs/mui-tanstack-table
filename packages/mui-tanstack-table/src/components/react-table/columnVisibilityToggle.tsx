@@ -3,11 +3,11 @@ import { Checkbox, Divider, IconButton, IconButtonProps, ListItemText, Menu, Men
 import { Table } from '@tanstack/react-table';
 import { Fragment, useState } from 'react';
 
-type ReactTableColumnVisibilityToggleProps<T> = IconButtonProps & {
+type TableColumnVisibilityToggleProps<T> = IconButtonProps & {
 	table: Table<T>;
 };
 
-export function ReactTableColumnVisibilityToggle<T>(props: ReactTableColumnVisibilityToggleProps<T>) {
+export function TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggleProps<T>) {
 	const { table, ...rest } = props;
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [open, setOpen] = useState(false);

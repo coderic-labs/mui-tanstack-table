@@ -2,7 +2,7 @@ import { KeyboardArrowDown, KeyboardArrowUp, KeyboardArrowRight } from '@mui/ico
 import { IconButton } from '@mui/material';
 import { CellContext, HeaderContext } from '@tanstack/react-table';
 
-export function RowExpansionCell<T>({ row }: CellContext<T, unknown>) {
+export function TableRowExpansionCell<T>({ row }: CellContext<T, unknown>) {
 	if (!row.getCanExpand())
 		return null;
 
@@ -15,7 +15,7 @@ export function RowExpansionCell<T>({ row }: CellContext<T, unknown>) {
 	);
 }
 
-export function RowExpansionHeader<T>({ table }: HeaderContext<T, unknown>) {
+export function TableRowExpansionHeader<T>({ table }: HeaderContext<T, unknown>) {
 	return (
 		<IconButton
 			size='small'
@@ -26,4 +26,4 @@ export function RowExpansionHeader<T>({ table }: HeaderContext<T, unknown>) {
 	);
 }
 
-export const ExpandRowButton = RowExpansionCell;
+export const TableExpandRowButton = TableRowExpansionCell;

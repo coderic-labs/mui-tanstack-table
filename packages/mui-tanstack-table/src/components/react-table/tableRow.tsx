@@ -1,18 +1,18 @@
-import { Stack, TableCell, TableRow, Typography } from '@mui/material';
+import { Stack, TableCell, TableRow as MuiTableRow, Typography } from '@mui/material';
 import { flexRender, Row, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
-import { RowDetailComponent } from './reactTable';
+import { RowDetailComponent } from './table';
 import { getPinnedColumnStyle } from './styleUtils';
 
-export type ReactTableRowProps<T> = {
+export type TableRowProps<T> = {
 	row: Row<T>,
 	highlight: boolean
 }
 
-export const ReactTableRow = <T, >(props: ReactTableRowProps<T>) => {
+export const TableRow = <T, >(props: TableRowProps<T>) => {
 	const { row, highlight } = props;
 	return (
-		<TableRow>
+		<MuiTableRow>
 			{row.getVisibleCells().map(cell =>
 				<TableCell
 					key={cell.id}
@@ -24,36 +24,36 @@ export const ReactTableRow = <T, >(props: ReactTableRowProps<T>) => {
 					)}
 				</TableCell>
 			)}
-		</TableRow>
+		</MuiTableRow>
 	);
 };
 
-export type ReactTableDetailRowProps<T> = {
+export type TableDetailRowProps<T> = {
 	row: Row<T>,
 	rowDetail: RowDetailComponent<T>;
 }
 
-export const ReactTableDetailRow = <T, >(props: ReactTableDetailRowProps<T>) => {
+export const TableDetailRow = <T, >(props: TableDetailRowProps<T>) => {
 	const { row, rowDetail } = props;
 	return (
-		<TableRow>
+		<MuiTableRow>
 			<TableCell colSpan={row.getVisibleCells().length}>
 				{rowDetail({ row })}
 			</TableCell>
-		</TableRow>
+		</MuiTableRow>
 	);
 };
 
-export type ReactTableEmptyRowProps<T> = {
+export type TableEmptyRowProps<T> = {
 	table: Table<T>,
 }
 
-export const ReactTableEmptyRow = <T, >(props: ReactTableEmptyRowProps<T>) => {
+export const TableEmptyRow = <T, >(props: TableEmptyRowProps<T>) => {
 	const { table } = props;
 	const { formatMessage } = useTableIntl();
 	
 	return (
-		<TableRow>
+		<MuiTableRow>
 			<TableCell colSpan={table.getVisibleLeafColumns().length}>
 				<Stack width={'100%'} height={'100px'} alignItems={'center'} justifyContent={'center'} padding={2}>
 					<Typography variant='body2' fontStyle='italic'>
@@ -61,7 +61,7 @@ export const ReactTableEmptyRow = <T, >(props: ReactTableEmptyRowProps<T>) => {
 					</Typography>
 				</Stack>
 			</TableCell>
-		</TableRow>
+		</MuiTableRow>
 	);
 };
 
