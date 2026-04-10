@@ -4,12 +4,12 @@ import { useTableIntl } from '../../context/tableIntl';
 
 const defaultOptions = [10, 25, 50, 100];
 
-export type ReactTablePaginationProps<TData> = StackProps & {
+export type TablePaginationProps<TData> = StackProps & {
 	table: Table<TData>;
 	options?: number[];
 }
 
-export const ReactTablePagination = <TData, >(props: ReactTablePaginationProps<TData>) => {
+export const TablePagination = <TData, >(props: TablePaginationProps<TData>) => {
 	const { table, options = defaultOptions, ...rest } = props;
 	const pageOptions = table.getPageOptions();
 	const { pagination } = table.getState();

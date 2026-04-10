@@ -2,14 +2,14 @@ import { Close } from '@mui/icons-material';
 import { IconButton, Stack, StackProps, TableSortLabel, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { InfoTooltip } from '../infoTooltip';
-import { ReactTableSortingOrderBadge } from './reactTableSortingOrderBadge';
+import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 
 /**
  * Renderer for table header in React Table. Renders column title, sorting and filter.
  * Use this component in the column definition's header property.
  * @param context tanstack table header context
  */
-export function ReactTableHeader<TData, TValue>(context: HeaderContext<TData, TValue> & StackProps) {
+export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue> & StackProps) {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { header, column, table, ...rest } = context;
 	const canFilter = column.getCanFilter();
@@ -50,9 +50,9 @@ export function ReactTableHeader<TData, TValue>(context: HeaderContext<TData, TV
 					{headerTitle}
 					{isMultiSort &&
 						<Zoom in={sortIndex !== -1}>
-							<ReactTableSortingOrderBadge sx={{ ml: 'auto' }}>
+							<TableSortingOrderBadge sx={{ ml: 'auto' }}>
 								{Math.max(sortIndex + 1, 1)}
-							</ReactTableSortingOrderBadge>
+							</TableSortingOrderBadge>
 						</Zoom>}
 				</TableSortLabel>}
 			{canFilter && column.columnDef.filter &&

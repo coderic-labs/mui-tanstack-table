@@ -3,13 +3,13 @@ import { SvgIconProps } from '@mui/material';
 import { CellContext } from '@tanstack/react-table';
 import React, {Fragment} from 'react';
 
-export type BooleanCellProps<TData> = CellContext<TData, boolean> & {
+export type TableBooleanCellProps<TData> = CellContext<TData, boolean> & {
 	svgIconProps?: SvgIconProps;
 	IconTrue?: React.ComponentType<SvgIconProps>;
 	IconFalse?: React.ComponentType<SvgIconProps>;
 };
 
-export function BooleanCell<TData>(props: BooleanCellProps<TData>) {
+export function TableBooleanCell<TData>(props: TableBooleanCellProps<TData>) {
 	const {
 		svgIconProps,
 		IconTrue = (iconProps) => <Check {...iconProps}/>,

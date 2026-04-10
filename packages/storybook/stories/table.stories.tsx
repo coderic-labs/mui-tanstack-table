@@ -1,15 +1,15 @@
-import { ReactTable } from '@coderic-labs/mui-tanstack-table';
+import { Table } from '@coderic-labs/mui-tanstack-table';
 import type { Meta, StoryFn } from '@storybook/react';
 import { ServerSideTableDemo } from './demoComponents/table/serverSide';
 import { ClientSideTableDemo } from './demoComponents/table/clientSide';
 
 const meta = {
-	title: 'ReactTable',
-	component: ReactTable,
+	title: 'Table',
+	component: Table,
 	parameters: {
 		layout: 'fullscreen'
 	}
-} satisfies Meta<typeof ReactTable>;
+} satisfies Meta<typeof Table>;
 
 export default meta;
 

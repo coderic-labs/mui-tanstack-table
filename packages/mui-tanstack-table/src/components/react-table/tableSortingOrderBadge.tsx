@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const ReactTableSortingOrderBadge = styled(Box)(({ theme }) => ({
+export const TableSortingOrderBadge = styled(Box)(({ theme }) => ({
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',

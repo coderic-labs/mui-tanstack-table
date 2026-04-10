@@ -1,28 +1,8 @@
-import {
-	BooleanCell,
-	getTableMeta, makeMeta, predefinedColumnFilters, ReactTable,
-	ReactTableBulkActionButton,
-	ReactTableColumnVisibilityToggle,
-	ReactTableHeader,
-	ReactTablePaginationV2,
-	ReactTableResultsLabel,
-	ReactTableToolbar,
-	ReactTableToolbarActions,
-	ReactTableToolbarInfo,
-	RowExpansionCell, RowExpansionHeader, RowSelectionCell,
-	RowSelectionHeader,
-	useConfirmDialog
-} from '@coderic-labs/mui-tanstack-table';
+import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
 import type { ColumnFiltersState, ColumnPinningState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
-import {
-	createColumnHelper,
-	getCoreRowModel,
-	getExpandedRowModel,
-	RowSelectionState,
-	useReactTable
-} from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, getExpandedRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
 import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
 import { Developer, useItems } from './_data';
@@ -32,7 +12,7 @@ type TableMeta = {
 	showConfirmDialog: (items: Developer[]) => void;
 }
 
-const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = predefinedColumnFilters;
+const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = MTT.predefinedColumnFilters;
 
 const columnHelper = createColumnHelper<Developer>();
 
@@ -43,54 +23,54 @@ const columns = [
 		tableCellProps: { style: { minWidth: 'unset' } },
 		header: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
-				<RowExpansionHeader {...context} />
-				<RowSelectionHeader {...context} />
+				<MTT.TableRowExpansionHeader {...context} />
+				<MTT.TableRowSelectionHeader {...context} />
 			</Stack>,
 		cell: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
-				<RowExpansionCell {...context} />
-				<RowSelectionCell {...context} />
+				<MTT.TableRowExpansionCell {...context} />
+				<MTT.TableRowSelectionCell {...context} />
 			</Stack>
 	}),
 	columnHelper.accessor('id', {
 		// render same content in header and footer
-		header: ReactTableHeader,
-		footer: ReactTableHeader
+		header: MTT.TableHeader,
+		footer: MTT.TableHeader
 	}),
 	columnHelper.accessor('name', {
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: TextFilter
 	}),
 	columnHelper.accessor('hireDate', {
 		title: 'hire date',
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: DateRangeFilter,
 		cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
 	}),
 	columnHelper.accessor('employmentType', {
 		title: 'employment type',
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: (context) => <SelectFilter {...context} options={employmentOptions} />
 	}),
 	columnHelper.accessor('technologies', {
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
 		cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
 		tooltip: 'Last updated 1.1.2025'
 	}),
 	columnHelper.accessor('projects', {
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: TextFilter,
 		cell: ({ getValue }) => <Chip size='small' label={getValue()} />
 	}),
 	columnHelper.accessor('verified', {
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
-		cell: BooleanCell
+		cell: MTT.TableBooleanCell
 	}),
 	columnHelper.display({
 		id: 'actions',
-		header: ReactTableHeader,
+		header: MTT.TableHeader,
 		enableHiding: false,
 		tableCellProps: { style: { minWidth: 'unset' } },
 		cell: (cellContext) => {
@@ -99,14 +79,12 @@ const columns = [
 				<Stack direction='row' gap={1}>
 					<IconButton
 						color="secondary"
-						onClick={() => alert('edit: ' + JSON.stringify(row.original))}
-					>
+						onClick={() => alert('edit: ' + JSON.stringify(row.original))}>
 						<Edit />
 					</IconButton>
 					<IconButton
 						color="error"
-						onClick={() => getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}
-					>
+						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}>
 						<Delete />
 					</IconButton>
 				</Stack>
@@ -128,7 +106,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	const { data, totalCount, deleteItems } = useItems({ columnFilters, sorting, pagination });
 
 	// confirm delete dialog
-	const { showConfirmDialog, confirmDialog } = useConfirmDialog({
+	const { showConfirmDialog, confirmDialog } = MTT.useConfirmDialog({
 		Component: ConfirmDeleteDialog,
 		onConfirm: (items) => deleteItems(items.map(item => item.id))
 	});
@@ -154,7 +132,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 		onColumnPinningChange,
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
-		meta: makeMeta<TableMeta>({ showConfirmDialog }),
+		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
 		state: {
 			pagination,
 			columnFilters,
@@ -166,37 +144,37 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 
 	return (
 		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
-			<ReactTableToolbar mb={2}>
-				<ReactTableToolbarInfo>
-					<ReactTableResultsLabel table={table} />
-				</ReactTableToolbarInfo>
-				<ReactTableToolbarActions>
+			<MTT.TableToolbar mb={2}>
+				<MTT.TableToolbarInfo>
+					<MTT.TableResultsLabel table={table} />
+				</MTT.TableToolbarInfo>
+				<MTT.TableToolbarActions>
 					<Button
 						color='primary'
 						variant='contained'
 						onClick={() => alert('Add something')}>
 						Add
 					</Button>
-					<ReactTableBulkActionButton
+					<MTT.TableBulkActionButton
 						table={table}
 						color='error'
 						variant='contained'
 						onClick={showConfirmDialog}>
 						Remove selected
-					</ReactTableBulkActionButton>
-					<ReactTableColumnVisibilityToggle
+					</MTT.TableBulkActionButton>
+					<MTT.TableColumnVisibilityToggle
 						table={table} />
-				</ReactTableToolbarActions>
-			</ReactTableToolbar>
+				</MTT.TableToolbarActions>
+			</MTT.TableToolbar>
 			<Stack component={Paper} overflow='auto'>
 				<TableContainer>
-					<ReactTable
+					<MTT.Table
 						table={table}
 						rowDetail={RowDetail}
 						{...baseTableProps}
 					/>
 				</TableContainer>
-				<ReactTablePaginationV2 table={table} />
+				<MTT.TablePaginationV2 table={table} />
 			</Stack>
 			{confirmDialog}
 		</Stack>

@@ -3,12 +3,12 @@ import { Box, Chip, Stack, styled, Typography, TypographyProps, Zoom } from '@mu
 import { ColumnFilter, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
 
-export type ReactTableFilterOverviewProps<T> = Omit<TypographyProps, 'children'> & {
+export type TableFilterOverviewProps<T> = Omit<TypographyProps, 'children'> & {
 	table: Table<T>,
 	formatFilterValue?: (filter: ColumnFilter) => string
 }
 
-export const ReactTableFilterOverview = <T, >(props: ReactTableFilterOverviewProps<T>) => {
+export const TableFilterOverview = <T, >(props: TableFilterOverviewProps<T>) => {
 	const { table, formatFilterValue, ...rest } = props;
 	const columnFilters = table.getState().columnFilters;
 	const filtersCount = columnFilters.length;

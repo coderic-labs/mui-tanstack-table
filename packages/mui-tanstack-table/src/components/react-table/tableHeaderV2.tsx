@@ -4,7 +4,7 @@ import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 import { InfoTooltip } from '../infoTooltip';
-import { ReactTableSortingOrderBadge } from './reactTableSortingOrderBadge';
+import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 
 /**
  * More compact renderer for table header in React Table. Renders column title, sorting and filter.
@@ -12,7 +12,7 @@ import { ReactTableSortingOrderBadge } from './reactTableSortingOrderBadge';
  * Use this component in the column definition's header property.
  * @param context tanstack table header context
  */
-export function ReactTableHeaderV2<TData, TValue>(context: HeaderContext<TData, TValue>) {
+export function TableHeaderV2<TData, TValue>(context: HeaderContext<TData, TValue>) {
 	const { header } = context;
 	const canFilter = header.column.getCanFilter();
 	const canSort = header.column.getCanSort();
@@ -63,9 +63,9 @@ export function ReactTableHeaderV2<TData, TValue>(context: HeaderContext<TData, 
 					onClick={() => header.column.toggleSorting(undefined, isMultiSort)}>
 					{isMultiSort &&
 						<Zoom in={sortIndex !== -1} unmountOnExit>
-							<ReactTableSortingOrderBadge sx={{}}>
+							<TableSortingOrderBadge sx={{}}>
 								{Math.max(sortIndex + 1, 1)}
-							</ReactTableSortingOrderBadge>
+							</TableSortingOrderBadge>
 						</Zoom>}
 				</TableSortLabel>}
 		</Stack>

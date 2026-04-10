@@ -2,11 +2,11 @@ import { Typography, TypographyProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
 
-export type ReactTableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
+export type TableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
 	table: Table<T>,
 }
 
-export const ReactTableResultsLabel = <T,>(props: ReactTableResultsLabelProps<T>) => {
+export const TableResultsLabel = <T,>(props: TableResultsLabelProps<T>) => {
 	const { table, ...rest } = props;
 
 	const { formatMessage } = useTableIntl();

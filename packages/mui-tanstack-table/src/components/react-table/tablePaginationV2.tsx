@@ -1,15 +1,15 @@
 import { TablePagination, TablePaginationProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
-import { ReactTableResultsLabel } from './reactTableResultsLabel';
+import { TableResultsLabel } from './tableResultsLabel';
 
 const defaultOptions = [10, 25, 50, 100];
 
-export type ReactTablePaginationV2Props<TData> = Omit<TablePaginationProps, 'count' | 'rowsPerPage' | 'page' | 'onPageChange' | 'onRowsPerPageChange'> & {
+export type TablePaginationV2Props<TData> = Omit<TablePaginationProps, 'count' | 'rowsPerPage' | 'page' | 'onPageChange' | 'onRowsPerPageChange'> & {
 	table: Table<TData>;
 }
 
-export const ReactTablePaginationV2 = <TData, >(props: ReactTablePaginationV2Props<TData>) => {
+export const TablePaginationV2 = <TData, >(props: TablePaginationV2Props<TData>) => {
 	const { table, sx, ...rest } = props;
 	const { pagination } = table.getState();
 	const totalCount = table.options.rowCount ?? table.getFilteredRowModel().rows.length;
@@ -28,7 +28,7 @@ export const ReactTablePaginationV2 = <TData, >(props: ReactTablePaginationV2Pro
 			onPageChange={(_, v) => table.setPageIndex(v)}
 			labelRowsPerPage={formatMessage({ id: 'tablePagination.rowPerPage' })}
 			onRowsPerPageChange={(event) => table.setPagination({ pageIndex: 0, pageSize: parseInt(event.target.value, 10) })}
-			slotProps={{ spacer: { children: <ReactTableResultsLabel table={table} /> } }}
+			slotProps={{ spacer: { children: <TableResultsLabel table={table} /> } }}
 			showFirstButton
 			showLastButton
 			{...rest}

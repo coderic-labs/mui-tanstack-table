@@ -2,7 +2,7 @@ import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
 
-export function ResetTableHeader<T>({ table }: HeaderContext<T, unknown>) {
+export function TableResetHeader<T>({ table }: HeaderContext<T, unknown>) {
 	return (
 		<IconButton
 			size='small'

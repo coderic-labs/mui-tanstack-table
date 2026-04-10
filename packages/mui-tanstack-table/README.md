@@ -7,18 +7,21 @@
 ## ⭐ Key Features
 
 - **🔧 Modular Design** — Mix and match components. Use filtering without pagination, or pagination without sorting—it's up to you.
-- **🔐 Zero Coupling** — Configure TanStack Table once with `useReactTable`, and let the UI components simply consume and render it. **Complete isolation between table logic and UI.**
-- **📊 Render-Only Components** — **All MUI components are pure presentational.** They trigger state changes through the TanStack Table headless model
+- **🔐 Zero Coupling** — **Complete isolation between table logic and UI.** Configure TanStack Table once with `useTable`, and let the UI components simply consume and render it.
+- **📊 Render-Only Components** — All MUI components are pure presentational. They trigger state changes through the TanStack Table headless model
 - **⚡ Built on TanStack Table** — Leverage the power of TanStack's headless table logic.
+- **📘 Requires TanStack Table knowledge** — This library assumes you already understand `@tanstack/react-table` basics.
 - **🎨 Material-UI Components** — Styled with MUI for consistency and accessibility.
-- **📦 Out-of-the-Box Capabilities**:
-  - ✅ Column filtering (text, date range, custom)
-  - ✅ Column visibility toggle
-  - ✅ Row selection and bulk actions
-  - ✅ Row expansion
-  - ✅ Pagination (with multiple versions)
-  - ✅ Sorting and filtering summary
-  - ✅ Internationalization support
+
+## 📚 Documentation
+
+This package is a UI rendering layer for TanStack Table. Be sure to review the TanStack Table docs at [https://tanstack.com/table/v8](https://tanstack.com/table/v8) before using this library.
+
+See the [Storybook](https://coderic-labs.github.io/mui-tanstack-table) for interactive component examples and detailed API documentation.
+
+## ⚠️ Alpha status
+
+This library is currently in alpha. The public API is still evolving, and we are actively working on new table helpers, docs, and stability improvements. Use this package if you already have basic familiarity with `@tanstack/react-table` and expect the API to change.
 
 ## Quick Start
 
@@ -31,49 +34,30 @@ npm install @coderic-labs/mui-tanstack-table
 ### Basic Usage
 
 ```tsx
-import {
-  ReactTable,
-  ReactTableToolbar,
-  ReactTableToolbarInfo,
-  ReactTableToolbarActions,
-  ReactTableResultsLabel,
-  ReactTableColumnVisibilityToggle,
-  ReactTablePaginationV2,
-  ReactTableHeader,
-  RowSelectionCell,
-  RowSelectionHeader,
-  predefinedColumnFilters
-} from '@coderic-labs/mui-tanstack-table';
-import { createColumnHelper, useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
+import * as MTT from '@coderic-labs/mui-tanstack-table';
+import { createColumnHelper, useTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
 import { Paper, Stack, TableContainer } from '@mui/material';
 
-const { TextFilter } = predefinedColumnFilters;
-
 function MyTable() {
-  // ═══════════════════════════════════════════════════════════════════════
+
   // Step 1: Configure TanStack Table (all logic, no UI)
-  // ═══════════════════════════════════════════════════════════════════════
   const columnHelper = createColumnHelper();
   
   const columns = [
     columnHelper.display({
       id: 'select',
-      header: RowSelectionHeader,
-      cell: RowSelectionCell,
+      header: MTT.TableRowSelectionHeader,
+      cell: MTT.TableRowSelectionCell,
     }),
     columnHelper.accessor('name', {
-      header: ReactTableHeader,
-      filter: TextFilter,
+      header: MTT.TableHeader,
+      filter: MTT.predefinedColumnFilters.TextFilter,
       filterFn: 'includesString',
     }),
-    columnHelper.accessor('email', {
-      header: ReactTableHeader,
-      filter: TextFilter,
-      filterFn: 'includesString',
-    }),
+    ...
   ];
 
-  const table = useReactTable({
+  const table = useTable({
     data: myData,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -82,26 +66,23 @@ function MyTable() {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  // ═══════════════════════════════════════════════════════════════════════
-  // Step 2: Use MUI components for rendering (pass configured table)
-  // All components consume the table instance—no configuration needed here
-  // ═══════════════════════════════════════════════════════════════════════
+  // Step 2: Use MUI components for rendering
   return (
     <Stack gap={2}>
-      <ReactTableToolbar>
-        <ReactTableToolbarInfo>
-          <ReactTableResultsLabel table={table} />
-        </ReactTableToolbarInfo>
-        <ReactTableToolbarActions>
-          <ReactTableColumnVisibilityToggle table={table} />
-        </ReactTableToolbarActions>
-      </ReactTableToolbar>
+      <MTT.TableToolbar>
+        <MTT.TableToolbarInfo>
+          <MTT.TableResultsLabel table={table} />
+        </MTT.TableToolbarInfo>
+        <MTT.TableToolbarActions>
+          <MTT.TableColumnVisibilityToggle table={table} />
+        </MTT.TableToolbarActions>
+      </MTT.TableToolbar>
       
       <TableContainer component={Paper}>
-        <ReactTable table={table} />
+        <MTT.Table table={table} />
       </TableContainer>
       
-      <ReactTablePaginationV2 table={table} />
+      <MTT.TablePaginationV2 table={table} />
     </Stack>
   );
 }
@@ -115,12 +96,12 @@ function MyTable() {
 
 | Layer | Responsibility | Framework |
 |-------|---|---|
-| **Table Logic** | All filtering, sorting, pagination, state, row selection | TanStack Table (`useReactTable`) |
+| **Table Logic** | All filtering, sorting, pagination, state, row selection | TanStack Table (`useTable`) |
 | **UI Rendering** | Pure presentation of configured data | MUI Components |
 
 ### What This Means:
 
-✅ **Configure your table features ONCE** with `useReactTable` (all logic happens here)
+✅ **Configure your table features ONCE** with `useTable` (all logic happens here)
 
 ✅ **Pass the table instance to ANY COMBINATION of MUI components** (they just render)
 
@@ -147,36 +128,54 @@ Pick only what you need:
 
 | Component | Purpose |
 |-----------|---------|
-| `ReactTable` | Core table rendering |
-| `ReactTableToolbar` | Toolbar container for actions and info |
-| `ReactTableToolbarInfo` / `ReactTableToolbarActions` | Toolbar sections |
-| `ReactTableResultsLabel` | Display row count |
-| `ReactTablePaginationV2` | Pagination controls |
-| `ReactTableColumnVisibilityToggle` | Toggle column visibility |
-| `ReactTableHeader` | Standard column header with sorting |
-| `RowSelectionCell` / `RowSelectionHeader` | Row selection checkboxes |
-| `RowExpansionCell` / `RowExpansionHeader` | Expandable rows |
-| `ReactTableBulkActionButton` | Bulk action button for selected rows |
+| `Table` | Core table rendering |
+| `TableToolbar` | Toolbar container for actions and info |
+| `TableToolbarInfo` / `TableToolbarActions` | Toolbar sections |
+| `TableResultsLabel` | Display row count |
+| `TablePaginationV2` | Pagination controls |
+| `TableColumnVisibilityToggle` | Toggle column visibility |
+| `TableHeader` | Standard column header with sorting and filtering |
+| `TableHeaderV2` | Compact header with inline filter popover and sort order badges |
+| `TableFilterOverview` | Filter summary chips with reset button |
+| `TablePagination` | Standard pagination controls |
+| `TablePaginationV2` | Pagination controls |
+| `TableRowSelectionCell` / `TableRowSelectionHeader` | Row selection checkboxes |
+| `TableRowExpansionCell` / `TableRowExpansionHeader` | Row expanding buttons |
+| `TableResetHeader` | Resets filters, sorting, pagination, global filter, and expansion state |
+| `TableBulkActionButton` | Bulk action button for selected rows |
 | `predefinedColumnFilters` | Pre-built filters (TextFilter, DateRangeFilter, SelectFilter, BooleanFilter) |
 
-## Internationalization
+## Features that are present
 
-The library supports multiple languages via `react-intl`. Wrap your component with the localization provider:
+These are implemented or demonstrated in the current library:
 
-```tsx
-import { TableLocalizationProvider } from '@coderic-labs/mui-tanstack-table';
+- Sorting
+- Filtering
+- Pagination
+- Row selection and bulk operations
+- Row expansion with detail rows
+- Column visibility toggle
+- Sticky header support
+- Filter overview chips
+- Client-side and server-side usage
+- Reset header to clear filters, sorting, pagination, global filter, and expansion
 
-<TableLocalizationProvider locale="en_GB" messages={enMessages}>
-  <MyTable />
-</TableLocalizationProvider>
-```
+## Features missing
 
-## 📚 Documentation
+These common table capabilities are not yet provided by the UI layer:
 
-See the [Storybook](https://coderic-labs.github.io/mui-tanstack-table) for interactive component examples and detailed API documentation.
+- Column pinning UI — only manual pinning via TanStack Table state is implied, no built-in pin/unpin helper
+- Column reorder — no drag-and-drop or `columnOrder` state helper
+- Column resize — no resize handles or `columnSizing` support
+- Virtualization — no row virtualization integration
+- Grouping/aggregation — no grouping helpers or aggregation row/footer support
+- Inline editing — no editable cell components
+- Global filter input — no dedicated top-level search/global filter component
 
-## 📄 License
+## ❤️ Support
 
-**MIT License © 2026 Coderic Labs**
+If this project helps you, consider supporting its development.
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for complete details.
+👉 https://github.com/sponsors/ErikParso
+
+Suggestions, feedback, and contributions are welcome!
