@@ -7,11 +7,9 @@ const config: StorybookConfig = {
 		"../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
 	],
 	addons: [
-		"@storybook/addon-onboarding",
 		"@storybook/addon-links",
-		"@storybook/addon-essentials",
-		"@chromatic-com/storybook",
-		"@storybook/addon-interactions",
+		"@storybook/addon-docs",
+		'@storybook/addon-controls'
 	],
 	framework: {
 		name: "@storybook/react-vite",
@@ -25,7 +23,7 @@ const config: StorybookConfig = {
 		return mergeConfig(config, {
 			resolve: {
 				alias: {
-					"@coderic-labs/mui-tanstack-table": resolve( __dirname, "../../mui-tanstack-table/src"),
+					"@coderic-labs/mui-tanstack-table": resolve(__dirname, "../../mui-tanstack-table/src"),
 				}
 			},
 			build: {
