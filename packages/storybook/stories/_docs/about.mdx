@@ -1,0 +1,29 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="About" />
+
+# About MUI TanStack Table
+
+MUI TanStack Table is a focused UI layer that renders `@tanstack/react-table` using Material UI components. It is not a full table engine — it is a rendering library built for apps that already use TanStack Table for table state and behavior.
+
+## Design principles
+
+- **Strict separation of concerns** — Table logic belongs to TanStack Table, UI belongs to MUI components.
+- **Render-only components** — Components receive a configured table instance and render state, actions, and interactions.
+- **Composable tooling** — Use toolbar actions, filters, pagination, column visibility controls, selection, expansion, and more in any combination.
+- **Minimal surface area** — Keep the public API small and predictable while supporting the most common table UI patterns.
+
+## Who should use it
+
+This package is ideal for developers who:
+
+- already use `@tanstack/react-table`
+- want MUI-based table UI components
+- prefer a render-only UI layer without embedded table behavior
+- need reusable MUI table building blocks for filterable, sortable, paginated tables
+
+## Recommended prerequisites
+
+- `@tanstack/react-table` v8 knowledge
+- Material UI v6 experience
+- React 18+ application architecture

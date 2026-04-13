@@ -1,0 +1,86 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Getting Started" />
+
+# Getting Started
+
+This guide shows how to go from a TanStack Table configuration to a rendered MUI table using the library’s reusable components.
+
+## 1. Install the package
+
+```bash
+npm install @coderic-labs/mui-tanstack-table
+```
+
+## 2. Configure TanStack Table
+
+Create your column definitions and table instance with `useTable`.
+
+```tsx
+import * as MTT from '@coderic-labs/mui-tanstack-table';
+import { createColumnHelper, useTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
+import { Paper, Stack, TableContainer } from '@mui/material';
+
+const columnHelper = createColumnHelper();
+
+const columns = [
+  columnHelper.accessor('name', {
+    header: MTT.TableHeader,
+    filter: MTT.predefinedColumnFilters.TextFilter,
+    filterFn: 'includesString',
+  }),
+  columnHelper.accessor('age', {
+    header: MTT.TableHeader,
+    sortingFn: 'alphanumeric',
+  }),
+  columnHelper.accessor('status', {
+    header: MTT.TableHeader,
+    filter: MTT.predefinedColumnFilters.SelectFilter,
+    filterFn: 'equals',
+  }),
+];
+
+const table = useTable({
+  data: data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+});
+```
+
+## 3. Render the table with MUI components
+
+Use `MTT.Table` and optional toolbar components from the package.
+
+```tsx
+return (
+  <Stack gap={2}>
+    <MTT.TableToolbar>
+      <MTT.TableToolbarInfo>
+        <MTT.TableResultsLabel table={table} />
+      </MTT.TableToolbarInfo>
+      <MTT.TableToolbarActions>
+        <MTT.TableColumnVisibilityToggle table={table} />
+      </MTT.TableToolbarActions>
+    </MTT.TableToolbar>
+
+    <TableContainer component={Paper}>
+      <MTT.Table table={table} />
+    </TableContainer>
+
+    <MTT.TablePaginationV2 table={table} />
+  </Stack>
+);
+```
+
+## 4. Use demo patterns from the Storybook examples
+
+The demo components show how to build real-world table screens with:
+
+- row selection and bulk actions
+- row expansion and details
+- advanced filtering with select, boolean, and date-range filters
+- client-side and server-side table state handling
+- column visibility toggles and toolbar actions
