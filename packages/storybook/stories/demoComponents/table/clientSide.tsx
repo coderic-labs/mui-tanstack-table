@@ -170,6 +170,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 						Remove selected
 					</MTT.TableBulkActionButton>
 					<MTT.TableColumnVisibilityToggle
+						color='secondary'
 						table={table} />
 				</MTT.TableToolbarActions>
 			</MTT.TableToolbar>

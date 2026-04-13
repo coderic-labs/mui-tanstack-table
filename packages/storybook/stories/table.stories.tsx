@@ -1,15 +1,13 @@
-import { Table } from '@coderic-labs/mui-tanstack-table';
-import type { Meta, StoryFn } from '@storybook/react';
-import { ServerSideTableDemo } from './demoComponents/table/serverSide';
+import type { StoryFn } from '@storybook/react';
 import { ClientSideTableDemo } from './demoComponents/table/clientSide';
+import { ServerSideTableDemo } from './demoComponents/table/serverSide';
 
 const meta = {
-	title: 'Table',
-	component: Table,
+	title: 'Demos',
 	parameters: {
 		layout: 'fullscreen'
 	}
-} satisfies Meta<typeof Table>;
+};
 
 export default meta;
 
