@@ -114,7 +114,6 @@ const columns = [
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
 	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 	const [columnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
 
 	const { data, deleteItems } = useItems();
@@ -139,10 +138,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
-		onRowSelectionChange: setRowSelection,
 		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
 		state: {
-			rowSelection,
 			columnPinning
 		}
 	});
