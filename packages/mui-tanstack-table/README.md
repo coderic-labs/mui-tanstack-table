@@ -7,7 +7,7 @@
 ## ⭐ Key Features
 
 - **🔧 Modular Design** — Mix and match components. Use filtering without pagination, or pagination without sorting—it's up to you.
-- **🔐 Zero Coupling** — **Complete isolation between table logic and UI.** Configure TanStack Table once with `useTable`, and let the UI components simply consume and render it.
+- **🔐 Zero Coupling** — **Complete isolation between table logic and UI.** Configure TanStack Table once with `useReactTable`, and let the UI components simply consume and render it.
 - **📊 Render-Only Components** — All MUI components are pure presentational. They trigger state changes through the TanStack Table headless model
 - **⚡ Built on TanStack Table** — Leverage the power of TanStack's headless table logic.
 - **📘 Requires TanStack Table knowledge** — This library assumes you already understand `@tanstack/react-table` basics.
@@ -35,7 +35,7 @@ npm install @coderic-labs/mui-tanstack-table
 
 ```tsx
 import * as MTT from '@coderic-labs/mui-tanstack-table';
-import { createColumnHelper, useTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
+import { createColumnHelper, useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
 import { Paper, Stack, TableContainer } from '@mui/material';
 
 function MyTable() {
@@ -57,7 +57,7 @@ function MyTable() {
     ...
   ];
 
-  const table = useTable({
+  const table = useReactTable({
     data: myData,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -96,12 +96,12 @@ function MyTable() {
 
 | Layer | Responsibility | Framework |
 |-------|---|---|
-| **Table Logic** | All filtering, sorting, pagination, state, row selection | TanStack Table (`useTable`) |
+| **Table Logic** | All filtering, sorting, pagination, state, row selection | TanStack Table (`useReactTable`) |
 | **UI Rendering** | Pure presentation of configured data | MUI Components |
 
 ### What This Means:
 
-✅ **Configure your table features ONCE** with `useTable` (all logic happens here)
+✅ **Configure your table features ONCE** with `useReactTable` (all logic happens here)
 
 ✅ **Pass the table instance to ANY COMBINATION of MUI components** (they just render)
 

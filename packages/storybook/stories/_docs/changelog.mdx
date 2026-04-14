@@ -4,6 +4,18 @@ import { Meta } from '@storybook/blocks';
 
 # Changelog
 
+## 0.0.5
+
+- Added row highlighting and cell style customization support through table rendering props.
+- Improved table cell rendering internals by introducing a dedicated table cell component.
+- Refined row-selection behavior to use stable string row IDs across table interactions.
+- Expanded Cypress component coverage for pagination, row detail, row selection, and cross-page bulk deletion flows.
+
+### Upgrade Notes
+
+- If you were using row-level styling APIs from previous pre-release builds, migrate to the current cell styling approach (`getCellStyle`).
+- Selection state keys are now normalized as string row IDs; custom integrations that inspect `rowSelection` directly should treat keys as strings.
+
 ## 0.0.4
 
 - Initial public alpha release for the Storybook package.

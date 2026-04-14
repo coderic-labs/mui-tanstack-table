@@ -14,11 +14,11 @@ npm install @coderic-labs/mui-tanstack-table
 
 ## 2. Configure TanStack Table
 
-Create your column definitions and table instance with `useTable`.
+Create your column definitions and table instance with `useReactTable`.
 
 ```tsx
 import * as MTT from '@coderic-labs/mui-tanstack-table';
-import { createColumnHelper, useTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
+import { createColumnHelper, useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
 import { Paper, Stack, TableContainer } from '@mui/material';
 
 const columnHelper = createColumnHelper();
@@ -40,7 +40,7 @@ const columns = [
   }),
 ];
 
-const table = useTable({
+const table = useReactTable({
   data: data,
   columns,
   getCoreRowModel: getCoreRowModel(),
