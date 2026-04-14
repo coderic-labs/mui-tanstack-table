@@ -27,7 +27,11 @@ export const dataTests = {
 		pageSizeSelect: 'mtt-table-pagination-page-size-select'
 	},
 	paginationV2: {
-		root: 'mtt-table-pagination-v2'
+		root: 'mtt-table-pagination-v2',
+		nextButton: 'mtt-table-pagination-v2-next-button',
+		prevButton: 'mtt-table-pagination-v2-prev-button',
+		firstButton: 'mtt-table-pagination-v2-first-button',
+		lastButton: 'mtt-table-pagination-v2-last-button'
 	},
 	rowSelection: {
 		headerCheckbox: 'mtt-row-selection-header-checkbox',

@@ -16,6 +16,12 @@ export const assertRowsRenderedInOrder = (rowIds: readonly (string | number)[]) 
 	});
 };
 
+export const assertPaginationLabel = (expectedLabel: string) => {
+	getByDataTest(dataTests.paginationV2.root).within(() => {
+		cy.get('p').contains(expectedLabel).should('exist');
+	});
+};
+
 export const allColumns = ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions'] as const;
 
 export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
