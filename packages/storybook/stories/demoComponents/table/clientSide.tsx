@@ -1,16 +1,15 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
-import type { ColumnPinningState, FilterFnOption, RowSelectionState } from '@tanstack/react-table';
+import type { FilterFnOption } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Dayjs } from 'dayjs';
-import { useState } from 'react';
 import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
 import { Developer, useItems } from './_data';
 import { DemoTableProps } from './_types';
 
 type TableMeta = {
-	showConfirmDialog: (items: Developer[]) => void;
+	showConfirmDialog: (ids: string[]) => void;
 }
 
 const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = MTT.predefinedColumnFilters;
@@ -102,7 +101,7 @@ const columns = [
 					</IconButton>
 					<IconButton
 						color="secondary"
-						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}
+						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original.id])}
 					>
 						<Delete />
 					</IconButton>
@@ -114,13 +113,12 @@ const columns = [
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
 	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
-	const [columnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
 
 	const { data, deleteItems } = useItems();
 
 	const { confirmDialog, showConfirmDialog } = MTT.useConfirmDialog({
 		Component: ConfirmDeleteDialog,
-		onConfirm: (items) => deleteItems(items.map(item => item.id))
+		onConfirm: (items) => { deleteItems(items); table.resetRowSelection(); }
 	});
 
 	const table = useReactTable<Developer>({
@@ -140,7 +138,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 		getExpandedRowModel: getExpandedRowModel(),
 		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
 		state: {
-			columnPinning
+			columnPinning: { left: ['select'], right: ['actions'] }
 		}
 	});
 

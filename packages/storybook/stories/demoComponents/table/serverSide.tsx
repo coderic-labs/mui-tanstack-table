@@ -1,7 +1,7 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
-import type { ColumnFiltersState, ColumnPinningState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
+import type { ColumnFiltersState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, getExpandedRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
 import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
@@ -9,7 +9,7 @@ import { Developer, useItems } from './_data';
 import { DemoTableProps } from './_types';
 
 type TableMeta = {
-	showConfirmDialog: (items: Developer[]) => void;
+	showConfirmDialog: (ids: string[]) => void;
 }
 
 const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = MTT.predefinedColumnFilters;
@@ -82,7 +82,7 @@ const columns = [
 					</IconButton>
 					<IconButton
 						color='primary'
-						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}>
+						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original.id])}>
 						<Delete />
 					</IconButton>
 				</Stack>
@@ -96,8 +96,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 
 	// table state
 	const {
-		pagination, sorting, columnFilters, rowSelection, columnPinning,
-		onColumnFiltersChange, onSortingChange, onPaginationChange, onColumnPinningChange, onRowSelectionChange
+		pagination, sorting, columnFilters,
+		onColumnFiltersChange, onSortingChange, onPaginationChange
 	} = useTableState();
 
 	// data fetching
@@ -106,7 +106,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	// confirm delete dialog
 	const { showConfirmDialog, confirmDialog } = MTT.useConfirmDialog({
 		Component: ConfirmDeleteDialog,
-		onConfirm: (items) => deleteItems(items.map(item => item.id))
+		onConfirm: (items) => { deleteItems(items); table.resetRowSelection(); }
 	});
 
 	const table = useReactTable<Developer>({
@@ -126,8 +126,6 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 		onPaginationChange,
 		onColumnFiltersChange,
 		onSortingChange,
-		onRowSelectionChange,
-		onColumnPinningChange,
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
 		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
@@ -135,8 +133,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 			pagination,
 			columnFilters,
 			sorting,
-			rowSelection,
-			columnPinning
+			columnPinning: { left: ['select'], right: ['actions'] }
 		}
 	});
 
@@ -196,7 +193,6 @@ const useTableState = () => {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-	const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
 
 	// table pagination update handler
 	const onPaginationChange: OnChangeFn<PaginationState> = useCallback(updater => setPagination(updater), [setPagination]);
@@ -216,11 +212,8 @@ const useTableState = () => {
 	// table row selection update handler
 	const onRowSelectionChange: OnChangeFn<RowSelectionState> = useCallback(updater => setRowSelection(updater), [setRowSelection]);
 
-	// table column pinning update handler
-	const onColumnPinningChange: OnChangeFn<ColumnPinningState> = useCallback(updater => setColumnPinning(updater), [setColumnPinning]);
-
 	return {
-		pagination, sorting, columnFilters, rowSelection, columnPinning,
-		onPaginationChange, onSortingChange, onColumnFiltersChange, onRowSelectionChange, onColumnPinningChange
+		pagination, sorting, columnFilters, rowSelection,
+		onPaginationChange, onSortingChange, onColumnFiltersChange, onRowSelectionChange
 	};
 }

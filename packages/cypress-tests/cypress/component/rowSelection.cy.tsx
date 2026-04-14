@@ -22,25 +22,15 @@ const selectCurrentTableRows = (rowIds: readonly number[]) => {
 const tableDemos = [
 	{
 		name: 'ClientSideTable',
-		Component: ClientSideTableDemo,
-		crossPageSelectedLabelCounts: {
-			afterFirstPageSelection: 3,
-			afterSecondPageSelection: 5,
-			afterReturningToFirstPage: 5
-		}
+		Component: ClientSideTableDemo
 	},
 	{
 		name: 'ServerSideTable',
-		Component: ServerSideTableDemo,
-		crossPageSelectedLabelCounts: {
-			afterFirstPageSelection: 3,
-			afterSecondPageSelection: 2,
-			afterReturningToFirstPage: 3
-		}
+		Component: ServerSideTableDemo
 	}
 ] as const;
 
-tableDemos.forEach(({ name, Component, crossPageSelectedLabelCounts }) => {
+tableDemos.forEach(({ name, Component }) => {
 
 	describe(name, () => {
 
@@ -64,18 +54,18 @@ tableDemos.forEach(({ name, Component, crossPageSelectedLabelCounts }) => {
 			assertRowsRenderedInOrder([1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]);
 			selectCurrentTableRows(firstPageSelectedRowIds);
 			assertCurrentTableRowsSelected(firstPageSelectedRowIds);
-			assertSelectedRowsLabel(crossPageSelectedLabelCounts.afterFirstPageSelection, totalRows);
+			assertSelectedRowsLabel(3, totalRows);
 
 			getByDataTest(dataTests.paginationV2.nextButton).click();
 			assertRowsRenderedInOrder([1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019]);
 			selectCurrentTableRows(secondPageSelectedRowIds);
 			assertCurrentTableRowsSelected(secondPageSelectedRowIds);
-			assertSelectedRowsLabel(crossPageSelectedLabelCounts.afterSecondPageSelection, totalRows);
+			assertSelectedRowsLabel(5, totalRows);
 
 			getByDataTest(dataTests.paginationV2.prevButton).click();
 			assertRowsRenderedInOrder([1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]);
 			assertCurrentTableRowsSelected(firstPageSelectedRowIds);
-			assertSelectedRowsLabel(crossPageSelectedLabelCounts.afterReturningToFirstPage, totalRows);
+			assertSelectedRowsLabel(5, totalRows);
 		});
 
 	});

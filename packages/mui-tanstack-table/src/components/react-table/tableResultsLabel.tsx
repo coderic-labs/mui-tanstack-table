@@ -1,7 +1,7 @@
 import { Typography, TypographyProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
-import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useTableIntl } from '../../context/tableIntl';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 export type TableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
 	table: Table<T>,
@@ -12,8 +12,7 @@ export const TableResultsLabel = <T,>(props: TableResultsLabelProps<T>) => {
 
 	const { formatMessage } = useTableIntl();
 
-	const selectedRows = table.getSelectedRowModel().rows.map(row => row.original);
-	const selectedCount = selectedRows.length;
+	const selectedCount = Object.keys(table.getState().rowSelection).length;
 	const totalCount = table.options.rowCount ?? table.getFilteredRowModel().rows.length;
 
 	const values = selectedCount
