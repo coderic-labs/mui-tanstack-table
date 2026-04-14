@@ -14,10 +14,10 @@ export const TableRow = <T, >(props: TableRowProps<T>) => {
 	const { row, highlight } = props;
 	return (
 		<MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.index + 1)}>
-			{row.getVisibleCells().map((cell, cellIndex) =>
+			{row.getVisibleCells().map((cell) =>
 				<TableCell
 					key={cell.id}
-					{...getDataTestAttrs(dataTests.table.dataCell, `${row.index + 1}.${cellIndex + 1}`)}
+					{...getDataTestAttrs(dataTests.table.dataCell, `${row.index + 1}.${cell.column.id}`)}
 					{...cell.column.columnDef.tableCellProps}
 					sx={getPinnedColumnStyle({ column: cell.column, highlight, even: row.index % 2 === 0 })}>
 					{flexRender(

@@ -22,11 +22,11 @@ export function Table<T>(props: TableProps<T>) {
 			<TableHead {...getDataTestAttrs(dataTests.table.head)}>
 				{table.getHeaderGroups().map((headerGroup, headerGroupIndex) => (
 					<MuiTableRow key={headerGroup.id} {...getDataTestAttrs(dataTests.table.headerRow, headerGroupIndex + 1)}>
-						{headerGroup.headers.map((header, headerIndex) =>
+						{headerGroup.headers.map((header) =>
 							<TableCell
 								key={header.id}
 								colSpan={header.colSpan}
-								{...getDataTestAttrs(dataTests.table.headerCell, `${headerGroupIndex + 1}.${headerIndex + 1}`)}
+								{...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
 								{...header.column.columnDef.tableCellProps}
 								sx={{
 									...getPinnedColumnStyle({ column: header.column, isHeading: true }),
@@ -52,11 +52,11 @@ export function Table<T>(props: TableProps<T>) {
 				<TableFooter {...getDataTestAttrs(dataTests.table.footer)}>
 					{table.getFooterGroups().map((footerGroup, footerGroupIndex) => (
 						<MuiTableRow key={footerGroup.id} {...getDataTestAttrs(dataTests.table.footerRow, footerGroupIndex + 1)}>
-							{footerGroup.headers.map((header, footerHeaderIndex) =>
+							{footerGroup.headers.map((header) =>
 								<TableCell
 									key={header.id}
 									colSpan={header.colSpan}
-									{...getDataTestAttrs(dataTests.table.footerCell, `${footerGroupIndex + 1}.${footerHeaderIndex + 1}`)}
+									{...getDataTestAttrs(dataTests.table.footerCell, header.column.id)}
 									{...header.column.columnDef.tableCellProps}
 									sx={getPinnedColumnStyle({ column: header.column })}>
 									{flexRender(header.column.columnDef.footer, header.getContext())}

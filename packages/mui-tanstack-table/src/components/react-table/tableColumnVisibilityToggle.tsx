@@ -47,8 +47,8 @@ export function TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggl
 					<ListItemText primary="All columns" />
 				</MenuItem>
 				<Divider />
-				{columns.map((column, columnIndex) => (
-					<MenuItem key={column.id} onClick={column.getToggleVisibilityHandler()} {...getDataTestAttrs(dataTests.columnVisibility.columnItem, columnIndex + 1)}>
+				{columns.map((column) => (
+					<MenuItem key={column.id} onClick={column.getToggleVisibilityHandler()} {...getDataTestAttrs(dataTests.columnVisibility.columnItem, column.id)}>
 						<Checkbox
 							checked={column.getIsVisible()} />
 						<ListItemText
