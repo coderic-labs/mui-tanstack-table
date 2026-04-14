@@ -29,7 +29,6 @@ export function TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggl
 		<Fragment>
 			<IconButton
 				ref={setAnchorEl}
-				color="secondary"
 				onClick={() => setOpen(true)}
 				{...rest}>
 				<ViewColumn />

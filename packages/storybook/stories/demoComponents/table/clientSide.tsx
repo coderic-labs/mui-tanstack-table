@@ -150,7 +150,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 	});
 
 	return (
-		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
+		<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
 			<MTT.TableToolbar mb={2}>
 				<MTT.TableToolbarInfo>
 					<MTT.TableResultsLabel table={table} />
@@ -170,6 +170,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 						Remove selected
 					</MTT.TableBulkActionButton>
 					<MTT.TableColumnVisibilityToggle
+						color='secondary'
 						table={table} />
 				</MTT.TableToolbarActions>
 			</MTT.TableToolbar>

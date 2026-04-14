@@ -78,12 +78,12 @@ const columns = [
 			return (
 				<Stack direction='row' gap={1}>
 					<IconButton
-						color="secondary"
+						color='primary'
 						onClick={() => alert('edit: ' + JSON.stringify(row.original))}>
 						<Edit />
 					</IconButton>
 					<IconButton
-						color="error"
+						color='primary'
 						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}>
 						<Delete />
 					</IconButton>
@@ -143,7 +143,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	});
 
 	return (
-		<Stack sx={{ overflow: 'hidden', width: '100vw', height: '100vh', p: 2, boxSizing: 'border-box' }}>
+		<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
 			<MTT.TableToolbar mb={2}>
 				<MTT.TableToolbarInfo>
 					<MTT.TableResultsLabel table={table} />
@@ -163,6 +163,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 						Remove selected
 					</MTT.TableBulkActionButton>
 					<MTT.TableColumnVisibilityToggle
+						color='primary'
 						table={table} />
 				</MTT.TableToolbarActions>
 			</MTT.TableToolbar>

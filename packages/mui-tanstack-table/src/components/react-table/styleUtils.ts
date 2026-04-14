@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material';
+import { Theme, darken, lighten } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 import { Column, ColumnPinningPosition } from '@tanstack/react-table';
 
@@ -29,7 +29,7 @@ export const getPinnedColumnStyle = <T, >(opts: getPinnedColumnStyleOpts<T>): Sy
 	let styles: SystemStyleObject<Theme> = {
 		background: theme =>
 			highlight ? theme.palette.primary.light :
-				even ? theme.palette.grey[50] : theme.palette.background.paper
+				even ? getEvenRowColor(theme) : theme.palette.background.paper
 	};
 
 	if (isPinned) {
@@ -62,3 +62,11 @@ export const getStickyHeaderStyle = (stickyHeader?: boolean): SystemStyleObject<
 		background: theme => theme.palette.background.paper
 	};
 };
+
+export const getEvenRowColor = (theme: Theme) => {
+	if (theme.palette.mode === 'light')		
+		return darken(theme.palette.background.paper, 0.03);
+	if (theme.palette.mode === 'dark')
+		return lighten(theme.palette.background.paper, 0.03);
+	return theme.palette.background.paper;
+}
