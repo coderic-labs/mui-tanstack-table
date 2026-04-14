@@ -18,7 +18,6 @@ export const TableRow = <T, >(props: TableRowProps<T>) => {
 				<TableCell
 					key={cell.id}
 					{...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-					{...cell.column.columnDef.tableCellProps}
 					sx={getPinnedColumnStyle({ column: cell.column, highlight, even: row.index % 2 === 0 })}>
 					{flexRender(
 						cell.column.columnDef.cell,

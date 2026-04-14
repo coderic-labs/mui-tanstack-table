@@ -1,5 +1,4 @@
-import { TableCellProps } from '@mui/material';
-import { HeaderContext, ColumnDefTemplate, RowData } from '@tanstack/react-table';
+import { ColumnDefTemplate, HeaderContext, RowData } from '@tanstack/react-table';
 
 // Extend the column definition
 declare module '@tanstack/react-table' {
@@ -8,7 +7,6 @@ declare module '@tanstack/react-table' {
 		filter?: ColumnDefTemplate<HeaderContext<TData, TValue>>;
 		tooltip?: ColumnDefTemplate<HeaderContext<TData, TValue>>;
 		title?: string;
-		tableCellProps?: TableCellProps;
 	}
-	
+
 }

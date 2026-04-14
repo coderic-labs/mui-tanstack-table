@@ -20,7 +20,6 @@ const columns = [
 	columnHelper.display({
 		id: 'select',
 		enableHiding: false,
-		tableCellProps: { style: { minWidth: 'unset' } },
 		header: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
 				<MTT.TableRowExpansionHeader {...context} />
@@ -72,7 +71,6 @@ const columns = [
 		id: 'actions',
 		header: MTT.TableHeader,
 		enableHiding: false,
-		tableCellProps: { style: { minWidth: 'unset' } },
 		cell: (cellContext) => {
 			const { row, table } = cellContext;
 			return (

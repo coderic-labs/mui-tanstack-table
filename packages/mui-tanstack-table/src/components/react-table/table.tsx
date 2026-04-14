@@ -27,7 +27,6 @@ export function Table<T>(props: TableProps<T>) {
 								key={header.id}
 								colSpan={header.colSpan}
 								{...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
-								{...header.column.columnDef.tableCellProps}
 								sx={{
 									...getPinnedColumnStyle({ column: header.column, isHeading: true }),
 									...getStickyHeaderStyle(tableProps.stickyHeader)
@@ -57,7 +56,6 @@ export function Table<T>(props: TableProps<T>) {
 									key={header.id}
 									colSpan={header.colSpan}
 									{...getDataTestAttrs(dataTests.table.footerCell, header.column.id)}
-									{...header.column.columnDef.tableCellProps}
 									sx={getPinnedColumnStyle({ column: header.column })}>
 									{flexRender(header.column.columnDef.footer, header.getContext())}
 								</TableCell>
