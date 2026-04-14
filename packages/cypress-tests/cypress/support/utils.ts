@@ -6,6 +6,16 @@ export const getByDataTest = (value: string) =>
 export const getByDataTestId = (value: string) =>
 	cy.get(`[data-testid="${value}"]`);
 
+export const assertRowsRenderedInOrder = (rowIds: Array<string | number>) => {
+	getByDataTest(dataTests.table.dataRow).should('have.length.at.least', rowIds.length);
+
+	rowIds.forEach((rowId, index) => {
+		getByDataTest(dataTests.table.dataRow)
+			.eq(index)
+			.should('have.attr', 'data-testid', `${dataTests.table.dataRow}.${rowId}`);
+	});
+};
+
 export const allColumns = ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions'] as const;
 
 export const assertColumnVisibility = (visibleColumns: string[]) => {

@@ -11,9 +11,9 @@ describe('ClientSideTable row highlight', () => {
 			</Providers>
 		);
 
-		getByDataTestId(`${dataTests.table.dataCell}.1.select`).invoke('css', 'background-color').then((firstRowColor) => {
+		getByDataTestId(`${dataTests.table.dataCell}.1000.select`).invoke('css', 'background-color').then((firstRowColor) => {
 			expect(firstRowColor).to.match(/^rgb\(/);
-			getByDataTestId(`${dataTests.table.dataCell}.2.select`)
+			getByDataTestId(`${dataTests.table.dataCell}.1001.select`)
 				.invoke('css', 'background-color')
 				.should('not.eq', firstRowColor);
 		});

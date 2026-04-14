@@ -11,9 +11,9 @@ describe('ServerSideTable column pinning', () => {
 			</Providers>
 		);
 
-		getByDataTestId(`${dataTests.table.dataCell}.1.select`).should('have.css', 'position', 'sticky');
-		getByDataTestId(`${dataTests.table.dataCell}.1.select`).should('have.css', 'left', '0px');
-		getByDataTestId(`${dataTests.table.dataCell}.1.actions`).should('have.css', 'position', 'sticky');
-		getByDataTestId(`${dataTests.table.dataCell}.1.actions`).should('have.css', 'right', '0px');
+		getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'position', 'sticky');
+		getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'left', '0px');
+		getByDataTestId(`${dataTests.table.dataCell}.1000.actions`).should('have.css', 'position', 'sticky');
+		getByDataTestId(`${dataTests.table.dataCell}.1000.actions`).should('have.css', 'right', '0px');
 	});
 });

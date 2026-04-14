@@ -13,11 +13,11 @@ export type TableRowProps<T> = {
 export const TableRow = <T, >(props: TableRowProps<T>) => {
 	const { row, highlight } = props;
 	return (
-		<MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.index + 1)}>
+		<MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.id)}>
 			{row.getVisibleCells().map((cell) =>
 				<TableCell
 					key={cell.id}
-					{...getDataTestAttrs(dataTests.table.dataCell, `${row.index + 1}.${cell.column.id}`)}
+					{...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
 					{...cell.column.columnDef.tableCellProps}
 					sx={getPinnedColumnStyle({ column: cell.column, highlight, even: row.index % 2 === 0 })}>
 					{flexRender(
@@ -38,7 +38,7 @@ export type TableDetailRowProps<T> = {
 export const TableDetailRow = <T, >(props: TableDetailRowProps<T>) => {
 	const { row, rowDetail } = props;
 	return (
-		<MuiTableRow {...getDataTestAttrs(dataTests.table.detailRow, row.index + 1)}>
+		<MuiTableRow {...getDataTestAttrs(dataTests.table.detailRow, row.id)}>
 			<TableCell colSpan={row.getVisibleCells().length}>
 				{rowDetail({ row })}
 			</TableCell>
