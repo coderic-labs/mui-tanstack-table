@@ -29,3 +29,6 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+
+      - name: Run Cypress component tests
+        run: npm run cypress:run
