@@ -12,24 +12,18 @@ export type getPinnedColumnStyleOpts<T, > = {
 	 */
 	isHeading?: boolean,
 	/**
-	 * highlighted style if true
-	 */
-	highlight?: boolean,
-	/**
 	 * grey if true, white if false
-	 * highlight takes precedence over this option
 	 */
 	even?: boolean
 }
 
 export const getPinnedColumnStyle = <T, >(opts: getPinnedColumnStyleOpts<T>): SystemStyleObject<Theme> => {
-	const { column, isHeading = false, highlight = false, even = false } = opts;
+	const { column, isHeading = false, even = false } = opts;
 	const isPinned = column.getIsPinned();
 
 	let styles: SystemStyleObject<Theme> = {
 		background: theme =>
-			highlight ? theme.palette.primary.light :
-				even ? getEvenRowColor(theme) : theme.palette.background.paper
+			even ? getEvenRowColor(theme) : theme.palette.background.paper
 	};
 
 	if (isPinned) {

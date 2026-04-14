@@ -13,3 +13,4 @@ export * from './tableResetHeader';
 export * from './tableRowExpansion';
 export * from './tableRowSelection';
 export * from './utils';
+export * from './types';

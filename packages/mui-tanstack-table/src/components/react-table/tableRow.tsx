@@ -1,28 +1,26 @@
-import { Stack, TableCell, TableRow as MuiTableRow, Typography } from '@mui/material';
-import { flexRender, Row, Table } from '@tanstack/react-table';
+import { TableRow as MuiTableRow, Stack, TableCell as MuiTableCell, Typography } from '@mui/material';
+import { Cell, Row, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
-import { RowDetailComponent } from './table';
-import { getPinnedColumnStyle } from './styleUtils';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
+import { TableCell } from './tableCell';
+import type { GetCellStyle, RowDetailComponent } from './types';
 
 export type TableRowProps<T> = {
 	row: Row<T>,
-	highlight: boolean
+	getCellStyle?: GetCellStyle<T>;
 }
 
-export const TableRow = <T, >(props: TableRowProps<T>) => {
-	const { row, highlight } = props;
+export const TableRow = <T,>(props: TableRowProps<T>) => {
+	const { row, getCellStyle } = props;
 	return (
-		<MuiTableRow>
-			{row.getVisibleCells().map(cell =>
+		<MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.id)}>
+			{row.getVisibleCells().map((cell: Cell<T, unknown>) =>
 				<TableCell
 					key={cell.id}
-					{...cell.column.columnDef.tableCellProps}
-					sx={getPinnedColumnStyle({ column: cell.column, highlight, even: row.index % 2 === 0 })}>
-					{flexRender(
-						cell.column.columnDef.cell,
-						cell.getContext()
-					)}
-				</TableCell>
+					cell={cell}
+					row={row}
+					getCellStyle={getCellStyle}
+				/>
 			)}
 		</MuiTableRow>
 	);
@@ -33,13 +31,13 @@ export type TableDetailRowProps<T> = {
 	rowDetail: RowDetailComponent<T>;
 }
 
-export const TableDetailRow = <T, >(props: TableDetailRowProps<T>) => {
+export const TableDetailRow = <T,>(props: TableDetailRowProps<T>) => {
 	const { row, rowDetail } = props;
 	return (
-		<MuiTableRow>
-			<TableCell colSpan={row.getVisibleCells().length}>
+		<MuiTableRow {...getDataTestAttrs(dataTests.table.detailRow, row.id)}>
+			<MuiTableCell colSpan={row.getVisibleCells().length}>
 				{rowDetail({ row })}
-			</TableCell>
+			</MuiTableCell>
 		</MuiTableRow>
 	);
 };
@@ -48,19 +46,19 @@ export type TableEmptyRowProps<T> = {
 	table: Table<T>,
 }
 
-export const TableEmptyRow = <T, >(props: TableEmptyRowProps<T>) => {
+export const TableEmptyRow = <T,>(props: TableEmptyRowProps<T>) => {
 	const { table } = props;
 	const { formatMessage } = useTableIntl();
-	
+
 	return (
-		<MuiTableRow>
-			<TableCell colSpan={table.getVisibleLeafColumns().length}>
-				<Stack width={'100%'} height={'100px'} alignItems={'center'} justifyContent={'center'} padding={2}>
+		<MuiTableRow {...getDataTestAttrs(dataTests.table.emptyRow)}>
+			<MuiTableCell colSpan={table.getVisibleLeafColumns().length}>
+				<Stack width={'100%'} height={'100px'} alignItems={'center'} justifyContent={'center'} padding={2} {...getDataTestAttrs(dataTests.table.emptyState)}>
 					<Typography variant='body2' fontStyle='italic'>
 						{formatMessage({ id: 'components.reactTable.noResults' })}
 					</Typography>
 				</Stack>
-			</TableCell>
+			</MuiTableCell>
 		</MuiTableRow>
 	);
 };

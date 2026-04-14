@@ -1,16 +1,15 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
-import type { ColumnPinningState, FilterFnOption, RowSelectionState } from '@tanstack/react-table';
+import type { FilterFnOption } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Dayjs } from 'dayjs';
-import { useState } from 'react';
 import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
 import { Developer, useItems } from './_data';
 import { DemoTableProps } from './_types';
 
 type TableMeta = {
-	showConfirmDialog: (items: Developer[]) => void;
+	showConfirmDialog: (ids: string[]) => void;
 }
 
 const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = MTT.predefinedColumnFilters;
@@ -29,7 +28,6 @@ const columns = [
 	columnHelper.display({
 		id: 'select',
 		enableHiding: false,
-		tableCellProps: { style: { minWidth: 'unset' } },
 		header: (context) =>
 			<Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
 				<MTT.TableRowExpansionHeader {...context} />
@@ -92,7 +90,6 @@ const columns = [
 		id: 'actions',
 		header: MTT.TableHeader,
 		enableHiding: false,
-		tableCellProps: { style: { minWidth: 'unset' } },
 		cell: ({ row, table }) => {
 			return (
 				<Stack direction='row' gap={1}>
@@ -104,7 +101,7 @@ const columns = [
 					</IconButton>
 					<IconButton
 						color="secondary"
-						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original])}
+						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original.id])}
 					>
 						<Delete />
 					</IconButton>
@@ -115,15 +112,13 @@ const columns = [
 ];
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
-	const { enableMultiSort, maxMultiSortColCount, ...baseTableProps } = props;
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-	const [columnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
+	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
 
 	const { data, deleteItems } = useItems();
 
 	const { confirmDialog, showConfirmDialog } = MTT.useConfirmDialog({
 		Component: ConfirmDeleteDialog,
-		onConfirm: (items) => deleteItems(items.map(item => item.id))
+		onConfirm: (items) => { deleteItems(items); table.resetRowSelection(); }
 	});
 
 	const table = useReactTable<Developer>({
@@ -141,13 +136,16 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
-		onRowSelectionChange: setRowSelection,
 		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
 		state: {
-			rowSelection,
-			columnPinning
+			columnPinning: { left: ['select'], right: ['actions'] }
 		}
 	});
+
+	const getCellStyle: MTT.GetCellStyle<Developer> = (cell) => {
+		if (cell.row.original.id === highlightRow)
+			return (theme) => ({ backgroundColor: theme.palette.warning.light });
+	};
 
 	return (
 		<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
@@ -179,6 +177,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 					<MTT.Table
 						table={table}
 						rowDetail={RowDetail}
+						getCellStyle={getCellStyle}
 						{...baseTableProps}
 					/>
 				</TableContainer>

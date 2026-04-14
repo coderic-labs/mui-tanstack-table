@@ -1,6 +1,7 @@
 import { Close } from '@mui/icons-material';
 import { IconButton, Stack, StackProps, TableSortLabel, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
 import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 
@@ -35,6 +36,7 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
 
 			{canSort &&
 				<TableSortLabel
+					{...getDataTestAttrs(dataTests.header.sortLabel)}
 					sx={{
 						flexDirection: 'row',
 						alignItems: 'center',
@@ -56,11 +58,11 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
 						</Zoom>}
 				</TableSortLabel>}
 			{canFilter && column.columnDef.filter &&
-				<Stack direction='row' alignItems='center' gap={1}>
+				<Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
 					{flexRender(column.columnDef.filter, context)}
 					{context.column.getIsFiltered() &&
 						<Zoom in={context.column.getIsFiltered()}>
-							<IconButton size='small' onClick={() => context.column.setFilterValue(undefined)}>
+							<IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
 								<Close />
 							</IconButton>
 						</Zoom>}

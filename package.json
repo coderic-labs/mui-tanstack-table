@@ -1,10 +1,12 @@
 {
 	"name": "@coderic-labs/mui-tanstack-table-monorepo",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Mui tanstack table monorepo.",
 	"scripts": {
 		"build": "npm run build -ws --if-present",
 		"storybook": "npm run storybook -w packages/storybook",
+		"cypress:open": "npm run cypress:open -w packages/cypress-tests",
+		"cypress:run": "npm run cypress:run -w packages/cypress-tests",
 		"lint": "eslint ./packages",
 		"lint-fix": "eslint ./packages --fix",
 		"tsc": "npm run tsc --ws"
@@ -12,7 +14,8 @@
 	"author": "coderic-labs",
 	"workspaces": [
 		"packages/mui-tanstack-table",
-		"packages/storybook"
+		"packages/storybook",
+		"packages/cypress-tests"
 	],
 	"devDependencies": {
 		"@types/node": "^25.5.2",

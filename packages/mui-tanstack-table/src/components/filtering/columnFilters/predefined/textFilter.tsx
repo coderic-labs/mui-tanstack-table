@@ -2,6 +2,7 @@ import { Search } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField, TextFieldProps, Zoom } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
 export function TextFilter<T>(props: HeaderContext<T, string | number> & { textFieldProps?: TextFieldProps }) {
 	const { textFieldProps, ...headerContext } = props;
@@ -31,6 +32,7 @@ export function TextFilter<T>(props: HeaderContext<T, string | number> & { textF
 		<InputAdornment position="end">
 			<Zoom in>
 				<IconButton
+					{...getDataTestAttrs(dataTests.filters.textApplyButton)}
 					size="small"
 					sx={{ marginRight: -1.5 }}
 					onClick={ref?.blur}>
@@ -43,6 +45,7 @@ export function TextFilter<T>(props: HeaderContext<T, string | number> & { textF
 
 	return (
 		<TextField
+			{...getDataTestAttrs(dataTests.filters.textInput)}
 			size="small"
 			inputRef={setRef}
 			value={localValue ?? ''}

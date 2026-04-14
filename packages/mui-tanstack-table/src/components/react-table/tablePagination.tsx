@@ -1,6 +1,7 @@
 import { MenuItem, Pagination, Select, Stack, StackProps, Typography } from '@mui/material';
 import { Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 const defaultOptions = [10, 25, 50, 100];
 
@@ -16,8 +17,9 @@ export const TablePagination = <TData, >(props: TablePaginationProps<TData>) => 
 	const { formatMessage } = useTableIntl();
 
 	return (
-		<Stack direction="row" justifyContent="space-between" alignItems="center" {...rest}>
+		<Stack direction="row" justifyContent="space-between" alignItems="center" {...getDataTestAttrs(dataTests.pagination.root)} {...rest}>
 			<Pagination
+				{...getDataTestAttrs(dataTests.pagination.pager)}
 				sx={{ margin: 0 }}
 				count={pageOptions.length}
 				page={pagination.pageIndex + 1}
@@ -32,6 +34,7 @@ export const TablePagination = <TData, >(props: TablePaginationProps<TData>) => 
 					{formatMessage({ id: 'tablePagination.rowPerPage' })}
 				</Typography>
 				<Select
+					{...getDataTestAttrs(dataTests.pagination.pageSizeSelect)}
 					id="demo-controlled-open-select"
 					value={pagination.pageSize}
 					onChange={(event) => table.setPageSize(Number(event.target.value))}

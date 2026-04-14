@@ -13,7 +13,7 @@ export const RowDetail = ({ row }: { row: Row<Developer> }) => {
 	);
 };
 
-export const ConfirmDeleteDialog = (props: ConfirmDialogProps<Developer[]>) => {
+export const ConfirmDeleteDialog = (props: ConfirmDialogProps<string[]>) => {
 	const { open, data, onClose, onConfirm } = props;
 
 	return (

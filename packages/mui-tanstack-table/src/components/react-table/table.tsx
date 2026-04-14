@@ -1,31 +1,31 @@
 import { Table as MuiTable, TableBody, TableCell, TableFooter, TableHead, TableProps as MuiTableProps, TableRow as MuiTableRow } from '@mui/material';
-import { flexRender, Row, Table as TanstackTable } from '@tanstack/react-table';
-import React, { Fragment } from 'react';
+import { flexRender, Table as TanstackTable } from '@tanstack/react-table';
+import { Fragment } from 'react';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { TableDetailRow, TableEmptyRow, TableRow } from './tableRow';
 import { getPinnedColumnStyle, getStickyHeaderStyle } from './styleUtils';
-
-export type RowDetailComponent<T> = (props: { row: Row<T> }) => React.ReactElement
+import type { GetCellStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
 	table: TanstackTable<T>;
 	rowDetail?: RowDetailComponent<T>;
-	highlightRow?: string;
+	getCellStyle?: GetCellStyle<T>;
 };
 
 export function Table<T>(props: TableProps<T>) {
-	const { table, rowDetail, highlightRow, ...tableProps } = props;
+	const { table, rowDetail, getCellStyle, ...tableProps } = props;
 	const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
 
 	return (
-		<MuiTable {...tableProps} sx={{ borderCollapse: 'separate', ...tableProps.sx }}>
-			<TableHead>
-				{table.getHeaderGroups().map(headerGroup => (
-					<MuiTableRow key={headerGroup.id}>
-						{headerGroup.headers.map(header =>
+		<MuiTable {...getDataTestAttrs(dataTests.table.root)} {...tableProps} sx={{ borderCollapse: 'separate', ...tableProps.sx }}>
+			<TableHead {...getDataTestAttrs(dataTests.table.head)}>
+				{table.getHeaderGroups().map((headerGroup, headerGroupIndex) => (
+					<MuiTableRow key={headerGroup.id} {...getDataTestAttrs(dataTests.table.headerRow, headerGroupIndex + 1)}>
+						{headerGroup.headers.map((header) =>
 							<TableCell
 								key={header.id}
 								colSpan={header.colSpan}
-								{...header.column.columnDef.tableCellProps}
+								{...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
 								sx={{
 									...getPinnedColumnStyle({ column: header.column, isHeading: true }),
 									...getStickyHeaderStyle(tableProps.stickyHeader)
@@ -36,10 +36,10 @@ export function Table<T>(props: TableProps<T>) {
 					</MuiTableRow>
 				))}
 			</TableHead>
-			<TableBody>
+			<TableBody {...getDataTestAttrs(dataTests.table.body)}>
 				{table.getRowModel().rows.map(row =>
 					<Fragment key={row.id}>
-						<TableRow row={row} highlight={highlightRow === row.id} />
+						<TableRow row={row} getCellStyle={getCellStyle} />
 						{row.getIsExpanded() && rowDetail && <TableDetailRow row={row} rowDetail={rowDetail} />}
 					</Fragment>
 				)}
@@ -47,14 +47,14 @@ export function Table<T>(props: TableProps<T>) {
 					<TableEmptyRow table={table} />}
 			</TableBody>
 			{showFooter &&
-				<TableFooter>
-					{table.getFooterGroups().map(footerGroup => (
-						<MuiTableRow key={footerGroup.id}>
-							{footerGroup.headers.map(header =>
+				<TableFooter {...getDataTestAttrs(dataTests.table.footer)}>
+					{table.getFooterGroups().map((footerGroup, footerGroupIndex) => (
+						<MuiTableRow key={footerGroup.id} {...getDataTestAttrs(dataTests.table.footerRow, footerGroupIndex + 1)}>
+							{footerGroup.headers.map((header) =>
 								<TableCell
 									key={header.id}
 									colSpan={header.colSpan}
-									{...header.column.columnDef.tableCellProps}
+									{...getDataTestAttrs(dataTests.table.footerCell, header.column.id)}
 									sx={getPinnedColumnStyle({ column: header.column })}>
 									{flexRender(header.column.columnDef.footer, header.getContext())}
 								</TableCell>

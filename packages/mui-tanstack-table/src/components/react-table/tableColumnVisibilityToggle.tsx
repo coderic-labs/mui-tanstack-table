@@ -2,6 +2,7 @@ import { ViewColumn } from '@mui/icons-material';
 import { Checkbox, Divider, IconButton, IconButtonProps, ListItemText, Menu, MenuItem } from '@mui/material';
 import { Table } from '@tanstack/react-table';
 import { Fragment, useState } from 'react';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 type TableColumnVisibilityToggleProps<T> = IconButtonProps & {
 	table: Table<T>;
@@ -28,24 +29,26 @@ export function TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggl
 	return (
 		<Fragment>
 			<IconButton
+				{...getDataTestAttrs(dataTests.columnVisibility.toggleButton)}
 				ref={setAnchorEl}
 				onClick={() => setOpen(true)}
 				{...rest}>
 				<ViewColumn />
 			</IconButton>
 			<Menu
+				{...getDataTestAttrs(dataTests.columnVisibility.menu)}
 				anchorEl={anchorEl}
 				open={open}
 				onClose={() => setOpen(false)}>
-				<MenuItem onClick={toggleAll}>
+				<MenuItem onClick={toggleAll} {...getDataTestAttrs(dataTests.columnVisibility.toggleAllItem)}>
 					<Checkbox
 						checked={allVisible}
 						indeterminate={!allVisible && someVisible} />
 					<ListItemText primary="All columns" />
 				</MenuItem>
 				<Divider />
-				{columns.map(column => (
-					<MenuItem key={column.id} onClick={column.getToggleVisibilityHandler()}>
+				{columns.map((column) => (
+					<MenuItem key={column.id} onClick={column.getToggleVisibilityHandler()} {...getDataTestAttrs(dataTests.columnVisibility.columnItem, column.id)}>
 						<Checkbox
 							checked={column.getIsVisible()} />
 						<ListItemText

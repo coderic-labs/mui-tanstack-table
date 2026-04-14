@@ -3,6 +3,7 @@ import { IconButton, Popover, Stack, TableSortLabel, Zoom } from '@mui/material'
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
 import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 
@@ -52,6 +53,7 @@ export function TableHeaderV2<TData, TValue>(context: HeaderContext<TData, TValu
 
 			{canSort &&
 				<TableSortLabel
+					{...getDataTestAttrs(dataTests.header.sortLabel)}
 					sx={{
 						flexDirection: 'row',
 						alignItems: 'center',
@@ -84,11 +86,13 @@ const FilterPopover = <TData, TValue>(props: FilterPopoverProps<TData, TValue>) 
 	return (
 		<Fragment>
 			<FilterAlt
+				{...getDataTestAttrs(dataTests.header.filterPopoverTrigger)}
 				className='filter-icon'
 				sx={{ cursor: 'pointer' }}
 				fontSize='small'
 				onClick={e => { setOpen(true); e.stopPropagation(); }} />
 			<Popover
+				{...getDataTestAttrs(dataTests.header.filterPopover)}
 				onClick={(e) => e.stopPropagation()}
 				slotProps={{ paper: { sx: { p: 2 } } }}
 				anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -105,11 +109,11 @@ const Filter = <TData, TValue>(context: HeaderContext<TData, TValue>) => {
 	const { header } = context;
 	const isFiltered = context.column.getIsFiltered();
 	return (
-		<Stack direction='row' alignItems='center' gap={1}>
+		<Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
 			{flexRender(header.column.columnDef.filter, context)}
 			{isFiltered &&
 				<Zoom in={context.column.getIsFiltered()}>
-					<IconButton size='small' onClick={() => context.column.setFilterValue(undefined)}>
+					<IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
 						<Close />
 					</IconButton>
 				</Zoom>}

@@ -28,7 +28,7 @@ export enum Techs {
 export const allTechs = [Techs.react, Techs.redux, Techs.mui, Techs.angular, Techs.vue, Techs.cSharp, Techs.java];
 
 export type Developer = {
-	id: number;
+	id: string;
 	name: string;
 	hireDate: Dayjs;
 	employmentType: EmploymentType;
@@ -59,7 +59,7 @@ export type Query = {
 }
 
 const _items = Array.from<unknown, Developer>({ length: 200 }, (_, index) => ({
-	id: 1000 + index,
+	id: `${1000 + index}`,
 	name: faker.person.fullName(),
 	hireDate: dayjs(faker.date.past({ refDate: new Date(2020, 0, 1), years: 20 })),
 	employmentType: faker.helpers.arrayElement(allEmploymentTypes),
@@ -120,7 +120,7 @@ export const useItems = (query: Query = {}) => {
 		return getItems(items, { columnFilters, sorting, pagination });
 	}, [items, columnFilters, pagination, sorting]);
 
-	const deleteItems = useCallback((ids: number[]) => {
+	const deleteItems = useCallback((ids: string[]) => {
 		const newItems = items.filter(item => !ids.includes(item.id));
 		setItems(newItems);
 	}, [items, setItems]);

@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import { DatePicker, DatePickerProps, PickerValidDate } from '@mui/x-date-pickers';
 import { HeaderContext } from '@tanstack/react-table';
 import { useCallback } from 'react';
+import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 import { DateRangeFilterProps, DateRangeFilterValue } from '../../types';
 
 export function DateFilter<TData, TDate extends PickerValidDate>(props: HeaderContext<TData, unknown> & { datePickerProps: DatePickerProps<TDate> }) {
@@ -13,6 +14,7 @@ export function DateFilter<TData, TDate extends PickerValidDate>(props: HeaderCo
 
 	return (
 		<DatePicker
+			{...getDataTestAttrs(dataTests.filters.date)}
 			value={value}
 			slotProps={{ textField: { variant: 'standard' } }}
 			onChange={setFilterValue}
@@ -34,6 +36,7 @@ export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: Hea
 	return (
 		<Stack direction='row' gap={1}>
 			<DatePicker
+				{...getDataTestAttrs(dataTests.filters.dateRangeFrom)}
 				sx={{ minWidth: 150 }}
 				value={from}
 				slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
@@ -41,6 +44,7 @@ export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: Hea
 				{...fromProps}
 			/>
 			<DatePicker
+				{...getDataTestAttrs(dataTests.filters.dateRangeTo)}
 				sx={{ minWidth: 150 }}
 				value={to}
 				slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
