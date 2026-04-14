@@ -31,7 +31,7 @@ tableDemos.forEach(({ name, Component }) => {
 			assertRowsRenderedInOrder([1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019]);
 			assertPaginationLabel('2 / 20');
 
-			getByDataTest(dataTests.header.sortLabel).eq(0).click();
+			getByDataTest(dataTests.header.sortLabel).eq(0).click().click();
 			assertRowsRenderedInOrder([1199, 1198, 1197, 1196, 1195, 1194, 1193, 1192, 1191, 1190]);
 			
 			// Verify current page is reset to 1

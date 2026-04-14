@@ -19,7 +19,7 @@ tableDemos.forEach(({ name, Component }) => {
 			getByDataTest(dataTests.rowExpansion.resetButton).first().should('be.disabled');
 			getByDataTest(dataTests.rowExpansion.rowToggleButton).first().click();
 			getByDataTest(dataTests.table.detailRow).should('be.visible');
-			getByDataTest(dataTests.table.detailRow).first().should('contain', '"id":1000');
+			getByDataTest(dataTests.table.detailRow).first().should('contain', '"id":"1000"');
 			getByDataTest(dataTests.rowExpansion.resetButton).first().click();
 			getByDataTest(dataTests.table.detailRow).should('not.exist');
 		});
