@@ -1,20 +1,20 @@
 import { Table as MuiTable, TableBody, TableCell, TableFooter, TableHead, TableProps as MuiTableProps, TableRow as MuiTableRow } from '@mui/material';
-import { flexRender, Row, Table as TanstackTable } from '@tanstack/react-table';
-import React, { Fragment } from 'react';
+import { flexRender, Table as TanstackTable } from '@tanstack/react-table';
+import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { TableDetailRow, TableEmptyRow, TableRow } from './tableRow';
 import { getPinnedColumnStyle, getStickyHeaderStyle } from './styleUtils';
-
-export type RowDetailComponent<T> = (props: { row: Row<T> }) => React.ReactElement
+import type { GetCellStyle, GetRowStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
 	table: TanstackTable<T>;
 	rowDetail?: RowDetailComponent<T>;
-	highlightRow?: string;
+	getRowStyle?: GetRowStyle<T>;
+	getCellStyle?: GetCellStyle<T>;
 };
 
 export function Table<T>(props: TableProps<T>) {
-	const { table, rowDetail, highlightRow, ...tableProps } = props;
+	const { table, rowDetail, getRowStyle, getCellStyle, ...tableProps } = props;
 	const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
 
 	return (
@@ -40,7 +40,7 @@ export function Table<T>(props: TableProps<T>) {
 			<TableBody {...getDataTestAttrs(dataTests.table.body)}>
 				{table.getRowModel().rows.map(row =>
 					<Fragment key={row.id}>
-						<TableRow row={row} highlight={highlightRow === row.id} />
+						<TableRow row={row} getRowStyle={getRowStyle} getCellStyle={getCellStyle} />
 						{row.getIsExpanded() && rowDetail && <TableDetailRow row={row} rowDetail={rowDetail} />}
 					</Fragment>
 				)}

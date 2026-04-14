@@ -113,7 +113,7 @@ const columns = [
 ];
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
-	const { enableMultiSort, maxMultiSortColCount, ...baseTableProps } = props;
+	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 	const [columnPinning] = useState<ColumnPinningState>({ left: ['select'], right: ['actions'] });
 
@@ -147,6 +147,11 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 		}
 	});
 
+	const getRowStyle: MTT.GetRowStyle<Developer> = (row) => {
+		if (row.original.id === highlightRow)
+			return (theme) => ({ backgroundColor: theme.palette.warning.light });
+	};
+
 	return (
 		<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
 			<MTT.TableToolbar mb={2}>
@@ -177,6 +182,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 					<MTT.Table
 						table={table}
 						rowDetail={RowDetail}
+						getRowStyle={getRowStyle}
 						{...baseTableProps}
 					/>
 				</TableContainer>

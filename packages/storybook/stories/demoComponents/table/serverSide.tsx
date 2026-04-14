@@ -92,7 +92,7 @@ const columns = [
 ];
 
 export const ServerSideTableDemo = (props: DemoTableProps) => {
-	const { enableMultiSort, maxMultiSortColCount, ...baseTableProps } = props;
+	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
 
 	// table state
 	const {
@@ -140,6 +140,11 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 		}
 	});
 
+	const getRowStyle: MTT.GetRowStyle<Developer> = (row) => {
+		if (row.original.id === highlightRow)
+			return (theme) => ({ backgroundColor: theme.palette.warning.light });
+	};
+
 	return (
 		<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
 			<MTT.TableToolbar mb={2}>
@@ -170,6 +175,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 					<MTT.Table
 						table={table}
 						rowDetail={RowDetail}
+						getRowStyle={getRowStyle}
 						{...baseTableProps}
 					/>
 				</TableContainer>
