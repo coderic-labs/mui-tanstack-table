@@ -1,29 +1,9 @@
 import { TableRow as MuiTableRow, Stack, TableCell as MuiTableCell, Typography } from '@mui/material';
-import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
+import { Cell, Row, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { getPinnedColumnStyle } from './styleUtils';
+import { TableCell } from './tableCell';
 import type { GetCellStyle, RowDetailComponent } from './types';
-
-type TableCellProps<T> = {
-	cell: Cell<T, unknown>;
-	row: Row<T>;
-	getCellStyle?: GetCellStyle<T>;
-}
-
-const TableCell = <T,>(props: TableCellProps<T>) => {
-	const { cell, row, getCellStyle } = props;
-	const baseStyle = getPinnedColumnStyle({ column: cell.column, even: row.index % 2 === 0 });
-	const tableCellStyle = getCellStyle?.(cell);
-
-	return (
-		<MuiTableCell
-			{...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-			sx={[baseStyle, tableCellStyle ?? {}]}>
-			{flexRender(cell.column.columnDef.cell, cell.getContext())}
-		</MuiTableCell>
-	);
-};
 
 export type TableRowProps<T> = {
 	row: Row<T>,
