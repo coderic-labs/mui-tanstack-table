@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"lib": ["es2016", "dom"],
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"jsx": "react-jsx",
+		"types": [
+			"cypress"
+		],
+		"paths": {
+			"@demo-components": [
+				"../storybook/stories/demoComponents/table"
+			]
+		}
+	},
+	"include": [
+		"src",
+		"cypress"
+	]
+}
