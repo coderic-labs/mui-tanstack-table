@@ -147,8 +147,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 		}
 	});
 
-	const getRowStyle: MTT.GetRowStyle<Developer> = (row) => {
-		if (row.original.id === highlightRow)
+	const getCellStyle: MTT.GetCellStyle<Developer> = (cell) => {
+		if (cell.row.original.id === highlightRow)
 			return (theme) => ({ backgroundColor: theme.palette.warning.light });
 	};
 
@@ -182,7 +182,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 					<MTT.Table
 						table={table}
 						rowDetail={RowDetail}
-						getRowStyle={getRowStyle}
+						getCellStyle={getCellStyle}
 						{...baseTableProps}
 					/>
 				</TableContainer>

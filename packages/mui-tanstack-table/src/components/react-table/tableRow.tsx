@@ -3,25 +3,23 @@ import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { getPinnedColumnStyle } from './styleUtils';
-import type { GetCellStyle, GetRowStyle, RowDetailComponent } from './types';
+import type { GetCellStyle, RowDetailComponent } from './types';
 
 type TableCellProps<T> = {
 	cell: Cell<T, unknown>;
 	row: Row<T>;
-	getRowStyle?: GetRowStyle<T>;
 	getCellStyle?: GetCellStyle<T>;
 }
 
 const TableCell = <T,>(props: TableCellProps<T>) => {
-	const { cell, row, getRowStyle, getCellStyle } = props;
+	const { cell, row, getCellStyle } = props;
 	const baseStyle = getPinnedColumnStyle({ column: cell.column, even: row.index % 2 === 0 });
-	const rowStyle = getRowStyle?.(row);
 	const tableCellStyle = getCellStyle?.(cell);
 
 	return (
 		<MuiTableCell
 			{...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-			sx={[baseStyle, rowStyle ?? {}, tableCellStyle ?? {}]}>
+			sx={[baseStyle, tableCellStyle ?? {}]}>
 			{flexRender(cell.column.columnDef.cell, cell.getContext())}
 		</MuiTableCell>
 	);
@@ -29,12 +27,11 @@ const TableCell = <T,>(props: TableCellProps<T>) => {
 
 export type TableRowProps<T> = {
 	row: Row<T>,
-	getRowStyle?: GetRowStyle<T>;
 	getCellStyle?: GetCellStyle<T>;
 }
 
 export const TableRow = <T,>(props: TableRowProps<T>) => {
-	const { row, getRowStyle, getCellStyle } = props;
+	const { row, getCellStyle } = props;
 	return (
 		<MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.id)}>
 			{row.getVisibleCells().map((cell: Cell<T, unknown>) =>
@@ -42,7 +39,6 @@ export const TableRow = <T,>(props: TableRowProps<T>) => {
 					key={cell.id}
 					cell={cell}
 					row={row}
-					getRowStyle={getRowStyle}
 					getCellStyle={getCellStyle}
 				/>
 			)}

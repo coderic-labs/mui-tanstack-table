@@ -4,17 +4,16 @@ import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { TableDetailRow, TableEmptyRow, TableRow } from './tableRow';
 import { getPinnedColumnStyle, getStickyHeaderStyle } from './styleUtils';
-import type { GetCellStyle, GetRowStyle, RowDetailComponent } from './types';
+import type { GetCellStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
 	table: TanstackTable<T>;
 	rowDetail?: RowDetailComponent<T>;
-	getRowStyle?: GetRowStyle<T>;
 	getCellStyle?: GetCellStyle<T>;
 };
 
 export function Table<T>(props: TableProps<T>) {
-	const { table, rowDetail, getRowStyle, getCellStyle, ...tableProps } = props;
+	const { table, rowDetail, getCellStyle, ...tableProps } = props;
 	const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
 
 	return (
@@ -40,7 +39,7 @@ export function Table<T>(props: TableProps<T>) {
 			<TableBody {...getDataTestAttrs(dataTests.table.body)}>
 				{table.getRowModel().rows.map(row =>
 					<Fragment key={row.id}>
-						<TableRow row={row} getRowStyle={getRowStyle} getCellStyle={getCellStyle} />
+						<TableRow row={row} getCellStyle={getCellStyle} />
 						{row.getIsExpanded() && rowDetail && <TableDetailRow row={row} rowDetail={rowDetail} />}
 					</Fragment>
 				)}
