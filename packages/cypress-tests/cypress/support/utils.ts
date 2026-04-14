@@ -22,6 +22,20 @@ export const assertPaginationLabel = (expectedLabel: string) => {
 	});
 };
 
+export const assertCurrentTableRowsSelected = (rowIds: readonly (string | number)[]) => {
+	rowIds.forEach((rowId) => {
+		getByDataTestId(`${dataTests.table.dataRow}.${rowId}`).within(() => {
+			getByDataTest(dataTests.rowSelection.rowCheckbox).find('input').should('be.checked');
+		});
+	});
+};
+
+export const assertSelectedRowsLabel = (selectedCount: number, totalCount: number) => {
+	getByDataTest(dataTests.results.label)
+		.first()
+		.should('have.text', `Results: ${selectedCount} / ${totalCount}`);
+};
+
 export const allColumns = ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions'] as const;
 
 export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
