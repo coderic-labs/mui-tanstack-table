@@ -15,12 +15,8 @@ tableDemos.forEach(({ name, Component }) => {
 		it(`highlights the configured row`, () => {
 			cy.mount(<Providers><Component highlightRow='1000' /></Providers>);
 
-			getByDataTestId(`${dataTests.table.dataCell}.1000.select`).invoke('css', 'background-color').then((firstRowColor) => {
-				expect(firstRowColor).to.match(/^rgb\(/);
-				getByDataTestId(`${dataTests.table.dataCell}.1001.select`)
-					.invoke('css', 'background-color')
-					.should('not.eq', firstRowColor);
-			});
+			getByDataTestId(`${dataTests.table.dataCell}.1000.select`)
+				.should('have.css', 'background-color', 'rgb(71, 145, 219)');
 		});
 
 	});

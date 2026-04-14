@@ -16,6 +16,7 @@ tableDemos.forEach(({ name, Component }) => {
 			cy.mount(<Providers><Component /></Providers>);
 
 			getByDataTest(dataTests.table.detailRow).should('not.exist');
+			getByDataTest(dataTests.rowExpansion.resetButton).first().should('be.disabled');
 			getByDataTest(dataTests.rowExpansion.rowToggleButton).first().click();
 			getByDataTest(dataTests.table.detailRow).should('be.visible');
 			getByDataTest(dataTests.table.detailRow).first().should('contain', '"id":1000');

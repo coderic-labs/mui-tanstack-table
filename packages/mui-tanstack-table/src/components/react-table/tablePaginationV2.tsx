@@ -32,6 +32,8 @@ export const TablePaginationV2 = <TData, >(props: TablePaginationV2Props<TData>)
 			onRowsPerPageChange={(event) => table.setPagination({ pageIndex: 0, pageSize: parseInt(event.target.value, 10) })}
 			slotProps={{
 				spacer: { children: <TableResultsLabel table={table} /> },
+				select: { 'data-test': dataTests.paginationV2.pageSizeSelect } as any,
+				menuItem: { 'data-test': dataTests.paginationV2.pageSizeOption } as any,
 				actions: {
 					firstButton: { 'data-test': dataTests.paginationV2.firstButton } as any,
 					previousButton: { 'data-test': dataTests.paginationV2.prevButton } as any,

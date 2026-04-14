@@ -31,7 +31,9 @@ export const dataTests = {
 		nextButton: 'mtt-table-pagination-v2-next-button',
 		prevButton: 'mtt-table-pagination-v2-prev-button',
 		firstButton: 'mtt-table-pagination-v2-first-button',
-		lastButton: 'mtt-table-pagination-v2-last-button'
+		lastButton: 'mtt-table-pagination-v2-last-button',
+		pageSizeSelect: 'mtt-table-pagination-v2-page-size-select',
+		pageSizeOption: 'mtt-table-pagination-v2-page-size-option'
 	},
 	rowSelection: {
 		headerCheckbox: 'mtt-row-selection-header-checkbox',
