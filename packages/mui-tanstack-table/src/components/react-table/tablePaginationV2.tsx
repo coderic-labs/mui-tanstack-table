@@ -1,5 +1,6 @@
 import { TablePagination, TablePaginationProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useTableIntl } from '../../context/tableIntl';
 import { TableResultsLabel } from './tableResultsLabel';
 
@@ -17,6 +18,7 @@ export const TablePaginationV2 = <TData, >(props: TablePaginationV2Props<TData>)
 
 	return (
 		<TablePagination
+			{...getDataTestAttrs(dataTests.paginationV2.root)}
 			component={'div'}
 			sx={{ overflow: 'unset', ...sx }}
 			labelDisplayedRows={(ctx) => formatMessage(

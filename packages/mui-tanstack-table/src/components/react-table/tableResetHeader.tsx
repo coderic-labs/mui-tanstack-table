@@ -1,10 +1,12 @@
 import { Close } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 export function TableResetHeader<T>({ table }: HeaderContext<T, unknown>) {
 	return (
 		<IconButton
+			{...getDataTestAttrs(dataTests.resetHeader.button)}
 			size='small'
 			disabled={!table.getIsSomeRowsExpanded() && !table.getState().columnFilters.length && table.getState().pagination.pageIndex === 0 && !table.getState().sorting.length}
 			onClick={() => {

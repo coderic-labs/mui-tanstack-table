@@ -1,5 +1,6 @@
 import { Typography, TypographyProps } from '@mui/material';
 import { Table } from '@tanstack/react-table';
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useTableIntl } from '../../context/tableIntl';
 
 export type TableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
@@ -20,7 +21,7 @@ export const TableResultsLabel = <T,>(props: TableResultsLabelProps<T>) => {
 		: totalCount.toString();
 
 	return (
-		<Typography {...rest}>
+		<Typography {...getDataTestAttrs(dataTests.results.label)} {...rest}>
 			{formatMessage({ id: 'tableToolbar.results' }, { values, selectedCount, totalCount })}
 		</Typography>
 	);

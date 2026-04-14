@@ -1,6 +1,7 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
+import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
 export type BooleanFilterProps = {
 	labels?: {
@@ -31,10 +32,12 @@ export function BooleanFilter<T>(props: HeaderContext<T, boolean> & BooleanFilte
 
 	return (
 		<FormControlLabel
+			{...getDataTestAttrs(dataTests.filters.booleanLabel)}
 			label={label}
 			sx={{ height: 32.25, marginRight: 0 }}
 			control={
 				<Checkbox
+					{...getDataTestAttrs(dataTests.filters.booleanCheckbox)}
 					checked={filterValue ?? false}
 					indeterminate={getFilterValue() === undefined}
 					onChange={handleChange}

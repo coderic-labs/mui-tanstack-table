@@ -1,5 +1,6 @@
 import { MenuItem, Select, SelectProps } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
+import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
 export type SelectFilterProps<F> = {
 	selectProps?: SelectProps;
@@ -14,6 +15,7 @@ export function SelectFilter<T, F extends string | number>(props: HeaderContext<
 
 	return (
 		<Select
+			{...getDataTestAttrs(dataTests.filters.select)}
 			size="small"
 			variant='standard'
 			value={getFilterValue() ?? (multiple ? [] : '')}
