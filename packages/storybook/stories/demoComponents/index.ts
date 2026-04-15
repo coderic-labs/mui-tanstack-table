@@ -9,3 +9,4 @@ export { PagingServerSideDemo } from './pagingServerSide';
 export { RowSelectionDemo } from './rowSelection';
 export { CustomCellRendersDemo } from './customCellRenders';
 export { RowHighlightDemo } from './rowHighlight';
+export { StickyHeaderDemo } from './stickyHeader';
