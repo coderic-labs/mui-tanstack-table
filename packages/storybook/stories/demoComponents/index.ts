@@ -15,3 +15,5 @@ export { ColumnPinningDemo } from './columnPinning';
 export { RowDetailDemo } from './rowDetail';
 export { RowActionsDemo } from './rowActions';
 export { ConfirmModalDemo } from './confirmModal';
+export { ColumnVisibilityDemo } from './columnVisibility';
+export { ResetHeaderDemo } from './resetHeader';
