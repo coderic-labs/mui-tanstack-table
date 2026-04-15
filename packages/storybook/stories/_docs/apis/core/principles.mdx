@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Core/Principles" />
+
+# Core Principles
+
+## Render-only architecture
+
+TanStack Table owns state and behavior. This package provides rendering components and helpers that consume a configured table instance.
+
+## What belongs where
+
+- TanStack side: row models, sorting/filtering functions, pagination state, server query state.
+- MUI layer side: table rendering, header/filter controls, toolbar actions, pagination widgets.
+
+## Data-test contract
+
+When building custom wrappers around package components, keep selectors stable by using exported test ids from the data-test helpers.
+
+## Recommended implementation flow
+
+1. Define columns and table options with `useReactTable`.
+2. Decide per feature whether behavior is client-side or server-side.
+3. Render with package components such as `Table`, `TableHeader`, `TablePaginationV2`, and toolbar helpers.
+
+## Related docs
+
+- [Getting Started](../../gettingStarted.mdx)
+- [Filtering API](../features/filtering.mdx)
+- [Sorting API](../features/sorting.mdx)
+- [Paging API](../features/paging.mdx)

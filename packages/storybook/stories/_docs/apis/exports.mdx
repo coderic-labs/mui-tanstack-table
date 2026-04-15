@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Exports" />
+
+# Exports Reference
+
+Public exports are centralized from the package root entrypoint.
+
+## Context and localization
+
+- `TableLocalizationProvider`
+- `useTableIntl`
+
+## Filtering
+
+- `predefinedColumnFilters`
+- filtering-related types from the filtering module
+
+## React table rendering components
+
+- Core table renderers: `Table`, `TableHeader`, `TableHeaderV2`
+- Pagination: `TablePagination`, `TablePaginationV2`
+- Toolbar: `TableToolbar`, `TableToolbarInfo`, `TableToolbarActions`
+- Feature helpers: `TableFilterOverview`, `TableColumnVisibilityToggle`, `TableResultsLabel`, `TableBulkActionButton`, `TableResetHeader`
+- Row utilities: `TableRowSelectionHeader`, `TableRowSelectionCell`, `TableRowExpansionHeader`, `TableRowExpansionCell`, `TableExpandRowButton`
+- Cells: `TableBooleanCell`
+- Utility functions/types: `makeMeta`, `getTableMeta`, `GetCellStyle`, `RowDetailComponent`
+
+## Other utilities
+
+- `useConfirmDialog`
+- `InfoTooltip`
+- `dataTests`
+- `getDataTestAttrs`
+
+## Related docs
+
+- [Core Principles](./core/principles.mdx)
+- [Filtering API](./features/filtering.mdx)
+- [Sorting API](./features/sorting.mdx)
+- [Paging API](./features/paging.mdx)

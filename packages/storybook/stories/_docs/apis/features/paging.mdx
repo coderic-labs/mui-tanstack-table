@@ -1,0 +1,34 @@
+import { Meta, Source } from '@storybook/blocks';
+import PagingClientSideDemoRaw from '../../../demoComponents/pagingClientSide?raw';
+import PagingServerSideDemoRaw from '../../../demoComponents/pagingServerSide?raw';
+
+<Meta title="Apis/Features/Paging" />
+
+# Paging API
+
+Paging UI is shared (`TablePagination` or `TablePaginationV2`), but the source of page slicing differs between client and server modes.
+
+## Client side approach
+
+Use TanStack pagination row model to slice already-loaded rows.
+
+- Include `getPaginationRowModel()`.
+- Optionally set `initialState.pagination`.
+- Render pagination controls against the same table instance.
+
+<Source code={PagingClientSideDemoRaw} language="tsx" dark />
+
+## Server side approach
+
+Use controlled pagination state and request each page from your API.
+
+- Enable `manualPagination: true`.
+- Pass `rowCount` from API total.
+- Pass `state.pagination` and `onPaginationChange`.
+
+<Source code={PagingServerSideDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Client Side Table](../../demos/clientSideTable/clientSideTable.mdx)
+- [Demo / Server Side Table](../../demos/serverSideTable/serverSideTable.mdx)

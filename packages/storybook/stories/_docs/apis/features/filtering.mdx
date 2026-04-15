@@ -1,0 +1,35 @@
+import { Meta, Source } from '@storybook/blocks';
+import FilteringClientSideDemoRaw from '../../../demoComponents/filteringClientSide?raw';
+import FilteringServerSideDemoRaw from '../../../demoComponents/filteringServerSide?raw';
+
+<Meta title="Apis/Features/Filtering" />
+
+# Filtering API
+
+Filtering can be implemented in two valid ways. The table renderer and filter UI components are shared, but the state and data flow differ between client and server approaches.
+
+## Client side approach
+
+Use TanStack row-model filtering in-memory.
+
+- Add filter UIs to columns through `filter`.
+- Set `filterFn` where needed.
+- Include `getFilteredRowModel()` in `useReactTable`.
+
+<Source code={FilteringClientSideDemoRaw} language="tsx" dark />
+
+## Server side approach
+
+Use controlled `columnFilters` state and send that state to your data-fetching layer.
+
+- Enable `manualFiltering: true`.
+- Pass `state.columnFilters`.
+- Provide `onColumnFiltersChange`.
+- Fetch rows externally and update table `data`.
+
+<Source code={FilteringServerSideDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Client Side Table](../../demos/clientSideTable/clientSideTable.mdx)
+- [Demo / Server Side Table](../../demos/serverSideTable/serverSideTable.mdx)
