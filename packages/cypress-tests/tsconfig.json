@@ -1,24 +1,24 @@
 {
-	"compilerOptions": {
-		"lib": ["es2016", "dom"],
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"jsx": "react-jsx",
-		"types": [
-			"cypress"
-		],
-		"paths": {
-			"@demo-components": [
-				"../storybook/stories/demoComponents"
-			],
-			"@coderic-labs/mui-tanstack-table": [
-				"../mui-tanstack-table/src"
-			]
-		}
-	},
-	"include": [
-		"src",
-		"cypress"
-	]
+    "compilerOptions": {
+        "lib": ["es2016", "dom"],
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "jsx": "react-jsx",
+        "types": [
+            "cypress"
+        ],
+        "paths": {
+            "@demo-components": [
+                "../storybook/stories/demoComponents"
+            ],
+            "@coderic-labs/mui-tanstack-table": [
+                "../mui-tanstack-table/src"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "cypress"
+    ]
 }

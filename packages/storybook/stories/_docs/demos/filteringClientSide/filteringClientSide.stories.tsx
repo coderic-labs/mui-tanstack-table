@@ -3,17 +3,17 @@ import { FilteringClientSideDemo } from '../../../demoComponents/filteringClient
 import FilteringClientSideDemoRaw from '../../../demoComponents/filteringClientSide?raw';
 
 const meta = {
-	title: 'Demo/Filtering Client Side',
-	component: FilteringClientSideDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: FilteringClientSideDemoRaw,
-			}
-		}
-	}
+    title: 'Demo/Filtering Client Side',
+    component: FilteringClientSideDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: FilteringClientSideDemoRaw,
+            }
+        }
+    }
 };
 
 export default meta;

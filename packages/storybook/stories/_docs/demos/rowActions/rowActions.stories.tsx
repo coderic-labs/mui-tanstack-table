@@ -3,17 +3,17 @@ import { RowActionsDemo } from '../../../demoComponents/rowActions';
 import RowActionsDemoRaw from '../../../demoComponents/rowActions?raw';
 
 const meta = {
-	title: 'Demo/Row Actions',
-	component: RowActionsDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: RowActionsDemoRaw,
-			},
-		},
-	},
+    title: 'Demo/Row Actions',
+    component: RowActionsDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: RowActionsDemoRaw,
+            },
+        },
+    },
 };
 
 export default meta;

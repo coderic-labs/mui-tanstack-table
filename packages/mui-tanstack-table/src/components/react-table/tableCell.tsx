@@ -5,21 +5,21 @@ import { getCellStyle as getBaseCellStyle } from './styleUtils';
 import type { GetCellStyle } from './types';
 
 export type TableCellProps<T> = {
-	cell: Cell<T, unknown>;
-	row: Row<T>;
-	getCellStyle?: GetCellStyle<T>;
+    cell: Cell<T, unknown>;
+    row: Row<T>;
+    getCellStyle?: GetCellStyle<T>;
 };
 
 export const TableCell = <T,>(props: TableCellProps<T>) => {
-	const { cell, row, getCellStyle } = props;
-	const baseStyle = getBaseCellStyle({ column: cell.column, area: 'body', even: row.index % 2 === 0 });
-	const tableCellStyle = getCellStyle?.(cell);
+    const { cell, row, getCellStyle } = props;
+    const baseStyle = getBaseCellStyle({ column: cell.column, area: 'body', even: row.index % 2 === 0 });
+    const tableCellStyle = getCellStyle?.(cell);
 
-	return (
-		<MuiTableCell
-			{...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-			sx={[baseStyle, tableCellStyle ?? {}]}>
-			{flexRender(cell.column.columnDef.cell, cell.getContext())}
-		</MuiTableCell>
-	);
+    return (
+        <MuiTableCell
+            {...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
+            sx={[baseStyle, tableCellStyle ?? {}]}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </MuiTableCell>
+    );
 };

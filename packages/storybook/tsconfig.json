@@ -1,14 +1,14 @@
 {
-	"include": [".storybook/**/*", "stories/**/*"],
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"jsx": "react-jsx",
-		"paths": {
-			"@coderic-labs/mui-tanstack-table": [
-				"../mui-tanstack-table/src"
-			],
-		}
-	}
+    "include": [".storybook/**/*", "stories/**/*"],
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "jsx": "react-jsx",
+        "paths": {
+            "@coderic-labs/mui-tanstack-table": [
+                "../mui-tanstack-table/src"
+            ],
+        }
+    }
 }

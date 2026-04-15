@@ -1,35 +1,35 @@
 {
-	"name": "@coderic-labs/mui-tanstack-table-storybook",
-	"version": "0.0.5",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build",
-		"build": "storybook build",
-		"chromatic": "npx chromatic --project-token=248109c2255b --exit-zero-on-changes",
-		"tsc": "tsc --noEmit --skipLibCheck"
-	},
-	"author": "coderic-labs",
-	"devDependencies": {
-		"@chromatic-com/storybook": "^3.2.4",
-		"@storybook/addon-essentials": "^8.5.3",
-		"@storybook/addon-interactions": "^8.5.3",
-		"@storybook/addon-links": "^8.5.3",
-		"@storybook/addon-onboarding": "^8.5.3",
-		"@storybook/blocks": "^8.5.3",
-		"@storybook/react": "^8.5.3",
-		"@storybook/react-vite": "^8.5.3",
-		"@storybook/test": "^8.5.3",
-		"chromatic": "^11.3.0",
-		"prop-types": "^15.8.1",
-		"storybook": "^8.5.3"
-	},
-	"dependencies": {
-		"@mui/material": "^6.4.6",
-		"react": "18.3.1",
-		"react-dom": "18.3.1",
-		"dayjs": "^1.11.19",
-		"@faker-js/faker": "10.1.0"
-	}
+    "name": "@coderic-labs/mui-tanstack-table-storybook",
+    "version": "0.0.5",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build",
+        "build": "storybook build",
+        "chromatic": "npx chromatic --project-token=248109c2255b --exit-zero-on-changes",
+        "tsc": "tsc --noEmit --skipLibCheck"
+    },
+    "author": "coderic-labs",
+    "devDependencies": {
+        "@chromatic-com/storybook": "^3.2.4",
+        "@storybook/addon-essentials": "^8.5.3",
+        "@storybook/addon-interactions": "^8.5.3",
+        "@storybook/addon-links": "^8.5.3",
+        "@storybook/addon-onboarding": "^8.5.3",
+        "@storybook/blocks": "^8.5.3",
+        "@storybook/react": "^8.5.3",
+        "@storybook/react-vite": "^8.5.3",
+        "@storybook/test": "^8.5.3",
+        "chromatic": "^11.3.0",
+        "prop-types": "^15.8.1",
+        "storybook": "^8.5.3"
+    },
+    "dependencies": {
+        "@mui/material": "^6.4.6",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "dayjs": "^1.11.19",
+        "@faker-js/faker": "10.1.0"
+    }
 }

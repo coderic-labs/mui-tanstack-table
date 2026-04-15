@@ -3,17 +3,17 @@ import { FilteringServerSideDemo } from '../../../demoComponents/filteringServer
 import FilteringServerSideDemoRaw from '../../../demoComponents/filteringServerSide?raw';
 
 const meta = {
-	title: 'Demo/Filtering Server Side',
-	component: FilteringServerSideDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: FilteringServerSideDemoRaw,
-			}
-		}
-	}
+    title: 'Demo/Filtering Server Side',
+    component: FilteringServerSideDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: FilteringServerSideDemoRaw,
+            }
+        }
+    }
 };
 
 export default meta;

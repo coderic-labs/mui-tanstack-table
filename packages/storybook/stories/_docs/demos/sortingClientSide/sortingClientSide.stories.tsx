@@ -3,17 +3,17 @@ import { SortingClientSideDemo } from '../../../demoComponents/sortingClientSide
 import SortingClientSideDemoRaw from '../../../demoComponents/sortingClientSide?raw';
 
 const meta = {
-	title: 'Demo/Sorting Client Side',
-	component: SortingClientSideDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: SortingClientSideDemoRaw,
-			}
-		}
-	}
+    title: 'Demo/Sorting Client Side',
+    component: SortingClientSideDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: SortingClientSideDemoRaw,
+            }
+        }
+    }
 };
 
 export default meta;

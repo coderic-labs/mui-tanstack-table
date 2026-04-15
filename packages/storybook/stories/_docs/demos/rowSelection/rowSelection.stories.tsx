@@ -3,17 +3,17 @@ import { RowSelectionDemo } from '../../../demoComponents/rowSelection';
 import RowSelectionDemoRaw from '../../../demoComponents/rowSelection?raw';
 
 const meta = {
-	title: 'Demo/Row Selection',
-	component: RowSelectionDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: RowSelectionDemoRaw,
-			}
-		}
-	}
+    title: 'Demo/Row Selection',
+    component: RowSelectionDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: RowSelectionDemoRaw,
+            }
+        }
+    }
 };
 
 export default meta;

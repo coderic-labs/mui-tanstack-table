@@ -3,17 +3,17 @@ import { CustomCellRendersDemo } from '../../../demoComponents/customCellRenders
 import CustomCellRendersDemoRaw from '../../../demoComponents/customCellRenders?raw';
 
 const meta = {
-	title: 'Demo/Custom Cell Renders',
-	component: CustomCellRendersDemo,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			codePanel: true,
-			source: {
-				code: CustomCellRendersDemoRaw,
-			}
-		}
-	}
+    title: 'Demo/Custom Cell Renders',
+    component: CustomCellRendersDemo,
+    parameters: {
+        layout: 'fullscreen',
+        docs: {
+            codePanel: true,
+            source: {
+                code: CustomCellRendersDemoRaw,
+            }
+        }
+    }
 };
 
 export default meta;
