@@ -14,3 +14,4 @@ export { FooterDemo } from './footer';
 export { ColumnPinningDemo } from './columnPinning';
 export { RowDetailDemo } from './rowDetail';
 export { RowActionsDemo } from './rowActions';
+export { ConfirmModalDemo } from './confirmModal';

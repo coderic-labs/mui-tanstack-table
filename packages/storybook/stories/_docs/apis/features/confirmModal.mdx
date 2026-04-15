@@ -1,0 +1,57 @@
+import { Meta, Source } from '@storybook/blocks';
+import ConfirmDeleteDialogRaw from '../../../common/_confirmDeleteDialog?raw';
+import ConfirmModalDemoRaw from '../../../demoComponents/confirmModal?raw';
+
+<Meta title="Apis/Features/Confirm Modal" />
+
+# Confirm Modal
+
+Confirm dialogs are essential for protecting users from accidental destructive actions like deletion. The `useConfirmDialog` hook provides a flexible pattern for integrating custom confirmation dialogs into your table workflows.
+
+## How it works
+
+The `useConfirmDialog` hook manages dialog state and connects your custom dialog component to confirmation handlers:
+
+- **Custom Dialog Component**: Create a Material-UI Dialog component that accepts `ConfirmDialogProps<TData>`.
+- **Confirmation Handler**: Define what happens when the user confirms the action.
+- **Show Dialog**: Call `showConfirmDialog(data)` to open the dialog with specific data.
+- **Auto-close**: Dialog closes automatically after confirmation or user cancellation.
+
+### ConfirmDialogProps interface
+
+Your custom dialog component must accept the following props:
+
+```tsx
+type ConfirmDialogProps<TData> = {
+    open: boolean;           // Dialog open/closed state
+    data: TData;             // Data passed to showConfirmDialog()
+    onClose: () => void;     // Called when user cancels
+    onConfirm: () => void;   // Called when user confirms
+}
+```
+
+### Example: ConfirmDeleteDialog
+
+A Material-UI Dialog component that accepts `ConfirmDialogProps<string[]>` and displays a confirmation prompt before deleting multiple items. Shows the count of items to be deleted and provides Cancel and Delete buttons.
+
+<Source code={ConfirmDeleteDialogRaw} language="tsx" dark />
+
+### Generic data support
+
+The hook works with any data type. Common patterns:
+
+- **Single IDs/objects**: `useConfirmDialog<string | Developer>`
+- **Array of IDs**: `useConfirmDialog<string[]>`
+- **Complex objects**: `useConfirmDialog<{ action: string; data: Developer }>`
+
+The `TData` type flows through to your dialog component via `ConfirmDialogProps<TData>`.
+
+## Example
+
+<Source code={ConfirmModalDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Confirm Modal](?path=/story/demo-confirm-modal--confirm-modal)
+- [Demo / Row Selection](?path=/story/demo-row-selection--row-selection)
+- [Demo / Row Actions](?path=/story/demo-row-actions--row-actions)
