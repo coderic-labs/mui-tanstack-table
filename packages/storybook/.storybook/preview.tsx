@@ -26,7 +26,7 @@ const preview: Preview = {
 					'Changelog',
 					'Getting Started',
 					'Apis', [
-						'Features', ['Columns Definition', 'Filtering', 'Sorting', 'Paging', 'Row Selection'],
+						'Features', ['Columns Definition', 'Filtering', 'Sorting', 'Paging', 'Row Selection', 'Custom Cell Renders'],
 						'Components', [
 							'Table',
 							'TableLocalizationProvider',
