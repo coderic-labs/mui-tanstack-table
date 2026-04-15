@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableHeader" />
+
+# TableHeader
+
+## Usage description
+
+Use as a column header renderer for inline sorting and filtering interactions.
+
+## Shape
+
+```ts
+TableHeader<TData, TValue>(context: HeaderContext<TData, TValue> & StackProps)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableHeaderProps<TData, TValue> = HeaderContext<TData, TValue> & StackProps;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack header context (plus Stack props).
+
+## Related demos
+
+- [Demo / Filtering Client Side](?path=/story/demo-filtering-client-side--filtering-client-side)
+- [Demo / Sorting Client Side](?path=/story/demo-sorting-client-side--sorting-client-side)
+- [Demo / Sorting Server Side](?path=/story/demo-sorting-server-side--sorting-server-side)

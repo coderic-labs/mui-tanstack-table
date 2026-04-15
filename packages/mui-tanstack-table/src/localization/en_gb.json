@@ -1,9 +1,9 @@
 {
-	"tablePagination.rowPerPage": "Row per page",
-	"tablePagination.displayedRows": "{page} / {pages}",
-	"tablePagination.goToPage": "Go to",
-	"reactTable.noResults": "No records to display.",
-	"tableToolbar.results": "Results: {values}",
-	"tableToolbar.filters": "Filters:",
-	"tableToolbar.filtersReset": "Clear all"
+    "tablePagination.rowPerPage": "Row per page",
+    "tablePagination.displayedRows": "{page} / {pages}",
+    "tablePagination.goToPage": "Go to",
+    "reactTable.noResults": "No records to display.",
+    "tableToolbar.results": "Results: {values}",
+    "tableToolbar.filters": "Filters:",
+    "tableToolbar.filtersReset": "Clear all"
 }

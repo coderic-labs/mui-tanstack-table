@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableFilterOverview" />
+
+# TableFilterOverview
+
+## Usage description
+
+Display active filters and provide quick filter-reset controls.
+
+## Shape
+
+```ts
+TableFilterOverview<T>(props: TableFilterOverviewProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableFilterOverviewProps<T> = Omit<TypographyProps, 'children'> & {
+  table: Table<T>;
+  formatFilterValue?: (filter: ColumnFilter) => string;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<T>`  
+  Required TanStack table used to read and reset active column filters.
+- `formatFilterValue`
+  Type: `((filter: ColumnFilter) => string) | undefined`  
+  Optional formatter for displayed filter chip values.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-filtering-client-side--filtering-client-side)
+- [Server Side related demo](?path=/story/demo-filtering-server-side--filtering-server-side)

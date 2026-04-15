@@ -9,6 +9,8 @@
 		"react/react-in-jsx-scope": "off",
 		"react/prop-types": "off",
 		"@typescript-eslint/no-explicit-any": "off",
-		"no-alert": "off"
+		"no-alert": "off",
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "no-tabs": "error"
 	}
 }

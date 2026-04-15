@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableLocalizationProvider" />
+
+# TableLocalizationProvider
+
+## Usage description
+
+Wrap table UI to provide locale and message overrides for built-in labels.
+
+## Shape
+
+```ts
+TableLocalizationProvider(props: LocalizationProviderProps)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type LocalizationProviderProps = {
+  locale: string;
+  messages: Partial<typeof enMessages>;
+  children: React.ReactNode;
+};
+```
+
+### Own props
+
+- `locale`
+  Type: `string`  
+  Locale code passed to `react-intl`.
+- `messages`
+  Type: `Partial<typeof enMessages>`  
+  Partial translation map merged with default English messages.
+- `children`
+  Type: `React.ReactNode`  
+  Descendant tree that consumes localization context.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

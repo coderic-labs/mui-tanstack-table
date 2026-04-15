@@ -1,0 +1,36 @@
+import { Meta, Source } from '@storybook/blocks';
+import SortingClientSideDemoRaw from '../../../demoComponents/sortingClientSide?raw';
+import SortingServerSideDemoRaw from '../../../demoComponents/sortingServerSide?raw';
+
+<Meta title="Apis/Features/Sorting" />
+
+# Sorting API
+
+Sorting uses the same header UI across both modes, but the place where rows are ordered is different. Choose one approach per table.
+
+## Client side approach
+
+Use TanStack client row sorting.
+
+- Set `sortingFn` per sortable column when needed.
+- Include `getSortedRowModel()`.
+- Optional multi-sort: `enableMultiSort` and `maxMultiSortColCount`.
+
+<Source code={SortingClientSideDemoRaw} language="tsx" dark />
+
+## Server side approach
+
+Use controlled sorting state and map it to your backend query.
+
+- Enable `manualSorting: true`.
+- Pass `state.sorting` and `onSortingChange`.
+- Fetch sorted rows externally and return the current page payload.
+
+<Source code={SortingServerSideDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Sorting Client Side](?path=/story/demo-sorting-client-side--sorting-client-side)
+- [Demo / Sorting Server Side](?path=/story/demo-sorting-server-side--sorting-server-side)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)

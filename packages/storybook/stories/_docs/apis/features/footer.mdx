@@ -1,0 +1,45 @@
+import { Meta, Source } from '@storybook/blocks';
+import FooterDemoRaw from '../../../demoComponents/footer?raw';
+
+<Meta title="Apis/Features/Footer" />
+
+# Footer
+
+The table footer is rendered automatically when at least one visible column defines a `footer` renderer in its column definition.
+
+Keep footer values aligned with the matching header column, so users can scan the same column from header to body to footer without context switching.
+
+## Usage
+
+Define `footer` on the columns where you want footer content:
+
+```tsx
+columnHelper.accessor('city', {
+  header: TableHeader,
+  title: 'City',
+  footer: ({ table }) => `${table.getRowModel().rows.length} rows`,
+});
+```
+
+- Footer content can be static text or a render function.
+- Footer renderers receive table context, so you can compute summaries from current rows.
+- If no visible column has `footer`, no footer section is rendered.
+
+## Sticky footer (optional)
+
+You can keep footer cells visible while scrolling by combining a scroll container with sticky styles on footer cells:
+
+```tsx
+<TableContainer sx={{ maxHeight: 360 }}>
+  <Table table={table} stickyFooter />
+</TableContainer>
+```
+
+## Demo
+
+<Source code={FooterDemoRaw} language="tsx" dark />
+
+## Related
+
+- [Demo / Footer](?path=/story/demo-footer--footer)
+- [Table](?path=/docs/apis-components-table--docs)

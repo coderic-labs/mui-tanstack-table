@@ -1,0 +1,37 @@
+import { Meta, Source } from '@storybook/blocks';
+import RowDetailDemoRaw from '../../../demoComponents/rowDetail?raw';
+
+<Meta title="Apis/Features/Row Detail" />
+
+# Row Detail
+
+Row detail lets users expand a row and render additional content below it.
+
+## Shared approach
+
+- Enable row expansion in TanStack: `enableExpanding: true`.
+- Return `true` from `getRowCanExpand` for rows that should be expandable.
+- Render `TableRowExpansionHeader` in the expansion column header.
+- Render `TableRowExpansionCell` in the expansion column body.
+- Pass a detail renderer to `Table` via the `rowDetail` prop.
+
+## Expansion controls explained
+
+- `TableRowExpansionHeader`
+	Acts as a table-level reset control for expansion state.
+	It is disabled when no rows are expanded, and collapses all expanded rows when clicked.
+- `TableRowExpansionCell`
+	Acts as a per-row toggle control.
+	It is shown only for rows that can expand, and toggles that single row open/closed.
+
+Use both in the same display column so users get row-level toggles plus a header-level reset action.
+
+## Example
+
+<Source code={RowDetailDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Row Detail](?path=/story/demo-row-detail--row-detail)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)

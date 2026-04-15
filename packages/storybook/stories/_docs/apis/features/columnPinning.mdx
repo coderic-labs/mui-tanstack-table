@@ -1,0 +1,29 @@
+import { Meta, Source } from '@storybook/blocks';
+import ColumnPinningDemoRaw from '../../../demoComponents/columnPinning?raw';
+
+<Meta title="Apis/Features/Column Pinning" />
+
+# Column Pinning
+
+Column pinning keeps selected columns visible while scrolling horizontally.
+
+This package currently supports a simple setup: pin the first column to the left and the last column to the right.
+
+## Usage notes
+
+- Keep pinning simple: first column left, last column right.
+- More advanced pinning flows are intentionally out of scope for this package.
+- Use a scrollable table container when needed for smaller viewports.
+
+> Note: this functionality is temporary and will be replaced by a more advanced column pinning mechanism that supports pinning multiple columns.
+
+## Example
+
+<Source code={ColumnPinningDemoRaw} language="tsx" dark />
+
+## Related
+
+- [Demo / Column Pinning](?path=/story/demo-column-pinning--column-pinning)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)
+- [Table](?path=/docs/apis-components-table--docs)

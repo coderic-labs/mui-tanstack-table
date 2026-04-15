@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableRowSelectionHeader" />
+
+# TableRowSelectionHeader
+
+## Usage description
+
+Render a select-all checkbox in a display column header.
+
+## Shape
+
+```ts
+TableRowSelectionHeader<T>({ table }: HeaderContext<T, unknown>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableRowSelectionHeaderProps<T> = HeaderContext<T, unknown>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack header context.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

@@ -4,29 +4,29 @@ import { CellContext, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 export function TableRowExpansionCell<T>({ row }: CellContext<T, unknown>) {
-	if (!row.getCanExpand())
-		return null;
+    if (!row.getCanExpand())
+        return null;
 
-	return (
-		<IconButton
-			{...getDataTestAttrs(dataTests.rowExpansion.rowToggleButton)}
-			size='small'
-			onClick={row.getToggleExpandedHandler()}>
-			{row.getIsExpanded() ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
-		</IconButton>
-	);
+    return (
+        <IconButton
+            {...getDataTestAttrs(dataTests.rowExpansion.rowToggleButton)}
+            size='small'
+            onClick={row.getToggleExpandedHandler()}>
+            {row.getIsExpanded() ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
+        </IconButton>
+    );
 }
 
 export function TableRowExpansionHeader<T>({ table }: HeaderContext<T, unknown>) {
-	return (
-		<IconButton
-			{...getDataTestAttrs(dataTests.rowExpansion.resetButton)}
-			size='small'
-			disabled={!table.getIsSomeRowsExpanded()}
-			onClick={() => table.resetExpanded(false)}>
-			<KeyboardArrowUp />
-		</IconButton>
-	);
+    return (
+        <IconButton
+            {...getDataTestAttrs(dataTests.rowExpansion.resetButton)}
+            size='small'
+            disabled={!table.getIsSomeRowsExpanded()}
+            onClick={() => table.resetExpanded(false)}>
+            <KeyboardArrowUp />
+        </IconButton>
+    );
 }
 
 export const TableExpandRowButton = TableRowExpansionCell;

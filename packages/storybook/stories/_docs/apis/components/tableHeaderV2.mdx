@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableHeaderV2" />
+
+# TableHeaderV2
+
+## Usage description
+
+Use as a compact header renderer with filter popover UX.
+
+## Shape
+
+```ts
+TableHeaderV2<TData, TValue>(context: HeaderContext<TData, TValue>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableHeaderV2Props<TData, TValue> = HeaderContext<TData, TValue>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack header context.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-filtering-server-side--filtering-server-side)
+- [Server Side related demo](?path=/story/demo-sorting-server-side--sorting-server-side)

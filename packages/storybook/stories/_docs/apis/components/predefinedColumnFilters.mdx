@@ -1,0 +1,109 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/predefinedColumnFilters" />
+
+# predefinedColumnFilters
+
+## Usage description
+
+Use this object to access a set of predefined filter renderer components.
+
+## Shape
+
+```ts
+const predefinedColumnFilters = { TextFilter, BooleanFilter, DateFilter, DateRangeFilter, SelectFilter }
+```
+
+### TextFilter
+
+#### Type definition
+
+```ts
+type TextFilterProps<T> = HeaderContext<T, string | number> & {
+  textFieldProps?: TextFieldProps;
+};
+```
+
+#### Own props
+
+- `textFieldProps`
+  Type: `TextFieldProps | undefined`  
+  Optional TextField configuration merged into the internal filter input.
+
+### SelectFilter
+
+#### Type definition
+
+```ts
+type SelectFilterProps<F> = {
+  selectProps?: SelectProps;
+  options: { value: F; label: string }[];
+};
+```
+
+#### Own props
+
+- `options`
+  Type: `{ value: F; label: string }[]`  
+  Required option list used to render the select menu.
+- `selectProps`
+  Type: `SelectProps | undefined`  
+  Optional Select configuration merged into the internal select.
+
+### BooleanFilter
+
+#### Type definition
+
+```ts
+type BooleanFilterProps = {
+  labels?: {
+    undetermined: string;
+    checked: string;
+    unchecked: string;
+  };
+};
+```
+
+#### Own props
+
+- `labels`
+  Type: `{ undetermined: string; checked: string; unchecked: string } | undefined`  
+  Optional labels used for the three boolean states.
+
+### DateFilter
+
+#### Type definition
+
+```ts
+type DateFilterOwnProps<TDate extends PickerValidDate> = {
+  datePickerProps: DatePickerProps<TDate>;
+};
+```
+
+#### Own props
+
+- `datePickerProps`
+  Type: `DatePickerProps<TDate>`  
+  Required DatePicker configuration merged into the internal picker.
+
+### DateRangeFilter
+
+#### Type definition
+
+```ts
+type DateRangeFilterOwnProps<TDate extends PickerValidDate> = DateRangeFilterProps<TDate>;
+```
+
+#### Own props
+
+- `fromProps`
+  Type: `DatePickerProps<TDate> | undefined`  
+  Optional DatePicker props for the range start control.
+- `toProps`
+  Type: `DatePickerProps<TDate> | undefined`  
+  Optional DatePicker props for the range end control.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-filtering-client-side--filtering-client-side)
+- [Server Side related demo](?path=/story/demo-filtering-server-side--filtering-server-side)

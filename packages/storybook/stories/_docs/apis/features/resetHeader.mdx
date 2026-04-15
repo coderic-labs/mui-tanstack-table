@@ -1,0 +1,44 @@
+import { Meta, Source } from '@storybook/blocks';
+import ResetHeaderDemoRaw from '../../../demoComponents/resetHeader?raw';
+
+<Meta title="Apis/Features/Reset Header" />
+
+# Reset Header
+
+`TableResetHeader` is a header cell renderer that renders a close icon button. When clicked, it resets all active table state in a single action — clearing filters, sorting, pagination offset, and expanded rows.
+
+## Behaviour
+
+- Disabled when no state has been modified (no active filters, sorting, page offset, or expanded rows).
+- Enabled as soon as any of the following is active: column filters, sorting, a non-zero page index, global filter, or expanded rows.
+- On click, resets only the state that is currently active.
+
+## Placement
+
+Add a dedicated display column and set `TableResetHeader` as its `header`. Set `enableHiding: false` so it cannot be hidden via the visibility toggle:
+
+```ts
+columnHelper.display({
+    id: 'reset',
+    header: MTT.TableResetHeader,
+    enableHiding: false,
+})
+```
+
+The button is typically placed as the first or last column header so it stands out from data headers.
+
+## What it resets
+
+- **Column filters** — clears all active column filter values
+- **Sorting** — removes all active sort columns and directions
+- **Page index** — returns to the first page
+- **Global filter** — clears the global search value
+- **Expanded rows** — collapses all expanded detail rows
+
+## Example
+
+<Source code={ResetHeaderDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Reset Header](?path=/story/demo-reset-header--reset-header)

@@ -1,0 +1,24 @@
+import { Meta, Source } from '@storybook/blocks';
+import RowSelectionDemoRaw from '../../../demoComponents/rowSelection?raw';
+
+<Meta title="Apis/Features/Row Selection" />
+
+# Row Selection API
+
+Row selection uses the same TanStack table state in client-side and server-side tables. The selection column renderers and bulk-action helpers are shared, so you do not need separate integration variants.
+
+## Shared approach
+
+- Enable `enableRowSelection: true`.
+- Provide a stable `getRowId` so selected rows can be tracked reliably.
+- Render `TableRowSelectionHeader` in the selection column header.
+- Render `TableRowSelectionCell` in the selection column body.
+- Read selected ids from `table.getState().rowSelection` directly or use `TableBulkActionButton`.
+
+<Source code={RowSelectionDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Row Selection](?path=/story/demo-row-selection--row-selection)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)

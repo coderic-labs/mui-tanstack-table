@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TablePaginationV2" />
+
+# TablePaginationV2
+
+## Usage description
+
+Render MUI TablePagination integrated with TanStack state.
+
+## Shape
+
+```ts
+TablePaginationV2<TData>(props: TablePaginationV2Props<TData>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TablePaginationV2Props<TData> = Omit<TablePaginationProps, 'count' | 'rowsPerPage' | 'page' | 'onPageChange' | 'onRowsPerPageChange'> & {
+  table: Table<TData>;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<TData>`  
+  Required TanStack table used to bind MUI TablePagination state.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-paging-client-side--paging-client-side)
+- [Server Side related demo](?path=/story/demo-paging-server-side--paging-server-side)

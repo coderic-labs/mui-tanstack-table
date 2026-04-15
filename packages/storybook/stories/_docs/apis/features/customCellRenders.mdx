@@ -1,0 +1,43 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Apis/Features/Custom Cell Renders" />
+
+# Custom Cell Renders
+
+TanStack Table controls what is rendered in each cell through the `cell` property on a column definition. By default, the raw value is rendered as text. Providing a custom `cell` function lets you render any React content for that column.
+
+## How it works
+
+The `cell` property accepts a render function with the signature:
+
+```ts
+cell: (info: CellContext<TData, TValue>) => ReactNode
+```
+
+Use `info.getValue()` to get the cell value, `info.row.original` to access the full row, and `info.table` for table context.
+
+## Examples
+
+### Chips for array values
+
+Render multi-value fields as a row of `Chip` components:
+
+```tsx
+columnHelper.accessor('technologies', {
+  header: TableHeader,
+  title: 'Technologies',
+  cell: ({ getValue }) => (
+    <Stack direction="row" gap={0.5} flexWrap="wrap">
+      {getValue().map((tech) => (
+        <Chip key={tech} label={tech} size="small" />
+      ))}
+    </Stack>
+  ),
+});
+```
+
+## Related
+
+- [Demo / Custom Cell Renders](?path=/story/demo-custom-cell-renders--custom-cell-renders)
+- [TableBooleanCell](?path=/docs/apis-components-tablebooleancell--docs)
+- [Columns Definition](?path=/docs/apis-features-columns-definition--docs)

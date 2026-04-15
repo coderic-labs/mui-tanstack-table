@@ -1,0 +1,26 @@
+import { Meta, Source } from '@storybook/blocks';
+import RowActionsDemoRaw from '../../../demoComponents/rowActions?raw';
+
+<Meta title="Apis/Features/Row Actions" />
+
+# Row Actions
+
+Row actions let users trigger item-level operations (for example edit or delete) directly from each row.
+
+## Shared approach
+
+- Add a display column (commonly `id: 'actions'`) for action controls.
+- Render row-level buttons in `cell` using `IconButton` or `Button`.
+- Handle actions directly in the cell renderer (the demo uses `alert` for edit/delete).
+- Use table meta only when handlers need shared table-level wiring.
+- Keep actions row-scoped: each handler should target `row.original` data.
+
+## Example
+
+<Source code={RowActionsDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Row Actions](?path=/story/demo-row-actions--row-actions)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)

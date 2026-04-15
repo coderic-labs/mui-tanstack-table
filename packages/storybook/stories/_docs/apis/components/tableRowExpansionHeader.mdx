@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableRowExpansionHeader" />
+
+# TableRowExpansionHeader
+
+## Usage description
+
+Render a header-level control to collapse expanded rows.
+
+## Shape
+
+```ts
+TableRowExpansionHeader<T>({ table }: HeaderContext<T, unknown>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableRowExpansionHeaderProps<T> = HeaderContext<T, unknown>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack header context.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

@@ -1,0 +1,63 @@
+import { Meta, Source } from '@storybook/blocks';
+import ColumnVisibilityDemoRaw from '../../../demoComponents/columnVisibility?raw';
+
+<Meta title="Apis/Features/Column Visibility" />
+
+# Column Visibility
+
+`TableColumnVisibilityToggle` is a toolbar icon button that opens a dropdown menu for showing and hiding individual columns at runtime.
+
+## Behaviour
+
+- Renders a `ViewColumn` icon button in the toolbar.
+- Opens a menu listing all hideable columns by their `title` or `id`.
+- Includes an **All columns** entry that toggles all columns at once, with indeterminate state when some but not all are visible.
+- Columns with `enableHiding: false` are excluded from the menu entirely.
+- Returns `null` when no hideable columns exist.
+
+## Placement
+
+Place it in `TableToolbarActions` alongside other toolbar controls:
+
+```tsx
+<MTT.TableToolbar>
+    <MTT.TableToolbarInfo>
+        <MTT.TableResultsLabel table={table} />
+    </MTT.TableToolbarInfo>
+    <MTT.TableToolbarActions>
+        <MTT.TableColumnVisibilityToggle table={table} />
+    </MTT.TableToolbarActions>
+</MTT.TableToolbar>
+```
+
+## Preventing a column from being hidden
+
+Set `enableHiding: false` in the column definition. The column will not appear in the toggle menu:
+
+```ts
+columnHelper.accessor('id', {
+    header: MTT.TableHeader,
+    enableHiding: false,
+})
+```
+
+## Column labels in the menu
+
+The menu uses the column's `title` extension field as the label. If `title` is not set, it falls back to the column `id`. Set `title` on all hideable columns for readable menu labels:
+
+```ts
+columnHelper.accessor('employmentType', {
+    header: MTT.TableHeader,
+    title: 'Employment Type',
+})
+```
+
+## Example
+
+<Source code={ColumnVisibilityDemoRaw} language="tsx" dark />
+
+## Related demos
+
+- [Demo / Column Visibility](?path=/story/demo-column-visibility--column-visibility)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)

@@ -4,17 +4,17 @@ import { CellContext } from '@tanstack/react-table';
 import React, {Fragment} from 'react';
 
 export type TableBooleanCellProps<TData> = CellContext<TData, boolean> & {
-	svgIconProps?: SvgIconProps;
-	IconTrue?: React.ComponentType<SvgIconProps>;
-	IconFalse?: React.ComponentType<SvgIconProps>;
+    svgIconProps?: SvgIconProps;
+    IconTrue?: React.ComponentType<SvgIconProps>;
+    IconFalse?: React.ComponentType<SvgIconProps>;
 };
 
 export function TableBooleanCell<TData>(props: TableBooleanCellProps<TData>) {
-	const {
-		svgIconProps,
-		IconTrue = (iconProps) => <Check {...iconProps}/>,
-		IconFalse = Fragment,
-		...cellContext
-	} = props;
-	return cellContext.getValue() ? <IconTrue {...svgIconProps} /> : <IconFalse {...svgIconProps} />;
+    const {
+        svgIconProps,
+        IconTrue = (iconProps) => <Check {...iconProps}/>,
+        IconFalse = Fragment,
+        ...cellContext
+    } = props;
+    return cellContext.getValue() ? <IconTrue {...svgIconProps} /> : <IconFalse {...svgIconProps} />;
 }

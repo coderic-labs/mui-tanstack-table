@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableBulkActionButton" />
+
+# TableBulkActionButton
+
+## Usage description
+
+Trigger actions against selected rows and receive selected ids in callback.
+
+## Shape
+
+```ts
+TableBulkActionButton<T>(props: TableBulkActionButtonProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableBulkActionButtonProps<T> = Omit<ButtonProps, 'onClick'> & {
+  table: Table<T>;
+  onClick: (selectedRowIds: string[], e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<T>`  
+  Required TanStack table used to resolve selected row ids.
+- `onClick`
+  Type: `(selectedRowIds: string[], e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void`  
+  Callback invoked with selected row ids and click event.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

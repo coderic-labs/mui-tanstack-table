@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/InfoTooltip" />
+
+# InfoTooltip
+
+## Usage description
+
+Render contextual help text with a standard info icon anchor.
+
+## Shape
+
+```ts
+InfoTooltip(props: InfoTooltipProps)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type InfoTooltipProps = Omit<TooltipProps, 'children'> & {
+  AnchorProps?: SvgIconProps;
+};
+```
+
+### Own props
+
+- `AnchorProps`
+  Type: `SvgIconProps | undefined`  
+  Optional props forwarded to the info icon anchor.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)
