@@ -41,7 +41,7 @@ pagination: { pageIndex: 0, pageSize: 10 }
 });
 
 return (
-<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box' }}>
+<Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
 <Stack component={Paper} overflow='auto'>
 <TableContainer>
 <MTT.Table table={table} />
