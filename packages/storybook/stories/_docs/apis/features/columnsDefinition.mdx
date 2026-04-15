@@ -1,0 +1,92 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Apis/Features/Columns Definition" />
+
+# Columns Definition API
+
+Column definitions start with TanStack Table. This library does not replace that model; it extends it with a few render-focused fields that are consumed by the provided MUI header components.
+
+## Start from TanStack Table
+
+Define columns using the standard TanStack Table column definition APIs.
+
+- Use the official TanStack guide for the base concepts: [Column Defs](https://tanstack.com/table/latest/docs/guide/column-defs)
+- Keep table state and behavior in TanStack.
+- Use this library only for render-oriented additions.
+
+## Library extension
+
+The library extends TanStack column definitions in [packages/mui-tanstack-table/src/table.extension.ts](packages/mui-tanstack-table/src/table.extension.ts).
+
+This extension adds three optional properties to `ColumnDefBase`:
+
+- `title`
+- `tooltip`
+- `filter`
+
+## Additional properties
+
+### `title`
+
+```ts
+title?: string;
+```
+
+Use `title` for the human-readable column label.
+
+- `TableHeader` and `TableHeaderV2` render `title` in the header UI.
+- If `title` is omitted, the header falls back to `column.id`.
+- Set `title` when the column id is technical, abbreviated, or not suitable for users.
+
+### `tooltip`
+
+```ts
+tooltip?: ColumnDefTemplate<HeaderContext<TData, TValue>>;
+```
+
+Use `tooltip` for additional explanatory content shown next to the header label.
+
+- `TableHeader` and `TableHeaderV2` render it through `InfoTooltip`.
+- Set `tooltip` when a label needs extra explanation, units, or business context.
+- Keep the content short and specific to the column.
+
+### `filter`
+
+```ts
+filter?: ColumnDefTemplate<HeaderContext<TData, TValue>>;
+```
+
+Use `filter` to provide the filter UI renderer for that column.
+
+- `TableHeader` renders the filter control inline under the title.
+- `TableHeaderV2` renders the filter control inside its popover.
+- Set `filter` only for columns that should expose filter input in the header.
+- The value should be a render function or component compatible with `HeaderContext`.
+- The library ships predefined filter renderers (`TextFilter`, `SelectFilter`, `BooleanFilter`, `DateFilter`, `DateRangeFilter`) via [predefinedColumnFilters](?path=/docs/apis-components-predefinedcolumnfilters--docs). See the [Filtering](?path=/docs/apis-features-filtering--docs) feature page for usage details.
+
+## Header components
+
+These predefined header renderers understand the extended column definition fields:
+
+- [TableHeader](?path=/docs/apis-components-tableheader--docs)
+- [TableHeaderV2](?path=/docs/apis-components-tableheaderv2--docs)
+
+Typical usage looks like this:
+
+```ts
+columnHelper.accessor('employmentType', {
+  header: TableHeader,
+  title: 'Employment type',
+  tooltip: () => 'Primary contract type',
+  filter: (context) => <SelectFilter {...context} options={employmentOptions} />
+});
+```
+
+## Practical guidance
+
+- Set `header` to `TableHeader` when you want inline filter UI in the header.
+- Set `header` to `TableHeaderV2` when you want a more compact header with filter UI in a popover.
+- Set `title` whenever the raw accessor key is not a user-facing label.
+- Set `tooltip` only when the header needs extra explanation.
+- Set `filter` only when the column is actually filterable and you want to expose filter input in the header.
+- Keep custom behavior in TanStack column options such as `sortingFn`, `filterFn`, and accessor logic; keep these extension fields focused on rendering.
