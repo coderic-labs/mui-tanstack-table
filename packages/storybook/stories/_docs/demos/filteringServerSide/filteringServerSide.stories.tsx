@@ -8,6 +8,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		docs: {
+			codePanel: true,
 			source: {
 				code: FilteringServerSideDemoRaw,
 			}
@@ -19,4 +20,4 @@ export default meta;
 
 type Story = StoryObj<typeof FilteringServerSideDemo>;
 
-export const Demo: Story = {};
+export const FilteringServerSide: Story = {};

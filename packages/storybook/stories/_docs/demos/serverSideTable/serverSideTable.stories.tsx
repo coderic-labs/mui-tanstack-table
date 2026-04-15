@@ -8,6 +8,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		docs: {
+			codePanel: true,
 			source: {
 				code: ServerSideTableDemoRaw,
 			}
@@ -19,7 +20,7 @@ export default meta;
 
 type Story = StoryObj<typeof ServerSideTableDemo>;
 
-export const Demo: Story = {
+export const ServerSideTable: Story = {
 	args: {
 		enableMultiSort: true,
 		maxMultiSortColCount: 3,
