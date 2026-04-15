@@ -1,0 +1,8 @@
+export { ClientSideTableDemo } from './clientSide';
+export { ServerSideTableDemo } from './serverSide';
+export { FilteringClientSideDemo } from './filteringClientSide';
+export { FilteringServerSideDemo } from './filteringServerSide';
+export { SortingClientSideDemo } from './sortingClientSide';
+export { SortingServerSideDemo } from './sortingServerSide';
+export { PagingClientSideDemo } from './pagingClientSide';
+export { PagingServerSideDemo } from './pagingServerSide';

@@ -6,7 +6,7 @@ export default defineConfig({
 	plugins: [react()],
 	resolve: {
 		alias: {
-			"@demo-components": resolve(__dirname, "../storybook/stories/demoComponents/table"),
+			"@demo-components": resolve(__dirname, "../storybook/stories/demoComponents"),
 			"@coderic-labs/mui-tanstack-table": resolve(__dirname, "../mui-tanstack-table/src"),
 		},
 	},

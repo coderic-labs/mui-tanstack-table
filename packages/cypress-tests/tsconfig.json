@@ -10,7 +10,7 @@
 		],
 		"paths": {
 			"@demo-components": [
-				"../storybook/stories/demoComponents/table"
+				"../storybook/stories/demoComponents"
 			],
 			"@coderic-labs/mui-tanstack-table": [
 				"../mui-tanstack-table/src"
