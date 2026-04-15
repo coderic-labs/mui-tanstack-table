@@ -3,7 +3,7 @@ import { ServerSideTableDemo } from './demoComponents/table/serverSide';
 import ServerSideTableDemoRaw from './demoComponents/table/serverSide?raw';
 
 const meta = {
-	title: 'Api/Server Side Table',
+	title: 'Demo/Server Side Table',
 	component: ServerSideTableDemo,
 	parameters: {
 		layout: 'fullscreen',

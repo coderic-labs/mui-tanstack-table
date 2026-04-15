@@ -3,7 +3,7 @@ import { ClientSideTableDemo } from './demoComponents/table/clientSide';
 import ClientSideTableDemoRaw from './demoComponents/table/clientSide?raw';
 
 const meta = {
-	title: 'Api/Client Side Table',
+	title: 'Demo/Client Side Table',
 	component: ClientSideTableDemo,
 	parameters: {
 		layout: 'fullscreen',
