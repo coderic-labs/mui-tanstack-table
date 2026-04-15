@@ -1,15 +1,15 @@
 import type { StoryObj } from '@storybook/react';
-import { ClientSideTableDemo } from './demoComponents/table/clientSide';
-import ClientSideTableDemoRaw from './demoComponents/table/clientSide?raw';
+import ServerSideTableDemoRaw from '../../../demoComponents/serverSide?raw';
+import { ServerSideTableDemo } from '../../../demoComponents/serverSide';
 
 const meta = {
-	title: 'Demo/Client Side Table',
-	component: ClientSideTableDemo,
+	title: 'Demo/Server Side Table',
+	component: ServerSideTableDemo,
 	parameters: {
 		layout: 'fullscreen',
 		docs: {
 			source: {
-				code: ClientSideTableDemoRaw,
+				code: ServerSideTableDemoRaw,
 			}
 		}
 	}
@@ -17,7 +17,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof ClientSideTableDemo>;
+type Story = StoryObj<typeof ServerSideTableDemo>;
 
 export const Demo: Story = {
 	args: {

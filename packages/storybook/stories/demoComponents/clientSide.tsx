@@ -1,12 +1,14 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
 import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
-import type { ColumnFiltersState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
-import { createColumnHelper, getCoreRowModel, getExpandedRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
-import { useCallback, useState } from 'react';
-import { ConfirmDeleteDialog, employmentOptions, RowDetail, techOptions, verifiedLabels } from './_common';
-import { Developer, useItems } from './_data';
-import { DemoTableProps } from './_types';
+import type { FilterFnOption } from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { Dayjs } from 'dayjs';
+import { Developer, useItems } from '../common/_data';
+import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
+import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
+import { RowDetail } from '../common/_rowDetail';
+import { DemoTableProps } from '../common/_types';
 
 type TableMeta = {
 	showConfirmDialog: (ids: string[]) => void;
@@ -15,6 +17,14 @@ type TableMeta = {
 const { BooleanFilter, DateRangeFilter, SelectFilter, TextFilter } = MTT.predefinedColumnFilters;
 
 const columnHelper = createColumnHelper<Developer>();
+
+const filterHireDate: FilterFnOption<Developer> = (row, id, filter) => {
+	const hireDate = row.getValue(id) as Dayjs;
+	const isInRange =
+		(!filter?.from || hireDate.isAfter(filter.from)) &&
+		(!filter?.to || hireDate.isBefore(filter.to));
+	return isInRange;
+};
 
 const columns = [
 	columnHelper.display({
@@ -32,57 +42,69 @@ const columns = [
 			</Stack>
 	}),
 	columnHelper.accessor('id', {
-		// render same content in header and footer
 		header: MTT.TableHeader,
 		footer: MTT.TableHeader
 	}),
 	columnHelper.accessor('name', {
 		header: MTT.TableHeader,
-		filter: TextFilter
+		filter: TextFilter,
+		filterFn: 'includesString',
+		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('hireDate', {
-		title: 'hire date',
 		header: MTT.TableHeader,
+		title: 'Hire date',
+		cell: ({ getValue }) => getValue().toDate().toLocaleDateString(),
 		filter: DateRangeFilter,
-		cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
+		filterFn: filterHireDate,
+		sortingFn: 'datetime'
 	}),
 	columnHelper.accessor('employmentType', {
-		title: 'employment type',
 		header: MTT.TableHeader,
-		filter: (context) => <SelectFilter {...context} options={employmentOptions} />
+		title: 'Employment type',
+		filter: (context) => <SelectFilter {...context} options={employmentOptions} />,
+		filterFn: 'equals',
+		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('technologies', {
 		header: MTT.TableHeader,
 		filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
 		cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
-		tooltip: 'Last updated 1.1.2025'
+		tooltip: 'Last updated 1.1.2025',
+		filterFn: 'arrIncludesAll',
+		sortingFn: 'auto'
 	}),
 	columnHelper.accessor('projects', {
 		header: MTT.TableHeader,
 		filter: TextFilter,
-		cell: ({ getValue }) => <Chip size='small' label={getValue()} />
+		cell: ({ getValue }) => <Chip size='small' label={getValue()} />,
+		filterFn: 'weakEquals',
+		sortingFn: 'alphanumeric'
 	}),
 	columnHelper.accessor('verified', {
 		header: MTT.TableHeader,
 		filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
-		cell: MTT.TableBooleanCell
+		cell: MTT.TableBooleanCell,
+		filterFn: 'equals',
+		sortingFn: 'auto'
 	}),
 	columnHelper.display({
 		id: 'actions',
 		header: MTT.TableHeader,
 		enableHiding: false,
-		cell: (cellContext) => {
-			const { row, table } = cellContext;
+		cell: ({ row, table }) => {
 			return (
 				<Stack direction='row' gap={1}>
 					<IconButton
-						color='primary'
-						onClick={() => alert('edit: ' + JSON.stringify(row.original))}>
+						color="secondary"
+						onClick={() => alert('edit: ' + JSON.stringify(row.original))}
+					>
 						<Edit />
 					</IconButton>
 					<IconButton
-						color='primary'
-						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original.id])}>
+						color="secondary"
+						onClick={() => MTT.getTableMeta<TableMeta>(table).showConfirmDialog([row.original.id])}
+					>
 						<Delete />
 					</IconButton>
 				</Stack>
@@ -91,20 +113,12 @@ const columns = [
 	})
 ];
 
-export const ServerSideTableDemo = (props: DemoTableProps) => {
+export const ClientSideTableDemo = (props: DemoTableProps) => {
 	const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
 
-	// table state
-	const {
-		pagination, sorting, columnFilters,
-		onColumnFiltersChange, onSortingChange, onPaginationChange
-	} = useTableState();
+	const { data, deleteItems } = useItems();
 
-	// data fetching
-	const { data, totalCount, deleteItems } = useItems({ columnFilters, sorting, pagination });
-
-	// confirm delete dialog
-	const { showConfirmDialog, confirmDialog } = MTT.useConfirmDialog({
+	const { confirmDialog, showConfirmDialog } = MTT.useConfirmDialog({
 		Component: ConfirmDeleteDialog,
 		onConfirm: (items) => { deleteItems(items); table.resetRowSelection(); }
 	});
@@ -112,27 +126,20 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 	const table = useReactTable<Developer>({
 		columns,
 		data,
-		rowCount: totalCount,
-		manualPagination: true,
-		manualFiltering: true,
-		manualSorting: true,
 		enableRowSelection: true,
-		enableColumnPinning: true,
 		enableMultiSort,
 		maxMultiSortColCount,
+		enableColumnPinning: true,
 		enableExpanding: true,
 		getRowCanExpand: () => true,
 		getRowId: (row) => row.id.toString(),
-		onPaginationChange,
-		onColumnFiltersChange,
-		onSortingChange,
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
 		meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
 		state: {
-			pagination,
-			columnFilters,
-			sorting,
 			columnPinning: { left: ['select'], right: ['actions'] }
 		}
 	});
@@ -150,7 +157,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 				</MTT.TableToolbarInfo>
 				<MTT.TableToolbarActions>
 					<Button
-						color='primary'
+						color='secondary'
 						variant='contained'
 						onClick={() => alert('Add something')}>
 						Add
@@ -163,7 +170,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 						Remove selected
 					</MTT.TableBulkActionButton>
 					<MTT.TableColumnVisibilityToggle
-						color='primary'
+						color='secondary'
 						table={table} />
 				</MTT.TableToolbarActions>
 			</MTT.TableToolbar>
@@ -182,38 +189,3 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 		</Stack>
 	);
 };
-
-/**
- * Provides state and update handlers for server side tanstack table demo.
- * Your implementation may vary depending on how you fetch data and handle state in your app.
- * @returns table state and update handlers
- */
-const useTableState = () => {
-	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
-	const [sorting, setSorting] = useState<SortingState>([]);
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-
-	// table pagination update handler
-	const onPaginationChange: OnChangeFn<PaginationState> = useCallback(updater => setPagination(updater), [setPagination]);
-
-	// table sorting update handler, also resets pagination on sorting change
-	const onSortingChange: OnChangeFn<SortingState> = useCallback(updater => {
-		setSorting(updater);
-		setPagination(prev => ({ ...prev, pageIndex: 0 }));
-	}, [setSorting, setPagination]);
-
-	// table column filters update handler, also resets pagination on filter change
-	const onColumnFiltersChange: OnChangeFn<ColumnFiltersState> = useCallback(updater => {
-		setColumnFilters(updater);
-		setPagination(prev => ({ ...prev, pageIndex: 0 }));
-	}, [setColumnFilters, setPagination]);
-
-	// table row selection update handler
-	const onRowSelectionChange: OnChangeFn<RowSelectionState> = useCallback(updater => setRowSelection(updater), [setRowSelection]);
-
-	return {
-		pagination, sorting, columnFilters, rowSelection,
-		onPaginationChange, onSortingChange, onColumnFiltersChange, onRowSelectionChange
-	};
-}
