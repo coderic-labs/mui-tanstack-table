@@ -13,3 +13,4 @@ export { StickyHeaderDemo } from './stickyHeader';
 export { FooterDemo } from './footer';
 export { ColumnPinningDemo } from './columnPinning';
 export { RowDetailDemo } from './rowDetail';
+export { RowActionsDemo } from './rowActions';
