@@ -176,6 +176,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
 						table={table}
 						rowDetail={RowDetail}
 						getCellStyle={getCellStyle}
+						stickyHeader
+						stickyFooter
 						{...baseTableProps}
 					/>
 				</TableContainer>

@@ -23,6 +23,7 @@ type TableProps<T> = MuiTableProps & {
   table: TanstackTable<T>;
   rowDetail?: RowDetailComponent<T>;
   getCellStyle?: GetCellStyle<T>;
+  stickyFooter?: boolean;
 };
 ```
 
@@ -37,6 +38,9 @@ type TableProps<T> = MuiTableProps & {
 - `getCellStyle`
   Type: `GetCellStyle<T> | undefined`  
   Optional callback for per-cell style customization.
+- `stickyFooter`
+  Type: `boolean | undefined`  
+  Optional flag to keep footer cells sticky at the bottom when the table is rendered in a scrollable container.
 
 ## Related demos
 

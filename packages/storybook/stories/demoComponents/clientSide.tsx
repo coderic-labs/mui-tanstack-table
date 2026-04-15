@@ -83,6 +83,7 @@ const columns = [
 	}),
 	columnHelper.accessor('verified', {
 		header: MTT.TableHeader,
+		footer: ctx => 'verified:' + ctx.table.getFilteredRowModel().rows.filter(r => r.getValue('verified')).length,
 		filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
 		cell: MTT.TableBooleanCell,
 		filterFn: 'equals',
@@ -180,6 +181,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
 						table={table}
 						rowDetail={RowDetail}
 						getCellStyle={getCellStyle}
+						stickyHeader
+						stickyFooter
 						{...baseTableProps}
 					/>
 				</TableContainer>

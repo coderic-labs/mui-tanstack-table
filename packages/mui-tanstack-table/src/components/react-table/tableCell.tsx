@@ -1,7 +1,7 @@
 import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { getPinnedColumnStyle } from './styleUtils';
+import { getCellStyle as getBaseCellStyle } from './styleUtils';
 import type { GetCellStyle } from './types';
 
 export type TableCellProps<T> = {
@@ -12,7 +12,7 @@ export type TableCellProps<T> = {
 
 export const TableCell = <T,>(props: TableCellProps<T>) => {
 	const { cell, row, getCellStyle } = props;
-	const baseStyle = getPinnedColumnStyle({ column: cell.column, even: row.index % 2 === 0 });
+	const baseStyle = getBaseCellStyle({ column: cell.column, area: 'body', even: row.index % 2 === 0 });
 	const tableCellStyle = getCellStyle?.(cell);
 
 	return (

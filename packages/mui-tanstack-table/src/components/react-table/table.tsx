@@ -3,17 +3,18 @@ import { flexRender, Table as TanstackTable } from '@tanstack/react-table';
 import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { TableDetailRow, TableEmptyRow, TableRow } from './tableRow';
-import { getPinnedColumnStyle, getStickyHeaderStyle } from './styleUtils';
+import { getCellStyle as getBaseCellStyle } from './styleUtils';
 import type { GetCellStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
 	table: TanstackTable<T>;
 	rowDetail?: RowDetailComponent<T>;
 	getCellStyle?: GetCellStyle<T>;
+	stickyFooter?: boolean;
 };
 
 export function Table<T>(props: TableProps<T>) {
-	const { table, rowDetail, getCellStyle, ...tableProps } = props;
+	const { table, rowDetail, getCellStyle, stickyFooter, ...tableProps } = props;
 	const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
 
 	return (
@@ -26,10 +27,11 @@ export function Table<T>(props: TableProps<T>) {
 								key={header.id}
 								colSpan={header.colSpan}
 								{...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
-								sx={{
-									...getPinnedColumnStyle({ column: header.column, isHeading: true }),
-									...getStickyHeaderStyle(tableProps.stickyHeader)
-								}}>
+								sx={getBaseCellStyle({
+									column: header.column,
+									area: 'header',
+									sticky: tableProps.stickyHeader
+								})}>
 								{!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
 							</TableCell>
 						)}
@@ -55,7 +57,11 @@ export function Table<T>(props: TableProps<T>) {
 									key={header.id}
 									colSpan={header.colSpan}
 									{...getDataTestAttrs(dataTests.table.footerCell, header.column.id)}
-									sx={getPinnedColumnStyle({ column: header.column })}>
+									sx={getBaseCellStyle({
+										column: header.column,
+										area: 'footer',
+										sticky: stickyFooter
+									})}>
 									{flexRender(header.column.columnDef.footer, header.getContext())}
 								</TableCell>
 							)}
