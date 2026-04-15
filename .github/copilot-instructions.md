@@ -30,7 +30,7 @@
 ## Storybook and Demos
 - Reflect behavior and API changes in storybook demos when relevant.
 - Keep client-side and server-side demo arguments aligned unless a difference is intentional.
-- When adding or renaming any MDX docs page, update the `storySort` order in `packages/storybook/.storybook/preview.tsx` to position it in logical order relative to existing entries. Read the current `storySort` first and insert the new item where it fits logically in the hierarchy.
+- When adding or renaming any MDX docs page, update the `storySort` order in `packages/storybook/.storybook/preview.tsx` to keep docs ordered by relevancy to users (core concepts first, advanced/optional topics later). Read the current `storySort` first and insert the new item where it best fits this relevancy-based hierarchy.
 
 ## Monorepo Boundaries
 - In Cypress tests, follow path aliases configured in packages/cypress-tests/vite.config.ts and packages/cypress-tests/tsconfig.json.

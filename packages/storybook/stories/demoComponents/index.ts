@@ -11,3 +11,4 @@ export { CustomCellRendersDemo } from './customCellRenders';
 export { RowHighlightDemo } from './rowHighlight';
 export { StickyHeaderDemo } from './stickyHeader';
 export { FooterDemo } from './footer';
+export { ColumnPinningDemo } from './columnPinning';
