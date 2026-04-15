@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableRowExpansionCell" />
+
+# TableRowExpansionCell
+
+## Usage description
+
+Render a row-level expand/collapse control.
+
+## Shape
+
+```ts
+TableRowExpansionCell<T>({ row }: CellContext<T, unknown>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableRowExpansionCellProps<T> = CellContext<T, unknown>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack cell context.
+
+## Related demos
+
+- [Client Side related demo](../../demos/clientSideTable/clientSideTable.mdx)
+- [Server Side related demo](../../demos/serverSideTable/serverSideTable.mdx)

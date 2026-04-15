@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/Table" />
+
+# Table
+
+## Usage description
+
+Render a fully configured TanStack table instance using MUI table primitives.
+
+## Shape
+
+```ts
+Table<T>(props: TableProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableProps<T> = MuiTableProps & {
+  table: TanstackTable<T>;
+  rowDetail?: RowDetailComponent<T>;
+  getCellStyle?: GetCellStyle<T>;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `TanstackTable<T>`  
+  Required TanStack table instance used to render headers, rows, and optional footer.
+- `rowDetail`
+  Type: `RowDetailComponent<T> | undefined`  
+  Optional renderer for expanded row detail content.
+- `getCellStyle`
+  Type: `GetCellStyle<T> | undefined`  
+  Optional callback for per-cell style customization.
+
+## Related demos
+
+- [Client Side related demo](../../demos/clientSideTable/clientSideTable.mdx)
+- [Server Side related demo](../../demos/serverSideTable/serverSideTable.mdx)

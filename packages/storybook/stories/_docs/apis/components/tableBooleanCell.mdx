@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableBooleanCell" />
+
+# TableBooleanCell
+
+## Usage description
+
+Render boolean values consistently in table cells.
+
+## Shape
+
+```ts
+TableBooleanCell<TData>(props: TableBooleanCellProps<TData>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableBooleanCellProps<TData> = CellContext<TData, boolean> & {
+  svgIconProps?: SvgIconProps;
+  IconTrue?: React.ComponentType<SvgIconProps>;
+  IconFalse?: React.ComponentType<SvgIconProps>;
+};
+```
+
+### Own props
+
+- `svgIconProps`
+  Type: `SvgIconProps | undefined`  
+  Optional props passed to the rendered true/false icon.
+- `IconTrue`
+  Type: `React.ComponentType<SvgIconProps> | undefined`  
+  Optional icon component used when value is `true`.
+- `IconFalse`
+  Type: `React.ComponentType<SvgIconProps> | undefined`  
+  Optional icon component used when value is `false`.
+
+## Related demos
+
+- [Client Side related demo](../../demos/filteringClientSide/filteringClientSide.mdx)
+- [Server Side related demo](../../demos/filteringServerSide/filteringServerSide.mdx)

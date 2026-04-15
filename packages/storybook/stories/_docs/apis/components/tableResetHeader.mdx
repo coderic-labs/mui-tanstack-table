@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableResetHeader" />
+
+# TableResetHeader
+
+## Usage description
+
+Render a utility header button that resets active table state.
+
+## Shape
+
+```ts
+TableResetHeader<T>({ table }: HeaderContext<T, unknown>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableResetHeaderProps<T> = HeaderContext<T, unknown>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack header context.
+
+## Related demos
+
+- [Client Side related demo](../../demos/filteringClientSide/filteringClientSide.mdx)
+- [Server Side related demo](../../demos/sortingClientSide/sortingClientSide.mdx)

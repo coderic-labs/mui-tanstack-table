@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableColumnVisibilityToggle" />
+
+# TableColumnVisibilityToggle
+
+## Usage description
+
+Open a menu to show or hide table columns.
+
+## Shape
+
+```ts
+TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggleProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableColumnVisibilityToggleProps<T> = IconButtonProps & {
+  table: Table<T>;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<T>`  
+  Required TanStack table used to read and toggle column visibility state.
+
+## Related demos
+
+- [Client Side related demo](../../demos/clientSideTable/clientSideTable.mdx)
+- [Server Side related demo](../../demos/serverSideTable/serverSideTable.mdx)

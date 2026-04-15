@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TablePagination" />
+
+# TablePagination
+
+## Usage description
+
+Render stack-based pagination controls bound to TanStack pagination state.
+
+## Shape
+
+```ts
+TablePagination<TData>(props: TablePaginationProps<TData>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TablePaginationProps<TData> = StackProps & {
+  table: Table<TData>;
+  options?: number[];
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<TData>`  
+  Required TanStack table with pagination state and handlers.
+- `options`
+  Type: `number[] | undefined`  
+  Optional rows-per-page options.
+
+## Related demos
+
+- [Client Side related demo](../../demos/pagingClientSide/pagingClientSide.mdx)
+- [Server Side related demo](../../demos/pagingServerSide/pagingServerSide.mdx)

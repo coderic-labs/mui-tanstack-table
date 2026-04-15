@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableResultsLabel" />
+
+# TableResultsLabel
+
+## Usage description
+
+Show localized results summary based on table state.
+
+## Shape
+
+```ts
+TableResultsLabel<T>(props: TableResultsLabelProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableResultsLabelProps<T> = Omit<TypographyProps, 'children'> & {
+  table: Table<T>;
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<T>`  
+  Required TanStack table used to compute displayed and selected row counts.
+
+## Related demos
+
+- [Client Side related demo](../../demos/clientSideTable/clientSideTable.mdx)
+- [Server Side related demo](../../demos/serverSideTable/serverSideTable.mdx)

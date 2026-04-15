@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableRowSelectionCell" />
+
+# TableRowSelectionCell
+
+## Usage description
+
+Render row-level selection checkbox in a display column cell.
+
+## Shape
+
+```ts
+TableRowSelectionCell<T>({ row }: CellContext<T, unknown>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableRowSelectionCellProps<T> = CellContext<T, unknown>;
+```
+
+### Own props
+
+No custom props are defined by this library; this component consumes TanStack cell context.
+
+## Related demos
+
+- [Client Side related demo](../../demos/clientSideTable/clientSideTable.mdx)
+- [Server Side related demo](../../demos/serverSideTable/serverSideTable.mdx)
