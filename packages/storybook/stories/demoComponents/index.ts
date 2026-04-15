@@ -6,3 +6,4 @@ export { SortingClientSideDemo } from './sortingClientSide';
 export { SortingServerSideDemo } from './sortingServerSide';
 export { PagingClientSideDemo } from './pagingClientSide';
 export { PagingServerSideDemo } from './pagingServerSide';
+export { RowSelectionDemo } from './rowSelection';
