@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Features/Localization" />
+
+# Localization
+
+By default all UI strings use English (en_GB) built-in messages. Wrap your table in `TableLocalizationProvider` to supply a different locale or override individual messages.
+
+## Without a provider
+
+All tables work out of the box with the built-in English strings. No setup needed unless you want to translate or override them.
+
+## With a provider
+
+Supply your own locale and translated messages:
+
+```tsx
+import { TableLocalizationProvider } from '@coderic-labs/mui-tanstack-table';
+
+<TableLocalizationProvider locale="de" messages={myDeMessages}>
+    <YourTable />
+</TableLocalizationProvider>
+```
+
+Pass your own translated messages object matching the shape of the built-in English messages.
+
+## Overriding individual messages
+
+You only need to supply the keys you want to override — the rest fall back to the English defaults:
+
+```tsx
+<TableLocalizationProvider locale="en" messages={{ 'reactTable.noResults': 'Nothing here.' }}>
+    <YourTable />
+</TableLocalizationProvider>
+```

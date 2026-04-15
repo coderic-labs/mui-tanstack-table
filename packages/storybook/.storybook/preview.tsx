@@ -26,7 +26,7 @@ const preview: Preview = {
                     'Changelog',
                     'Getting Started',
                     'Apis', [
-                        'Features', ['Columns Definition', 'Filtering', 'Sorting', 'Paging', 'Sticky Header', 'Footer', 'Row Detail', 'Row Actions', 'Confirm Modal', 'Row Selection', 'Row Highlighting', 'Custom Cell Renders', 'Column Visibility', 'Reset Header', 'Column Pinning'],
+                        'Features', ['Columns Definition', 'Filtering', 'Sorting', 'Paging', 'Sticky Header', 'Footer', 'Row Detail', 'Row Actions', 'Confirm Modal', 'Row Selection', 'Row Highlighting', 'Custom Cell Renders', 'Column Visibility', 'Reset Header', 'Column Pinning', 'Localization'],
                         'Components', [
                             'Table',
                             'TableLocalizationProvider',
