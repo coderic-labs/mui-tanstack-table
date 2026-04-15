@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { RowSelectionDemo } from '../../../demoComponents/rowSelection';
-import RowSelectionDemoRaw from '../../../demoComponents/rowSelection?raw';
+import { RowSelectionDemo } from '../../demoComponents/rowSelection';
+import RowSelectionDemoRaw from '../../demoComponents/rowSelection?raw';
 
 const meta = {
     title: 'Demo/Row Selection',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof RowSelectionDemo>;
 
 export const RowSelection: Story = {};
+

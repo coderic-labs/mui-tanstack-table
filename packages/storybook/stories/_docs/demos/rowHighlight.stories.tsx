@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { RowHighlightDemo } from '../../../demoComponents/rowHighlight';
-import RowHighlightDemoRaw from '../../../demoComponents/rowHighlight?raw';
+import { RowHighlightDemo } from '../../demoComponents/rowHighlight';
+import RowHighlightDemoRaw from '../../demoComponents/rowHighlight?raw';
 
 const meta = {
     title: 'Demo/Row Highlight',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof RowHighlightDemo>;
 
 export const RowHighlight: Story = {};
+

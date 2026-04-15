@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { StickyHeaderDemo } from '../../../demoComponents/stickyHeader';
-import StickyHeaderDemoRaw from '../../../demoComponents/stickyHeader?raw';
+import { StickyHeaderDemo } from '../../demoComponents/stickyHeader';
+import StickyHeaderDemoRaw from '../../demoComponents/stickyHeader?raw';
 
 const meta = {
     title: 'Demo/Sticky Header',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof StickyHeaderDemo>;
 
 export const StickyHeader: Story = {};
+

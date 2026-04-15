@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { CustomCellRendersDemo } from '../../../demoComponents/customCellRenders';
-import CustomCellRendersDemoRaw from '../../../demoComponents/customCellRenders?raw';
+import { CustomCellRendersDemo } from '../../demoComponents/customCellRenders';
+import CustomCellRendersDemoRaw from '../../demoComponents/customCellRenders?raw';
 
 const meta = {
     title: 'Demo/Custom Cell Renders',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof CustomCellRendersDemo>;
 
 export const CustomCellRenders: Story = {};
+

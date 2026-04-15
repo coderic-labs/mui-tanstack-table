@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { FilteringClientSideDemo } from '../../../demoComponents/filteringClientSide';
-import FilteringClientSideDemoRaw from '../../../demoComponents/filteringClientSide?raw';
+import { FilteringClientSideDemo } from '../../demoComponents/filteringClientSide';
+import FilteringClientSideDemoRaw from '../../demoComponents/filteringClientSide?raw';
 
 const meta = {
     title: 'Demo/Filtering Client Side',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof FilteringClientSideDemo>;
 
 export const FilteringClientSide: Story = {};
+

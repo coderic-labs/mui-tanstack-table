@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { ConfirmModalDemo } from '../../../demoComponents/confirmModal';
-import ConfirmModalDemoRaw from '../../../demoComponents/confirmModal?raw';
+import { ConfirmModalDemo } from '../../demoComponents/confirmModal';
+import ConfirmModalDemoRaw from '../../demoComponents/confirmModal?raw';
 
 const meta = {
     title: 'Demo/Confirm Modal',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof ConfirmModalDemo>;
 
 export const ConfirmModal: Story = {};
+

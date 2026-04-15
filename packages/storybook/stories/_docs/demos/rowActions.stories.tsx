@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { RowActionsDemo } from '../../../demoComponents/rowActions';
-import RowActionsDemoRaw from '../../../demoComponents/rowActions?raw';
+import { RowActionsDemo } from '../../demoComponents/rowActions';
+import RowActionsDemoRaw from '../../demoComponents/rowActions?raw';
 
 const meta = {
     title: 'Demo/Row Actions',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof RowActionsDemo>;
 
 export const RowActions: Story = {};
+

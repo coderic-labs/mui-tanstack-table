@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { FooterDemo } from '../../../demoComponents/footer';
-import FooterDemoRaw from '../../../demoComponents/footer?raw';
+import { FooterDemo } from '../../demoComponents/footer';
+import FooterDemoRaw from '../../demoComponents/footer?raw';
 
 const meta = {
     title: 'Demo/Footer',
@@ -21,3 +21,4 @@ export default meta;
 type Story = StoryObj<typeof FooterDemo>;
 
 export const Footer: Story = {};
+

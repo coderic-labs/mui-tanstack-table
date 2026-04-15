@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import ServerSideTableDemoRaw from '../../../demoComponents/serverSide?raw';
-import { ServerSideTableDemo } from '../../../demoComponents/serverSide';
+import ServerSideTableDemoRaw from '../../demoComponents/serverSide?raw';
+import { ServerSideTableDemo } from '../../demoComponents/serverSide';
 
 const meta = {
     title: 'Demo/Server Side Table',
@@ -29,3 +29,4 @@ export const ServerSideTable: Story = {
         stickyHeader: true,
     },
 };
+
