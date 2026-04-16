@@ -46,7 +46,7 @@ tableDemos.forEach(({ name, Component }) => {
         it(`does not render header column options when column cannot be pinned or hidden`, () => {
             cy.mount(<Providers><Component /></Providers>);
 
-            getByDataTestId(`${dataTests.table.headerCell}.actions`).within(() => {
+            getByDataTestId(`${dataTests.table.headerCell}.select`).within(() => {
                 cy.get(`[data-test="${dataTests.header.columnOptionsButton}"]`).should('not.exist');
             });
         });

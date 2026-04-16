@@ -94,7 +94,6 @@ const columns = [
         id: 'actions',
         header: MTT.TableHeader,
         enableHiding: false, // this column visibility state cannot be changed
-        enablePinning: false, // this column pinned state cannot be changed
         cell: ({ row, table }) => {
             return (
                 <Stack direction='row' gap={1}>
