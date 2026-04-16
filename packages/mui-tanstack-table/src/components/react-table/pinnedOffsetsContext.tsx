@@ -1,4 +1,4 @@
-import { createContext, useContext, useLayoutEffect, useRef, useState } from 'react';
+import { createContext, useContext, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { Table as TanstackTable } from '@tanstack/react-table';
 
 export type PinnedOffsets = {
@@ -13,67 +13,106 @@ export const PinnedOffsetsContext = createContext<PinnedOffsets>(EMPTY_OFFSETS);
 export const usePinnedOffsets = () => useContext(PinnedOffsetsContext);
 
 /**
- * Measures actual rendered header cell widths to compute accurate sticky offsets
- * for pinned columns. Uses `useLayoutEffect` so offsets are applied before the
- * browser paints, preventing any visible gap or flicker.
+ * Measures actual rendered header cell widths and positions to compute accurate sticky offsets
+ * for pinned columns. Uses ResizeObserver to detect layout changes.
  *
- * This is needed because TanStack's `column.getStart('left')` relies on TanStack's
- * internal column `size` (default 150px), which does not match actual rendered widths
- * in an HTML table with `table-layout: auto`.
+ * This approach measures actual DOM positions rather than calculating cumulative offsets,
+ * ensuring accuracy even when columns are dynamically pinned/unpinned.
  */
 export function usePinnedColumnOffsets<T>(table: TanstackTable<T>) {
     const headerRowRef = useRef<HTMLTableRowElement>(null);
     const [offsets, setOffsets] = useState<PinnedOffsets>(EMPTY_OFFSETS);
+    const measureTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
-    const columnPinningKey = JSON.stringify(table.getState().columnPinning);
-    const columnVisibilityKey = JSON.stringify(table.getState().columnVisibility);
+    const measure = useCallback(() => {
+        // Debounce rapid measurements
+        if (measureTimeoutRef.current) {
+            clearTimeout(measureTimeoutRef.current);
+        }
 
-    useLayoutEffect(() => {
-        const measure = () => {
+        measureTimeoutRef.current = setTimeout(() => {
             const row = headerRowRef.current;
             if (!row) return;
 
             const cells = Array.from(row.querySelectorAll<HTMLTableCellElement>('th'));
-            const visibleCols = table.getVisibleLeafColumns();
-            if (!visibleCols.length) return;
+            if (!cells.length) return;
 
-            // Map each visible column ID to its actual rendered pixel width
-            const widthByColId = new Map<string, number>();
-            visibleCols.forEach((col, i) => {
-                widthByColId.set(col.id, cells[i]?.offsetWidth ?? 0);
+            const leftOffsets = new Map<string, number>();
+            const rightOffsets = new Map<string, number>();
+
+            // Track cumulative positions for left and right pinned columns
+            let leftPos = 0;
+            let rightPos = 0;
+
+            // First pass: identify and measure all pinned columns in DOM order
+            const leftPinnedCols: Array<{ id: string; width: number }> = [];
+            const rightPinnedCols: Array<{ id: string; width: number }> = [];
+
+            cells.forEach((cell) => {
+                // Extract column ID from data-testid (format: "mtt-table-header-cell.{columnId}")
+                const testId = cell.getAttribute('data-testid');
+                if (!testId) return;
+
+                const colId = testId.split('.').pop();
+                if (!colId) return;
+
+                const col = table.getColumn(colId);
+                if (!col) return;
+
+                const isPinned = col.getIsPinned();
+                const width = cell.offsetWidth;
+
+                if (isPinned === 'left') {
+                    leftPinnedCols.push({ id: colId, width });
+                } else if (isPinned === 'right') {
+                    rightPinnedCols.push({ id: colId, width });
+                }
             });
 
-            // Left-pinned: cumulative offsets left-to-right
-            const leftPinned = table.getLeftVisibleLeafColumns();
-            const leftOffsets = new Map<string, number>();
-            let leftCumulative = 0;
-            for (const col of leftPinned) {
-                leftOffsets.set(col.id, leftCumulative);
-                leftCumulative += widthByColId.get(col.id) ?? 0;
+            // Calculate left offsets (left-to-right)
+            for (const { id, width } of leftPinnedCols) {
+                leftOffsets.set(id, leftPos);
+                leftPos += width;
             }
 
-            // Right-pinned: cumulative offsets right-to-left
-            const rightPinned = table.getRightVisibleLeafColumns();
-            const rightOffsets = new Map<string, number>();
-            let rightCumulative = 0;
-            for (const col of [...rightPinned].reverse()) {
-                rightOffsets.set(col.id, rightCumulative);
-                rightCumulative += widthByColId.get(col.id) ?? 0;
+            // Calculate right offsets (right-to-left, reverse iteration)
+            for (let i = rightPinnedCols.length - 1; i >= 0; i--) {
+                const { id, width } = rightPinnedCols[i];
+                rightOffsets.set(id, rightPos);
+                rightPos += width;
             }
+
+            console.log('Left offsets:', Array.from(leftOffsets.entries()));
+            console.log('Right offsets:', Array.from(rightOffsets.entries()));
 
             setOffsets({ left: leftOffsets, right: rightOffsets });
-        };
+        }, 0); // Use 0 timeout to batch rapid measurements in same frame
+    }, [table, table.getState().columnPinning]);
 
+    useLayoutEffect(() => {
+        // Initial measurement
         measure();
 
-        // Re-measure if column widths change (e.g. window resize, content change)
-        const observer = new ResizeObserver(measure);
-        const row = headerRowRef.current;
-        if (row) observer.observe(row);
+        // Observe header row for size changes
+        const observer = new ResizeObserver(() => {
+            measure();
+        });
 
-        return () => observer.disconnect();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [columnPinningKey, columnVisibilityKey]);
+        const row = headerRowRef.current;
+        if (row) {
+            observer.observe(row);
+            // Also observe individual cells to catch column width changes
+            const cells = row.querySelectorAll('th');
+            cells.forEach(cell => observer.observe(cell));
+        }
+
+        return () => {
+            observer.disconnect();
+            if (measureTimeoutRef.current) {
+                clearTimeout(measureTimeoutRef.current);
+            }
+        };
+    }, [measure]);
 
     return { headerRowRef, offsets };
 }
