@@ -2,7 +2,7 @@ import { Table as MuiTable, TableProps as MuiTableProps, TableRow as MuiTableRow
 import { Cell, Table as TanstackTable } from '@tanstack/react-table';
 import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { PinnedOffsetsContext, usePinnedColumnOffsets } from './pinnedOffsetsContext';
+import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
 import { TableBodyCell, TableFooterCell, TableHeaderCell } from './tableCell';
 import { TableDetailRow, TableEmptyRow } from './tableRow';
 import type { GetCellStyle, RowDetailComponent } from './types';
@@ -17,11 +17,11 @@ export type TableProps<T> = MuiTableProps & {
 export function Table<T>(props: TableProps<T>) {
     const { table, rowDetail, getCellStyle, stickyFooter, ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
-    const { headerRowRef, offsets } = usePinnedColumnOffsets(table);
+    const { headerRowRef, widths } = useColumnWidthsObserver(table);
     const headerGroups = table.getHeaderGroups();
 
     return (
-        <PinnedOffsetsContext.Provider value={offsets}>
+        <ColumnWidthsContext.Provider value={widths}>
             <MuiTable {...getDataTestAttrs(dataTests.table.root)} {...tableProps} sx={{ borderCollapse: 'separate', ...tableProps.sx }}>
                 <TableHead {...getDataTestAttrs(dataTests.table.head)}>
                     {headerGroups.map((headerGroup, headerGroupIndex) => (
@@ -74,6 +74,6 @@ export function Table<T>(props: TableProps<T>) {
                     </TableFooter>
                 }
             </MuiTable>
-        </PinnedOffsetsContext.Provider>
+        </ColumnWidthsContext.Provider>
     );
 }

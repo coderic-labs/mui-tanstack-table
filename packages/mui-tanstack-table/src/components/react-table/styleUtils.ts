@@ -1,22 +1,23 @@
 import { Theme, darken, lighten } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
-import { Column, ColumnPinningPosition } from '@tanstack/react-table';
-import { PinnedOffsets, usePinnedOffsets } from './pinnedOffsetsContext';
+import { Column, ColumnPinningPosition, Table as TanstackTable } from '@tanstack/react-table';
+import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
+import { getLeftOffset, getRightOffset } from '../../utils/pinning';
 
-export const useBodyCellStyle = <T,>(column: Column<T>, even?: boolean) => {
-    const offsets = usePinnedOffsets();
+export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, even?: boolean) => {
+    const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
         background: theme => even ? getEvenRowColor(theme) : theme.palette.background.paper
     };
 
-    styles = { ...styles, ...getPinnedCellStyle(column, offsets, 1) };
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 1) };
 
     return styles;
 };
 
-export const useHeaderCellStyle = <T,>(column: Column<T>, sticky?: boolean) => {
-    const offsets = usePinnedOffsets();
+export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, sticky?: boolean) => {
+    const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
         background: theme => theme.palette.background.paper,
@@ -29,13 +30,13 @@ export const useHeaderCellStyle = <T,>(column: Column<T>, sticky?: boolean) => {
         styles.top = 0;
     }
 
-    styles = { ...styles, ...getPinnedCellStyle(column, offsets, 3) };
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
 
     return styles;
 };
 
-export const useFooterCellStyle = <T,>(column: Column<T>, sticky?: boolean) => {
-    const offsets = usePinnedOffsets();
+export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, sticky?: boolean) => {
+    const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
         background: theme => theme.palette.background.paper
@@ -47,15 +48,23 @@ export const useFooterCellStyle = <T,>(column: Column<T>, sticky?: boolean) => {
         styles.bottom = 0;
     }
 
-    styles = { ...styles, ...getPinnedCellStyle(column, offsets, 3) };
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
 
     return styles;
 };
 
-export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, offsets: PinnedOffsets, zIndex: number): SystemStyleObject<Theme> => {
+export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, table: TanstackTable<T>, widths: ColumnWidths, zIndex: number): SystemStyleObject<Theme> => {
     const pinnedPosition = column.getIsPinned();
 
     if (!pinnedPosition) return {};
+
+    const left = pinnedPosition === 'left'
+        ? `${getLeftOffset(column, table, widths)}px`
+        : undefined;
+
+    const right = pinnedPosition === 'right'
+        ? `${getRightOffset(column, table, widths)}px`
+        : undefined;
 
     const isBoundary =
         (pinnedPosition === 'left' && column.getIsLastColumn('left')) ||
@@ -64,8 +73,8 @@ export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, offsets: Pinn
     return {
         position: 'sticky',
         zIndex,
-        left: pinnedPosition === 'left' ? `${offsets.left.get(column.id)}px` : undefined,
-        right: pinnedPosition === 'right' ? `${offsets.right.get(column.id)}px` : undefined,
+        left,
+        right,
         boxShadow: isBoundary ? getPinnedShadow(pinnedPosition) : undefined
     };
 };

@@ -13,7 +13,7 @@ export type TableBodyCellProps<T> = {
 export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
     const { cell, row, getCellStyle } = props;
 
-    const bodyCellStyle = useBodyCellStyle(cell.column, row.index % 2 === 0);
+    const bodyCellStyle = useBodyCellStyle(cell.column, cell.getContext().table, row.index % 2 === 0);
     const bodyCellStyleOverride = getCellStyle?.(cell) ?? {};
 
     return (
@@ -33,7 +33,7 @@ export type TableHeaderCellProps<T> = {
 export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
     const { header, stickyHeader } = props;
 
-    const headerCellStyle = useHeaderCellStyle(header.column, stickyHeader);
+    const headerCellStyle = useHeaderCellStyle(header.column, header.getContext().table, stickyHeader);
 
     return (
         <MuiTableCell
@@ -53,7 +53,7 @@ export type TableFooterCellProps<T> = {
 export const TableFooterCell = <T,>(props: TableFooterCellProps<T>) => {
     const { header, stickyFooter } = props;
 
-    const footerCellStyle = useFooterCellStyle(header.column, stickyFooter);
+    const footerCellStyle = useFooterCellStyle(header.column, header.getContext().table, stickyFooter);
 
     return (
         <MuiTableCell
