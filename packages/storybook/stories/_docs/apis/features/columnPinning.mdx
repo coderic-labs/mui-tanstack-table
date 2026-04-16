@@ -23,6 +23,17 @@ When columns are pinned:
 - Pinned columns maintain their visual order within their section
 - The browser's native `position: sticky` CSS property keeps them in place
 - Left-pinned columns are positioned at the left edge, right-pinned at the right edge
+- Multiple columns can be pinned to the same side and will stack horizontally
+
+## Pinning from the header
+
+Each column header includes an options button (⋮) that opens a menu with pin/unpin actions:
+
+- **Pin Left** — Moves the column to the left pinned section
+- **Pin Right** — Moves the column to the right pinned section
+- **Unpin** — Removes the column from pinning (if currently pinned)
+
+These actions update the `columnPinning` state in TanStack Table, allowing users to customize their view at runtime.
 
 ## Usage notes
 

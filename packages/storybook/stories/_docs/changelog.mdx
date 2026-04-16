@@ -4,6 +4,22 @@ import { Meta } from '@storybook/blocks';
 
 # Changelog
 
+## 0.0.6
+
+- Implemented multi-column pinning for left and right table edges.
+- Column pinning now supports any number of pinned columns (not limited to first/last).
+- Users can pin/unpin columns via the header options menu.
+- Added comprehensive Cypress test coverage for column pinning scenarios:
+  - Multi-column pinning interactions
+  - Pinned column visibility toggling
+  - Pinned column persistence across pagination and dataset changes
+- Improved server-side table demo with footer content for better test coverage.
+
+### Upgrade Notes
+
+- Column pinning is fully controlled by TanStack Table state; users interact via header options menu.
+- Pinned columns automatically adjust their position when visibility changes or data is paginated.
+
 ## 0.0.5
 
 - Added row highlighting and cell style customization support through table rendering props.

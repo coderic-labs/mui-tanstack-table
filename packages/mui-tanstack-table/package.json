@@ -1,6 +1,6 @@
 {
     "name": "@coderic-labs/mui-tanstack-table",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Material-UI rendering components for TanStack Table, with modular UI pieces and headless table integration.",
     "author": "Coderic Labs",
     "license": "MIT",
