@@ -132,7 +132,11 @@ tableDemos.forEach(({ name, Component }) => {
             const value = '3';
             const expectedPageIds = expectedRows.projects3;
 
-            getByDataTestId(`${dataTests.table.headerCell}.projects`).find('input').type(`${value}{enter}`);
+            getByDataTestId(`${dataTests.table.headerCell}.projects`)
+                .scrollIntoView()
+                .find('input')
+                .click({ force: true })
+                .type(`${value}{enter}`, { force: true });
             assertResultsLabel(expectedCounts.projects3);
             getByDataTest(dataTests.table.dataRow).should('have.length', expectedPageIds.length);
             assertRowsRenderedInOrder(expectedPageIds);

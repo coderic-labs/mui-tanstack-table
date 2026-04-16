@@ -19,7 +19,8 @@ export const useHeaderCellStyle = <T,>(column: Column<T>, sticky?: boolean) => {
     const offsets = usePinnedOffsets();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => theme.palette.background.paper
+        background: theme => theme.palette.background.paper,
+        verticalAlign: 'top'
     };
 
     if (sticky) {

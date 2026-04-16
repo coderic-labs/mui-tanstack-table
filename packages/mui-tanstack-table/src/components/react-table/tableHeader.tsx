@@ -3,6 +3,7 @@ import { IconButton, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
+import { TableColumnOptionsButton } from './tableColumnOptionsButton';
 import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 import { TableSortingToggle } from './tableSortingToggle';
 
@@ -28,18 +29,21 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
         </Stack>;
 
     const headerSorting =
-        <Stack direction='row' alignItems='center' gap={0.5}>
+        <Stack direction='row' alignItems='center' position={'relative'}>
             <TableSortingToggle
                 isSorted={isSorted}
                 onToggle={() => column.toggleSorting(undefined, isMultiSort)}
             />
             {isMultiSort &&
                 <Zoom in={sortIndex !== -1}>
-                    <TableSortingOrderBadge>
+                    <TableSortingOrderBadge sx={{ position: 'absolute', top: -3, right: -3 }}>
                         {Math.max(sortIndex + 1, 1)}
                     </TableSortingOrderBadge>
                 </Zoom>}
         </Stack>
+
+    const headerColumnOptions =
+        <TableColumnOptionsButton column={column} />
 
     const headerFilter =
         <Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
@@ -54,9 +58,10 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
 
     return (
         <Stack gap={0.5} {...rest}>
-            <Stack direction='row' alignItems='center' gap={0.5}>
+            <Stack direction='row' alignItems='center' gap={1}>
                 {headerTitle}
                 {canSort && headerSorting}
+                {headerColumnOptions}
             </Stack>
             {canFilter && column.columnDef.filter && headerFilter}
         </Stack>

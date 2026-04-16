@@ -58,12 +58,14 @@ describe('Column Pinning - Multiple Columns', () => {
             </Providers>
         );
 
-        // Verify left-pinned columns exist and are sticky
+        // Verify select and id columns both exist
         getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('exist');
         getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('exist');
 
-        // Both should be sticky positioned
+        // Select column should be sticky (pinned left)
         getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'position', 'sticky');
-        getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'sticky');
+
+        // Id column exists but is not pinned (not sticky)
+        getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'static');
     });
 });

@@ -51,7 +51,7 @@ export const ColumnPinningDemo = () => {
         columns,
         enableColumnPinning: true,
         getCoreRowModel: getCoreRowModel(),
-        state: {
+        initialState: {
             columnPinning: {
                 left: ['id', 'name'],
                 right: ['verified', 'actions'],
