@@ -141,7 +141,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         getExpandedRowModel: getExpandedRowModel(),
         meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
         state: {
-            columnPinning: { left: ['select'], right: ['actions'] }
+            columnPinning: { left: ['select', 'name'], right: ['verified','actions'] }
         }
     });
 

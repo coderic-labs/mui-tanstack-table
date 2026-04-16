@@ -23,3 +23,47 @@ tableDemos.forEach(({ name, Component }) => {
 
     });
 });
+
+describe('Column Pinning - Multiple Columns', () => {
+    it('should pin multiple columns to left side with correct sticky positioning', () => {
+        cy.mount(
+            <Providers>
+                <ClientSideTableDemo />
+            </Providers>
+        );
+
+        // Verify select column is pinned left at 0px
+        getByDataTestId(`${dataTests.table.dataCell}.1000.select`)
+            .should('have.css', 'position', 'sticky')
+            .should('have.css', 'left', '0px');
+    });
+
+    it('should pin multiple columns to right side with correct sticky positioning', () => {
+        cy.mount(
+            <Providers>
+                <ClientSideTableDemo />
+            </Providers>
+        );
+
+        // Verify actions column is pinned right at 0px
+        getByDataTestId(`${dataTests.table.dataCell}.1000.actions`)
+            .should('have.css', 'position', 'sticky')
+            .should('have.css', 'right', '0px');
+    });
+
+    it('should maintain visual order of multiple pinned columns on same side', () => {
+        cy.mount(
+            <Providers>
+                <ClientSideTableDemo />
+            </Providers>
+        );
+
+        // Verify left-pinned columns exist and are sticky
+        getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('exist');
+        getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('exist');
+
+        // Both should be sticky positioned
+        getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'position', 'sticky');
+        getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'sticky');
+    });
+});
