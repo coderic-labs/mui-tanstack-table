@@ -8,7 +8,7 @@ export const getLeftOffset = <T,>(column: Column<T, unknown>, table: TanstackTab
 
     let offset = 0;
     for (let i = 0; i < currentIndex; i++) {
-        offset += widths.get(leftPinned[i].id) ?? 0;
+        offset += widths[leftPinned[i].id] ?? 0;
     }
     return offset;
 };
@@ -20,7 +20,7 @@ export const getRightOffset = <T,>(column: Column<T, unknown>, table: TanstackTa
 
     let offset = 0;
     for (let i = currentIndex + 1; i < rightPinned.length; i++) {
-        offset += widths.get(rightPinned[i].id) ?? 0;
+        offset += widths[rightPinned[i].id] ?? 0;
     }
     return offset;
 };

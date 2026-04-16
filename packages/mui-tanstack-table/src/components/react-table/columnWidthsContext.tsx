@@ -1,9 +1,9 @@
-import { createContext, useContext, useLayoutEffect, useRef, useState, useCallback } from 'react';
-import { Table as TanstackTable } from '@tanstack/react-table';
+import { createContext, useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
+import isEqual from "lodash/isEqual";
 
-export type ColumnWidths = Map<string, number>;
+export type ColumnWidths = Record<string, number>;
 
-const EMPTY_WIDTHS: ColumnWidths = new Map();
+const EMPTY_WIDTHS: ColumnWidths = {};
 
 export const ColumnWidthsContext = createContext<ColumnWidths>(EMPTY_WIDTHS);
 
@@ -14,26 +14,12 @@ type HeaderCellWidth = {
     width: number;
 };
 
-const getColumnIdFromHeaderCell = (cell: HTMLTableCellElement) => {
-    const testId = cell.getAttribute('data-testid');
-    if (!testId) return undefined;
-    return testId.split('.').pop();
-};
-
-const collectHeaderCellWidths = <T,>(
-    row: HTMLTableRowElement,
-    table: TanstackTable<T>
+const collectHeaderCellWidths = (
+    headerCells: Map<string, HTMLTableCellElement>
 ): HeaderCellWidth[] => {
-    const cells = Array.from(row.querySelectorAll<HTMLTableCellElement>('th'));
     const cellWidths: HeaderCellWidth[] = [];
 
-    cells.forEach((cell) => {
-        const id = getColumnIdFromHeaderCell(cell);
-        if (!id) return;
-
-        const column = table.getColumn(id);
-        if (!column) return;
-
+    headerCells.forEach((cell, id) => {
         cellWidths.push({ id, width: cell.offsetWidth });
     });
 
@@ -41,36 +27,26 @@ const collectHeaderCellWidths = <T,>(
 };
 
 const buildColumnWidths = (cellWidths: HeaderCellWidth[]): ColumnWidths => {
-    const widths = new Map<string, number>();
+    const widths: ColumnWidths = {};
     for (const cell of cellWidths) {
-        widths.set(cell.id, cell.width);
+        widths[cell.id] = cell.width;
     }
     return widths;
 };
 
 const areWidthsEqual = (prev: ColumnWidths, next: ColumnWidths) => {
-    if (prev.size !== next.size) {
-        return false;
-    }
-
-    let isEqual = true;
-    prev.forEach((value, id) => {
-        if (next.get(id) !== value) {
-            isEqual = false;
-        }
-    });
-
-    if (!isEqual) return false;
-
-    return true;
+    const prevKeys = Object.keys(prev);
+    const nextKeys = Object.keys(next);
+    if (prevKeys.length !== nextKeys.length) return false;
+    return prevKeys.every(id => prev[id] === next[id]);
 };
 
 /**
  * Measures actual rendered widths of header cells.
  */
-export function useColumnWidthsObserver<T>(table: TanstackTable<T>) {
-    const headerRowRef = useRef<HTMLTableRowElement>(null);
+export function useColumnWidthsObserver() {
     const [widths, setWidths] = useState<ColumnWidths>(EMPTY_WIDTHS);
+    const [headerCells, setHeaderCells] = useState<Map<string, HTMLTableCellElement>>(new Map());
     const frameRef = useRef<number>();
 
     const measure = useCallback(() => {
@@ -79,32 +55,29 @@ export function useColumnWidthsObserver<T>(table: TanstackTable<T>) {
         }
 
         frameRef.current = requestAnimationFrame(() => {
-            const row = headerRowRef.current;
-            if (!row) return;
-
-            const cellWidths = collectHeaderCellWidths(row, table);
+            const cellWidths = collectHeaderCellWidths(headerCells);
             const next = buildColumnWidths(cellWidths);
 
             setWidths(prev => areWidthsEqual(prev, next) ? prev : next);
         });
-    }, [table]);
+    }, [headerCells]);
+
+    const registerHeaderCell = useCallback((columnId: string, cell: HTMLTableCellElement | null) => {
+        setHeaderCells((prev) => {
+            const next = new Map(prev);
+            if (cell) next.set(columnId, cell);
+            return isEqual(prev, next) ? prev : next;
+        });
+    }, [setHeaderCells]);
 
     useLayoutEffect(() => {
-        // Initial measurement
         measure();
 
-        // Observe header row for size changes
         const observer = new ResizeObserver(() => {
             measure();
         });
 
-        const row = headerRowRef.current;
-        if (row) {
-            observer.observe(row);
-            // Also observe individual cells to catch column width changes
-            const cells = row.querySelectorAll('th');
-            cells.forEach(cell => observer.observe(cell));
-        }
+        headerCells.forEach(cell => observer.observe(cell));
 
         return () => {
             observer.disconnect();
@@ -112,7 +85,7 @@ export function useColumnWidthsObserver<T>(table: TanstackTable<T>) {
                 cancelAnimationFrame(frameRef.current);
             }
         };
-    }, [measure]);
+    }, [headerCells, measure]);
 
-    return { headerRowRef, widths };
+    return { registerHeaderCell, widths };
 }

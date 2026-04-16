@@ -1,5 +1,6 @@
 import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Header, Row } from '@tanstack/react-table';
+import { ForwardedRef, forwardRef } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useBodyCellStyle, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
 import type { GetCellStyle } from './types';
@@ -30,13 +31,14 @@ export type TableHeaderCellProps<T> = {
     stickyHeader?: boolean;
 };
 
-export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
+const TableHeaderCellComponent = <T,>(props: TableHeaderCellProps<T>, ref: ForwardedRef<HTMLTableCellElement>) => {
     const { header, stickyHeader } = props;
 
     const headerCellStyle = useHeaderCellStyle(header.column, header.getContext().table, stickyHeader);
 
     return (
         <MuiTableCell
+            ref={ref}
             colSpan={header.colSpan}
             {...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
             sx={headerCellStyle}>
@@ -44,6 +46,10 @@ export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
         </MuiTableCell>
     );
 };
+
+export const TableHeaderCell = forwardRef(TableHeaderCellComponent) as <T>(
+    props: TableHeaderCellProps<T> & { ref?: ForwardedRef<HTMLTableCellElement> }
+) => JSX.Element;
 
 export type TableFooterCellProps<T> = {
     header: Header<T, unknown>;

@@ -17,7 +17,7 @@ export type TableProps<T> = MuiTableProps & {
 export function Table<T>(props: TableProps<T>) {
     const { table, rowDetail, getCellStyle, stickyFooter, ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
-    const { headerRowRef, widths } = useColumnWidthsObserver(table);
+    const { registerHeaderCell, widths } = useColumnWidthsObserver();
     const headerGroups = table.getHeaderGroups();
 
     return (
@@ -27,11 +27,11 @@ export function Table<T>(props: TableProps<T>) {
                     {headerGroups.map((headerGroup, headerGroupIndex) => (
                         <MuiTableRow
                             key={headerGroup.id}
-                            ref={headerGroupIndex === headerGroups.length - 1 ? headerRowRef : undefined}
                             {...getDataTestAttrs(dataTests.table.headerRow, headerGroupIndex + 1)}>
                             {headerGroup.headers.map((header) =>
                                 <TableHeaderCell
                                     key={header.id}
+                                    ref={el => registerHeaderCell(header.column.id, el)}
                                     header={header}
                                     stickyHeader={tableProps.stickyHeader}
                                 />
