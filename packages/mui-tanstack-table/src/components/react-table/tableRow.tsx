@@ -1,30 +1,8 @@
-import { TableRow as MuiTableRow, Stack, TableCell as MuiTableCell, Typography } from '@mui/material';
-import { Cell, Row, Table } from '@tanstack/react-table';
+import { TableCell as MuiTableCell, TableRow as MuiTableRow, Stack, Typography } from '@mui/material';
+import { Row, Table } from '@tanstack/react-table';
 import { useTableIntl } from '../../context/tableIntl';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { TableCell } from './tableCell';
-import type { GetCellStyle, RowDetailComponent } from './types';
-
-export type TableRowProps<T> = {
-    row: Row<T>,
-    getCellStyle?: GetCellStyle<T>;
-}
-
-export const TableRow = <T,>(props: TableRowProps<T>) => {
-    const { row, getCellStyle } = props;
-    return (
-        <MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.id)}>
-            {row.getVisibleCells().map((cell: Cell<T, unknown>) =>
-                <TableCell
-                    key={cell.id}
-                    cell={cell}
-                    row={row}
-                    getCellStyle={getCellStyle}
-                />
-            )}
-        </MuiTableRow>
-    );
-};
+import type { RowDetailComponent } from './types';
 
 export type TableDetailRowProps<T> = {
     row: Row<T>,

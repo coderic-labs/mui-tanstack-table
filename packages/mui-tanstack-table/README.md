@@ -42,7 +42,7 @@ function MyTable() {
 
   // Step 1: Configure TanStack Table (all logic, no UI)
   const columnHelper = createColumnHelper();
-  
+
   const columns = [
     columnHelper.display({
       id: 'select',
@@ -77,11 +77,11 @@ function MyTable() {
           <MTT.TableColumnVisibilityToggle table={table} />
         </MTT.TableToolbarActions>
       </MTT.TableToolbar>
-      
+
       <TableContainer component={Paper}>
         <MTT.Table table={table} />
       </TableContainer>
-      
+
       <MTT.TablePaginationV2 table={table} />
     </Stack>
   );
@@ -155,6 +155,7 @@ These are implemented or demonstrated in the current library:
 - Row selection and bulk operations
 - Row expansion with detail rows
 - Column visibility toggle
+- Column pinning
 - Sticky header support
 - Filter overview chips
 - Client-side and server-side usage
@@ -164,7 +165,6 @@ These are implemented or demonstrated in the current library:
 
 These common table capabilities are not yet provided by the UI layer:
 
-- Column pinning UI — only manual pinning via TanStack Table state is implied, no built-in pin/unpin helper
 - Column reorder — no drag-and-drop or `columnOrder` state helper
 - Column resize — no resize handles or `columnSizing` support
 - Virtualization — no row virtualization integration

@@ -5,17 +5,43 @@ import ColumnPinningDemoRaw from '../../../demoComponents/columnPinning?raw';
 
 # Column Pinning
 
-Column pinning keeps selected columns visible while scrolling horizontally.
+Column pinning keeps selected columns visible while scrolling horizontally. Multiple columns can be pinned to either the left or right side of the table.
 
-This package currently supports a simple setup: pin the first column to the left and the last column to the right.
+## How it works
+
+Column pinning uses a state-based model where column IDs are organized into left and right pinned arrays:
+
+```typescript
+columnPinning: {
+  left: ['id', 'name', 'select'],    // Multiple columns can be pinned to the left
+  right: ['verified', 'actions']     // Multiple columns can be pinned to the right
+}
+```
+
+When columns are pinned:
+- They remain visible while the table scrolls horizontally
+- Pinned columns maintain their visual order within their section
+- The browser's native `position: sticky` CSS property keeps them in place
+- Left-pinned columns are positioned at the left edge, right-pinned at the right edge
+- Multiple columns can be pinned to the same side and will stack horizontally
+
+## Pinning from the header
+
+Each column header includes an options button (⋮) that opens a menu with pin/unpin actions:
+
+- **Pin Left** — Moves the column to the left pinned section
+- **Pin Right** — Moves the column to the right pinned section
+- **Unpin** — Removes the column from pinning (if currently pinned)
+
+These actions update the `columnPinning` state in TanStack Table, allowing users to customize their view at runtime.
 
 ## Usage notes
 
-- Keep pinning simple: first column left, last column right.
-- More advanced pinning flows are intentionally out of scope for this package.
-- Use a scrollable table container when needed for smaller viewports.
-
-> Note: this functionality is temporary and will be replaced by a more advanced column pinning mechanism that supports pinning multiple columns.
+- Pin columns to `left` or `right` by including their IDs in the corresponding arrays
+- Multiple columns on the same side will stack horizontally
+- Pinned columns maintain their relative order based on their position in the array
+- Use a scrollable table container when needed for smaller viewports
+- Column pinning is independent of column visibility and column sizing
 
 ## Example
 

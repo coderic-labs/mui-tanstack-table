@@ -16,6 +16,12 @@ export const dataTests = {
     },
     header: {
         sortLabel: 'mtt-header-sort-label',
+        columnOptionsButton: 'mtt-header-column-options-button',
+        columnOptionsMenu: 'mtt-header-column-options-menu',
+        pinLeftOption: 'mtt-header-pin-left-option',
+        pinRightOption: 'mtt-header-pin-right-option',
+        unpinOption: 'mtt-header-unpin-option',
+        hideColumnOption: 'mtt-header-hide-column-option',
         filterContainer: 'mtt-header-filter-container',
         filterClearButton: 'mtt-header-filter-clear-button',
         filterPopoverTrigger: 'mtt-header-filter-popover-trigger',

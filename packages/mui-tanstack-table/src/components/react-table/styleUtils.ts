@@ -1,61 +1,82 @@
 import { Theme, darken, lighten } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
-import { Column, ColumnPinningPosition } from '@tanstack/react-table';
+import { Column, ColumnPinningPosition, Table as TanstackTable } from '@tanstack/react-table';
+import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
+import { getLeftOffset, getRightOffset } from '../../utils/pinning';
 
-export type GetCellStyleOptions<T> = {
-    /**
-     * column definition
-     */
-    column: Column<T>;
-    /**
-     * table section where the cell is rendered
-     */
-    area?: 'header' | 'body' | 'footer';
-    /**
-     * alternating row background for body cells
-     */
-    even?: boolean;
-    /**
-     * applies sticky behavior for header/footer areas
-     */
-    sticky?: boolean;
-};
+export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, even?: boolean) => {
+    const widths = useColumnWidths();
 
-export const getCellStyle = <T,>(opts: GetCellStyleOptions<T>): SystemStyleObject<Theme> => {
-    const {
-        column,
-        area = 'body',
-        even = false,
-        sticky = false,
-    } = opts;
-    
-    const pinnedPosition = column.getIsPinned();
-    const isHeader = area === 'header';
-    const isFooter = area === 'footer';
-
-    const styles: SystemStyleObject<Theme> = {
-        background: theme =>
-            even ? getEvenRowColor(theme) : theme.palette.background.paper
+    let styles: SystemStyleObject<Theme> = {
+        background: theme => even ? getEvenRowColor(theme) : theme.palette.background.paper
     };
 
-    if (pinnedPosition) {
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 1) };
+
+    return styles;
+};
+
+export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, sticky?: boolean) => {
+    const widths = useColumnWidths();
+
+    let styles: SystemStyleObject<Theme> = {
+        background: theme => theme.palette.background.paper,
+        verticalAlign: 'top'
+    };
+
+    if (sticky) {
         styles.position = 'sticky';
-        styles.zIndex = isHeader ? 3 : 1;
-        styles.left = pinnedPosition === 'left' ? 0 : undefined;
-        styles.right = pinnedPosition === 'right' ? 0 : undefined;
-        styles.boxShadow = getPinnedShadow(pinnedPosition);
+        styles.zIndex = 2;
+        styles.top = 0;
     }
 
-    if (sticky && (isHeader || isFooter)) {
-        styles.position = 'sticky !important';
-        styles.background = theme => theme.palette.background.paper;
-    }
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
 
-    if (sticky && isFooter) {
+    return styles;
+};
+
+export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, sticky?: boolean) => {
+    const widths = useColumnWidths();
+
+    let styles: SystemStyleObject<Theme> = {
+        background: theme => theme.palette.background.paper
+    };
+
+    if (sticky) {
+        styles.position = 'sticky';
+        styles.zIndex = 2;
         styles.bottom = 0;
     }
 
+    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
+
     return styles;
+};
+
+export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, table: TanstackTable<T>, widths: ColumnWidths, zIndex: number): SystemStyleObject<Theme> => {
+    const pinnedPosition = column.getIsPinned();
+
+    if (!pinnedPosition) return {};
+
+    const left = pinnedPosition === 'left'
+        ? `${getLeftOffset(column, table, widths)}px`
+        : undefined;
+
+    const right = pinnedPosition === 'right'
+        ? `${getRightOffset(column, table, widths)}px`
+        : undefined;
+
+    const isBoundary =
+        (pinnedPosition === 'left' && column.getIsLastColumn('left')) ||
+        (pinnedPosition === 'right' && column.getIsFirstColumn('right'));
+
+    return {
+        position: 'sticky',
+        zIndex,
+        left,
+        right,
+        boxShadow: isBoundary ? getPinnedShadow(pinnedPosition) : undefined
+    };
 };
 
 export const getPinnedShadow = (pinned: ColumnPinningPosition) => {

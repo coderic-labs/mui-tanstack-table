@@ -22,7 +22,8 @@ const columnHelper = createColumnHelper<Developer>();
 const columns = [
     columnHelper.display({
         id: 'select',
-        enableHiding: false,
+        enableHiding: false, // this column visibility state cannot be changed
+        enablePinning: false, // this column pinned state cannot be changed
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -67,13 +68,17 @@ const columns = [
     }),
     columnHelper.accessor('verified', {
         header: MTT.TableHeader,
+        footer: ({ table }) => {
+            const verifiedCount = table.getRowModel().rows.filter((row) => row.getValue('verified')).length;
+            return `verified:${verifiedCount}`;
+        },
         filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
         cell: MTT.TableBooleanCell
     }),
     columnHelper.display({
         id: 'actions',
         header: MTT.TableHeader,
-        enableHiding: false,
+        enableHiding: false, // this column visibility state cannot be changed
         cell: (cellContext) => {
             const { row, table } = cellContext;
             return (
@@ -132,11 +137,13 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
+        initialState: {
+            columnPinning: { left: ['select'], right: ['actions'] }
+        },
         state: {
             pagination,
             columnFilters,
             sorting,
-            columnPinning: { left: ['select'], right: ['actions'] }
         }
     });
 

@@ -1,9 +1,11 @@
 import { Close } from '@mui/icons-material';
-import { IconButton, Stack, StackProps, TableSortLabel, Zoom } from '@mui/material';
+import { IconButton, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
+import { TableColumnOptionsButton } from './tableColumnOptionsButton';
 import { TableSortingOrderBadge } from './tableSortingOrderBadge';
+import { TableSortingToggle } from './tableSortingToggle';
 
 /**
  * Renderer for table header in React Table. Renders column title, sorting and filter.
@@ -19,10 +21,6 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const isMultiSort = column.getCanMultiSort();
     const sortIndex = column.getSortIndex();
 
-    // if there are any visible columns with filters,
-    // set height to 100% to align content
-    const someFiltersInTable = table.getAllLeafColumns().some(column => column.getCanFilter() && column.getIsVisible() && column.columnDef.filter)
-
     const headerTitle =
         <Stack direction='row' gap={0.5} alignItems='center' whiteSpace='nowrap'>
             {column.columnDef.title ?? column.id}
@@ -30,43 +28,42 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
                 <InfoTooltip title={flexRender(column.columnDef.tooltip, context)} />}
         </Stack>;
 
-    return (
-        <Stack gap={0.5} height={someFiltersInTable ? '100%' : undefined} {...rest}>
-            {!canSort && headerTitle}
+    const headerSorting =
+        <Stack direction='row' alignItems='center' position={'relative'}>
+            <TableSortingToggle
+                isSorted={isSorted}
+                onToggle={() => column.toggleSorting(undefined, isMultiSort)}
+            />
+            {isMultiSort &&
+                <Zoom in={sortIndex !== -1}>
+                    <TableSortingOrderBadge sx={{ position: 'absolute', top: -3, right: -3 }}>
+                        {Math.max(sortIndex + 1, 1)}
+                    </TableSortingOrderBadge>
+                </Zoom>}
+        </Stack>
 
-            {canSort &&
-                <TableSortLabel
-                    {...getDataTestAttrs(dataTests.header.sortLabel)}
-                    sx={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        ustifyContent: 'space-between',
-                        gap: 0.5,
-                        '.MuiTableSortLabel-icon': { visibility: isSorted ? 'visible' : 'hidden' },
-                        ':hover': { '.MuiTableSortLabel-icon': { visibility: 'visible' } }
-                    }}
-                    slotProps={{ icon: { sx: { margin: 0 } } }}
-                    active={!!isSorted}
-                    direction={isSorted || 'asc'}
-                    onClick={() => column.toggleSorting(undefined, isMultiSort)}>
-                    {headerTitle}
-                    {isMultiSort &&
-                        <Zoom in={sortIndex !== -1}>
-                            <TableSortingOrderBadge sx={{ ml: 'auto' }}>
-                                {Math.max(sortIndex + 1, 1)}
-                            </TableSortingOrderBadge>
-                        </Zoom>}
-                </TableSortLabel>}
-            {canFilter && column.columnDef.filter &&
-                <Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
-                    {flexRender(column.columnDef.filter, context)}
-                    {context.column.getIsFiltered() &&
-                        <Zoom in={context.column.getIsFiltered()}>
-                            <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
-                                <Close />
-                            </IconButton>
-                        </Zoom>}
-                </Stack>}
+    const headerColumnOptions =
+        <TableColumnOptionsButton column={column} />
+
+    const headerFilter =
+        <Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
+            {flexRender(column.columnDef.filter, context)}
+            {context.column.getIsFiltered() &&
+                <Zoom in={context.column.getIsFiltered()}>
+                    <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
+                        <Close />
+                    </IconButton>
+                </Zoom>}
+        </Stack>
+
+    return (
+        <Stack gap={0.5} {...rest}>
+            <Stack direction='row' alignItems='center' gap={1}>
+                {headerTitle}
+                {canSort && headerSorting}
+                {headerColumnOptions}
+            </Stack>
+            {canFilter && column.columnDef.filter && headerFilter}
         </Stack>
     );
 }

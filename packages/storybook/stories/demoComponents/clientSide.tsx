@@ -29,7 +29,8 @@ const filterHireDate: FilterFnOption<Developer> = (row, id, filter) => {
 const columns = [
     columnHelper.display({
         id: 'select',
-        enableHiding: false,
+        enableHiding: false, // this column visibility state cannot be changed
+        enablePinning: false, // this column pinned state cannot be changed
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -92,7 +93,7 @@ const columns = [
     columnHelper.display({
         id: 'actions',
         header: MTT.TableHeader,
-        enableHiding: false,
+        enableHiding: false, // this column visibility state cannot be changed
         cell: ({ row, table }) => {
             return (
                 <Stack direction='row' gap={1}>
@@ -140,7 +141,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         getSortedRowModel: getSortedRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
-        state: {
+        initialState: {
             columnPinning: { left: ['select'], right: ['actions'] }
         }
     });

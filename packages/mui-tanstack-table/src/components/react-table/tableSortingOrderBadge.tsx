@@ -1,13 +1,12 @@
 import { Box, styled } from '@mui/material';
 
-export const TableSortingOrderBadge = styled(Box)(({ theme }) => ({
+export const TableSortingOrderBadge = styled(Box)(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '14px',
-    height: '14px',
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    borderRadius: '10px',
-    fontSize: '10px'
+    width: '10px',
+    height: '10px',
+    borderRadius: '5px',
+    fontSize: '10px',
+    fontWeight: 'bold',
 }));

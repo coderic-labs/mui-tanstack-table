@@ -18,13 +18,37 @@ tableDemos.forEach(({ name, Component }) => {
 
         it(`hides one column from the visibility menu`, () => {
             cy.mount(<Providers><Component /></Providers>);
-            
+
             assertColumnVisibility(allVisibleColumns);
             getByDataTest(dataTests.columnVisibility.toggleButton).click();
             getByDataTestId(`${dataTests.columnVisibility.columnItem}.select`).should('not.exist');
             getByDataTestId(`${dataTests.columnVisibility.columnItem}.actions`).should('not.exist');
             getByDataTestId(`${dataTests.columnVisibility.columnItem}.id`).click();
             assertColumnVisibility(visibleWithoutId);
+        });
+
+        it(`hides a column from header column options when column can be hidden`, () => {
+            cy.mount(<Providers><Component /></Providers>);
+
+            assertColumnVisibility(allVisibleColumns);
+
+            getByDataTestId(`${dataTests.table.headerCell}.id`).within(() => {
+                cy.get(`[data-test="${dataTests.header.columnOptionsButton}"]`).click();
+            });
+
+            getByDataTest(dataTests.header.columnOptionsMenu).should('be.visible');
+            getByDataTest(dataTests.header.hideColumnOption).should('be.visible').click();
+
+            assertColumnVisibility(visibleWithoutId);
+            getByDataTest(dataTests.header.columnOptionsMenu).should('not.exist');
+        });
+
+        it(`does not render header column options when column cannot be pinned or hidden`, () => {
+            cy.mount(<Providers><Component /></Providers>);
+
+            getByDataTestId(`${dataTests.table.headerCell}.select`).within(() => {
+                cy.get(`[data-test="${dataTests.header.columnOptionsButton}"]`).should('not.exist');
+            });
         });
 
 

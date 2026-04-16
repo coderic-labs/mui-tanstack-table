@@ -3,6 +3,10 @@
     "tablePagination.displayedRows": "{page} / {pages}",
     "tablePagination.goToPage": "Go to",
     "reactTable.noResults": "No records to display.",
+    "reactTable.columnOptions.pinLeft": "Pin left",
+    "reactTable.columnOptions.pinRight": "Pin right",
+    "reactTable.columnOptions.unpin": "Unpin",
+    "reactTable.columnOptions.hideColumn": "Hide column",
     "tableToolbar.results": "Results: {values}",
     "tableToolbar.filters": "Filters:",
     "tableToolbar.filtersReset": "Clear all"
