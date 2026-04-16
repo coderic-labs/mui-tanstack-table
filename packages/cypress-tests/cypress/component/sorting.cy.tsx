@@ -18,7 +18,9 @@ tableDemos.forEach(({ name, Component }) => {
             assertRowsRenderedInOrder([1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]);
             getByDataTest(dataTests.header.sortLabel).eq(0).click();
             getByDataTest(dataTests.header.sortLabel).eq(1).click();
-            getByDataTest(dataTests.table.head).find('.MuiTableSortLabel-root.Mui-active').should('have.length', 1);
+            getByDataTest(dataTests.table.head)
+                .find(`[data-test="${dataTests.header.sortLabel}"][data-sort-state!="none"]`)
+                .should('have.length', 1);
         });
 
 
@@ -28,7 +30,9 @@ tableDemos.forEach(({ name, Component }) => {
             assertRowsRenderedInOrder([1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]);
             getByDataTest(dataTests.header.sortLabel).eq(0).click();
             getByDataTest(dataTests.header.sortLabel).eq(1).click();
-            getByDataTest(dataTests.table.head).find('.MuiTableSortLabel-root.Mui-active').should('have.length', 2);
+            getByDataTest(dataTests.table.head)
+                .find(`[data-test="${dataTests.header.sortLabel}"][data-sort-state!="none"]`)
+                .should('have.length', 2);
         });
 
     });
