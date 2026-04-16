@@ -68,6 +68,10 @@ const columns = [
     }),
     columnHelper.accessor('verified', {
         header: MTT.TableHeader,
+        footer: ({ table }) => {
+            const verifiedCount = table.getRowModel().rows.filter((row) => row.getValue('verified')).length;
+            return `verified:${verifiedCount}`;
+        },
         filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
         cell: MTT.TableBooleanCell
     }),

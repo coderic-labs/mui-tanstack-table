@@ -6,6 +6,49 @@ export const getByDataTest = (value: string) =>
 export const getByDataTestId = (value: string) =>
     cy.get(`[data-testid="${value}"]`);
 
+type PinSide = 'left' | 'right';
+
+const parsePxValue = (value: string) => Number.parseFloat(value.replace('px', ''));
+
+export const assertStickyColumnProps = (
+    columnId: string,
+    expectedOffsetPx: number,
+    side: PinSide,
+    rowId: string | number = 1000,
+) => {
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`)
+        .last()
+        .should('have.css', 'position', 'sticky')
+        .should('have.css', 'z-index', '3')
+        .then(($headerCell) => {
+            const offsetValue = $headerCell.css(side);
+            const offset = Math.round(parsePxValue(offsetValue));
+            expect(Number.isFinite(offset), `numeric header offset for ${columnId}`).to.equal(true);
+            expect(offset, `header ${side} for ${columnId}`).to.equal(expectedOffsetPx);
+        });
+
+    getByDataTestId(`${dataTests.table.dataCell}.${rowId}.${columnId}`)
+        .should('have.css', 'position', 'sticky')
+        .should('have.css', 'z-index', '1')
+        .then(($bodyCell) => {
+            const offsetValue = $bodyCell.css(side);
+            const offset = Math.round(parsePxValue(offsetValue));
+            expect(Number.isFinite(offset), `numeric body offset for ${columnId}`).to.equal(true);
+            expect(offset, `body ${side} for ${columnId}`).to.equal(expectedOffsetPx);
+        });
+
+    getByDataTestId(`${dataTests.table.footerCell}.${columnId}`)
+        .last()
+        .should('have.css', 'position', 'sticky')
+        .should('have.css', 'z-index', '3')
+        .then(($footerCell) => {
+            const offsetValue = $footerCell.css(side);
+            const offset = Math.round(parsePxValue(offsetValue));
+            expect(Number.isFinite(offset), `numeric footer offset for ${columnId}`).to.equal(true);
+            expect(offset, `footer ${side} for ${columnId}`).to.equal(expectedOffsetPx);
+        });
+};
+
 export const assertRowsRenderedInOrder = (rowIds: readonly (string | number)[]) => {
     getByDataTest(dataTests.table.dataRow).should('have.length.at.least', rowIds.length);
 
