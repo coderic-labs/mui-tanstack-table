@@ -1,0 +1,69 @@
+name: Peer Compatibility Matrix
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  ci-deps-matrix:
+    name: ${{ matrix.name }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: baseline-react19-mui7
+            react: "19.2.5"
+            react_dom: "19.2.5"
+            mui_material: "7.3.10"
+            mui_icons: "7.3.10"
+            mui_pickers: "7.29.4"
+            tanstack: "8.21.3"
+            emotion_react: "11.14.0"
+            emotion_styled: "11.14.1"
+            react_intl: "7.1.14"
+            react_types: "19.2.2"
+            react_dom_types: "19.2.2"
+          - name: lowerbound-react18-mui6
+            react: "18.3.1"
+            react_dom: "18.3.1"
+            mui_material: "6.5.0"
+            mui_icons: "6.5.0"
+            mui_pickers: "7.23.6"
+            tanstack: "8.17.0"
+            emotion_react: "11.14.0"
+            emotion_styled: "11.14.1"
+            react_intl: "7.0.0"
+            react_types: "18.3.1"
+            react_dom_types: "18.3.1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Apply matrix dependency versions
+        run: |
+          npm install -w packages/storybook --save-exact react@${{ matrix.react }} react-dom@${{ matrix.react_dom }} @mui/material@${{ matrix.mui_material }} @mui/icons-material@${{ matrix.mui_icons }} @mui/x-date-pickers@${{ matrix.mui_pickers }} @tanstack/react-table@${{ matrix.tanstack }} @emotion/react@${{ matrix.emotion_react }} @emotion/styled@${{ matrix.emotion_styled }} react-intl@${{ matrix.react_intl }} dayjs@1.11.19
+          npm install -w packages/cypress-tests --save-exact react@${{ matrix.react }} react-dom@${{ matrix.react_dom }} @types/react@${{ matrix.react_types }} @types/react-dom@${{ matrix.react_dom_types }} @mui/material@${{ matrix.mui_material }} @mui/icons-material@${{ matrix.mui_icons }} @mui/x-date-pickers@${{ matrix.mui_pickers }} @tanstack/react-table@${{ matrix.tanstack }} @emotion/react@${{ matrix.emotion_react }} @emotion/styled@${{ matrix.emotion_styled }} react-intl@${{ matrix.react_intl }} dayjs@1.11.19
+
+      - name: TypeScript check
+        run: npm run tsc
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run Cypress component tests
+        run: npm run cypress:run
