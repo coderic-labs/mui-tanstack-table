@@ -15,6 +15,8 @@ export default defineConfig({
             external: [
                 'react',
                 'react-dom',
+                'react/jsx-runtime',
+                'react/jsx-dev-runtime',
                 '@mui/material',
                 '@mui/icons-material',
                 '@mui/x-date-pickers',
