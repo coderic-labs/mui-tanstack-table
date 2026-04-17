@@ -13,9 +13,15 @@ export default defineConfig({
         },
         rollupOptions: {
             external: [
-                'react', 'react-dom',
-                '@mui/material', 'emotion/react', '@emotion/styled',
-                '@material-table/core', '@mui/x-date-pickers'
+                'react',
+                'react-dom',
+                '@mui/material',
+                '@mui/icons-material',
+                '@mui/x-date-pickers',
+                '@tanstack/react-table',
+                '@emotion/react',
+                '@emotion/styled',
+                'react-intl'
             ]
         }
     }
