@@ -1,5 +1,5 @@
 import type { Theme } from '@mui/material';
-import type { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
+import type { SystemStyleObject } from '@mui/system';
 import type { Cell, Row } from '@tanstack/react-table';
 import type { ReactElement } from 'react';
 
