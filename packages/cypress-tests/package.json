@@ -1,6 +1,6 @@
 {
     "name": "@coderic-labs/mui-tanstack-table-cypress",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Cypress component tests for mui-tanstack-table.",
     "private": true,
     "scripts": {

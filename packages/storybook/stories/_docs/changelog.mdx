@@ -4,6 +4,29 @@ import { Meta } from '@storybook/blocks';
 
 # Changelog
 
+## 0.0.7
+
+- Froze a validated release baseline for peer dependencies to make setup and support reproducible.
+- Confirmed compatibility across React 18/19 and MUI 6/7 combinations.
+- Confirmed compatibility with `@tanstack/react-table` v8 and `react-intl` v7 combinations used in demos.
+
+### Validated Baseline
+
+- `react` 19.2.5
+- `react-dom` 19.2.5
+- `@mui/material` 7.3.10
+- `@mui/icons-material` 7.3.10
+- `@mui/x-date-pickers` 7.29.4
+- `@tanstack/react-table` 8.21.3
+- `@emotion/react` 11.14.0
+- `@emotion/styled` 11.14.1
+- `react-intl` 7.1.14
+
+### Upgrade Notes
+
+- If you are upgrading from earlier `0.0.x` versions, prefer the validated baseline above first, then adjust peers as needed.
+- Peer dependency ranges are unchanged; this release documents tested combinations and establishes a stable support anchor.
+
 ## 0.0.6
 
 - Implemented multi-column pinning for left and right table edges.
