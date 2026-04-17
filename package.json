@@ -4,6 +4,7 @@
 	"description": "Mui tanstack table monorepo.",
 	"scripts": {
 		"build": "npm run build -ws --if-present",
+		"pack": "npm run pack -w packages/mui-tanstack-table",
 		"storybook": "npm run storybook -w packages/storybook",
 		"cypress:open": "npm run cypress:open -w packages/cypress-tests",
 		"cypress:run": "npm run cypress:run -w packages/cypress-tests",

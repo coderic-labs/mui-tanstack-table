@@ -27,6 +27,7 @@
     "types": "./dist/index.d.ts",
     "scripts": {
         "build": "vite build",
+        "pack": "npm run build && npm pack",
         "tsc": "tsc --noEmit --skipLibCheck"
     },
     "dependencies": {
