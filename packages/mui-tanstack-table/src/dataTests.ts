@@ -84,7 +84,14 @@ export const dataTests = {
     }
 } as const;
 
-export const getDataTestAttrs = (value: string, id?: string | number) => ({
-    'data-test': value,
-    ...(id !== undefined ? { 'data-testid': `${value}.${id}` } : {})
-});
+
+// Only emit data-test/data-testid attributes if VITE_MTT_ENABLE_TEST_ATTRS env variable is true (Vite-compatible)
+const ENABLE_TEST_ATTRS = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_MTT_ENABLE_TEST_ATTRS === 'true';
+
+export const getDataTestAttrs = (value: string, id?: string | number) => {
+    if (!ENABLE_TEST_ATTRS) return {};
+    return {
+        'data-test': value,
+        ...(id !== undefined ? { 'data-testid': `${value}.${id}` } : {})
+    };
+};
