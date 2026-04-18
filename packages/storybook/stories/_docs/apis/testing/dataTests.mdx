@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="APIs/Testing/dataTests" />
+
+# dataTests Attributes: Usage & Configuration
+
+This page explains how to enable and use `data-test` and `data-testid` attributes in MUI TanStack Table for testing and automation.
+
+---
+
+
+## data-test Attributes Are Always Present
+
+- All table UI elements include stable `data-test` and `data-testid` attributes by default.
+- No environment variable or special configuration is required.
+- These attributes are always available for use in Cypress, Storybook, or any other test tool.
+
+---
+
+## data-test vs data-testid
+
+- **`data-test`**: Used for selecting UI elements by their stable role or purpose (e.g., `data-test="mtt-table"`).
+- **`data-testid`**: Used for selecting a specific instance, often with a unique identifier (e.g., `data-testid="mtt-table-data-cell.1000.name"`).
+
+---
+
+## Importing and Using dataTests Constants
+
+- All test attribute keys are defined in the `dataTests` object:
+
+```ts
+import { dataTests } from '@coderic-labs/mui-tanstack-table';
+```
+
+- Use these constants to select elements in your tests:
+
+```ts
+// Cypress example
+cy.get(`[data-test="${dataTests.table.root}"]`);
+cy.get(`[data-testid="${dataTests.table.dataCell}.1000.name"]`);
+```

@@ -10,6 +10,8 @@
 - **🔐 Zero Coupling** — **Complete isolation between table logic and UI.** Configure TanStack Table once with `useReactTable`, and let the UI components simply consume and render it.
 - **📊 Render-Only Components** — All MUI components are pure presentational. They trigger state changes through the TanStack Table headless model
 - **⚡ Built on TanStack Table** — Leverage the power of TanStack's headless table logic.
+- **🧩 Maximum flexibility and composability** — Ideal for advanced users and teams wanting to own all table logic and have full control.
+- **🔎 No hidden state or logic** — Everything is explicit and transparent; you control all table behavior.
 - **📘 Requires TanStack Table knowledge** — This library assumes you already understand `@tanstack/react-table` basics.
 - **🎨 Material-UI Components** — Styled with MUI for consistency and accessibility.
 

@@ -84,6 +84,8 @@ export const dataTests = {
     }
 } as const;
 
+
+// Always emit data-test/data-testid attributes for all UI elements
 export const getDataTestAttrs = (value: string, id?: string | number) => ({
     'data-test': value,
     ...(id !== undefined ? { 'data-testid': `${value}.${id}` } : {})
