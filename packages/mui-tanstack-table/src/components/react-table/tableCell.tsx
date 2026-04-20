@@ -13,7 +13,7 @@ export type TableBodyCellProps<T> = {
 export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
     const { cell, row, getCellStyle } = props;
 
-    const bodyCellStyle = useBodyCellStyle(cell.column, cell.getContext().table, row.index % 2 === 0);
+    const bodyCellStyle = useBodyCellStyle(cell.column, cell.getContext().table);
     const bodyCellStyleOverride = getCellStyle?.(cell) ?? {};
     const { draggingStyles, setNodeRef } = useDraggingStyles(cell.column.id, 5);
 

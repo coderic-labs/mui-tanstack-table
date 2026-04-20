@@ -1,6 +1,6 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Delete, Edit } from '@mui/icons-material';
-import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/material';
+import { Button, Chip, darken, IconButton, Paper, Stack, TableContainer } from '@mui/material';
 import type { FilterFnOption } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Dayjs } from 'dayjs';
@@ -9,6 +9,7 @@ import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
+import { getCellStyle } from '../common/_getCellStyle';
 
 type TableMeta = {
     showConfirmDialog: (ids: string[]) => void;
@@ -146,11 +147,6 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         }
     });
 
-    const getCellStyle: MTT.GetCellStyle<Developer> = (cell) => {
-        if (cell.row.original.id === highlightRow)
-            return (theme) => ({ backgroundColor: theme.palette.warning.light });
-    };
-
     return (
         <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <MTT.TableToolbar mb={2}>
@@ -181,7 +177,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle}
+                        getCellStyle={getCellStyle(highlightRow)}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}

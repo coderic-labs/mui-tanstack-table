@@ -5,7 +5,19 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Preview } from "@storybook/react";
 import { themes } from 'storybook/internal/theming';
 
-const theme = createMuiTheme({
+const themeDark = createMuiTheme({
+    palette: {
+        mode: 'dark',
+        primary: { main: '#1976D2' },
+        secondary: { main: '#7B3FE4' },
+            background: {
+                default: '#121212',
+                paper: '#1E1E1E',
+            }
+    }
+})
+
+const themeLight = createMuiTheme({
     palette: {
         mode: 'light',
         primary: { main: '#1976D2' },
@@ -59,7 +71,7 @@ const preview: Preview = {
     decorators: [
         (Story) => (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={themeDark}>
                     <ScopedCssBaseline>
                         <Story />
                     </ScopedCssBaseline>
