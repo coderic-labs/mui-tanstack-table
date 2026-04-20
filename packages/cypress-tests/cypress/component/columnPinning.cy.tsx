@@ -52,7 +52,7 @@ tableDemos.forEach(({ name, Component }) => {
             openHeaderOptions('id');
             getByDataTest(dataTests.header.unpinOption).click();
 
-            getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'static');
+            getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'relative');
         });
 
         it('applies cumulative left offsets when multiple columns are pinned left', () => {
