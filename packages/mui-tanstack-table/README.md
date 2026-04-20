@@ -158,6 +158,7 @@ These are implemented or demonstrated in the current library:
 - Row expansion with detail rows
 - Column visibility toggle
 - Column pinning
+- Column order (reordering via drag handle in header)
 - Sticky header support
 - Filter overview chips
 - Client-side and server-side usage
@@ -167,7 +168,6 @@ These are implemented or demonstrated in the current library:
 
 These common table capabilities are not yet provided by the UI layer:
 
-- Column reorder — no drag-and-drop or `columnOrder` state helper
 - Column resize — no resize handles or `columnSizing` support
 - Virtualization — no row virtualization integration
 - Grouping/aggregation — no grouping helpers or aggregation row/footer support
