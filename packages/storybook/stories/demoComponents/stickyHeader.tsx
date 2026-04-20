@@ -37,7 +37,7 @@ export const StickyHeaderDemo = () => {
     return (
         <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <Stack component={Paper} overflow='hidden'>
-                <TableContainer sx={{ maxHeight: 360 }}>
+                <TableContainer>
                     <MTT.Table table={table} stickyHeader />
                 </TableContainer>
             </Stack>

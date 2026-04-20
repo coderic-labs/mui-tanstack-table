@@ -1,19 +1,28 @@
 
-import { createMuiTheme, ScopedCssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Preview } from "@storybook/react";
 import { themes } from 'storybook/internal/theming';
-
-const theme = createMuiTheme({
-    palette: {
-        mode: 'light',
-        primary: { main: '#1976D2' },
-        secondary: { main: '#7B3FE4' },
-    }
-})
+import { themeDark } from './themes/dark';
+import { themeLight } from './themes/light';
 
 const preview: Preview = {
+    globalTypes: {
+        themeToggle: {
+            name: 'Theme',
+            description: 'Switch theme',
+            defaultValue: 'dark',
+            toolbar: {
+                icon: 'mirror',
+                items: [
+                    { value: 'light', title: 'light' },
+                    { value: 'dark', title: 'dark' },
+                ],
+                showName: true,
+            },
+        },
+    },
     parameters: {
         viewMode: 'docs',
         docs: { theme: themes.dark },
@@ -57,12 +66,11 @@ const preview: Preview = {
         },
     },
     decorators: [
-        (Story) => (
+        (Story, context) => (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <ThemeProvider theme={theme}>
-                    <ScopedCssBaseline>
-                        <Story />
-                    </ScopedCssBaseline>
+                <ThemeProvider theme={context.globals.themeToggle === 'light' ? themeLight : themeDark}>
+                    <CssBaseline />
+                    <Story />
                 </ThemeProvider>
             </LocalizationProvider>
         ),

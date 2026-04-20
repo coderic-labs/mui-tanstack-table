@@ -1,8 +1,8 @@
 import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Paper, Stack, TableContainer } from '@mui/material';
-import { Cell } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Developer, EmploymentType, useItems } from '../common/_data';
+import { Developer, useItems } from '../common/_data';
+import { getCellStyle } from '../common/_getCellStyle';
 
 const columnHelper = createColumnHelper<Developer>();
 
@@ -26,16 +26,6 @@ const columns = [
     }),
 ];
 
-const getCellStyle = (cell: Cell<Developer, unknown>) => {
-    const employmentType = cell.row.original.employmentType;
-    if (employmentType === EmploymentType.intern) {
-        return { backgroundColor: 'warning.light', color: 'warning.contrastText' };
-    }
-    if (employmentType === EmploymentType.partTime) {
-        return { backgroundColor: 'info.light', color: 'info.contrastText' };
-    }
-    return undefined;
-};
 
 export const RowHighlightDemo = () => {
     const { data } = useItems();
@@ -50,7 +40,7 @@ export const RowHighlightDemo = () => {
         <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <Stack component={Paper} overflow='auto'>
                 <TableContainer>
-                    <MTT.Table table={table} getCellStyle={getCellStyle} />
+                    <MTT.Table table={table} getCellStyle={getCellStyle('1001')} />
                 </TableContainer>
             </Stack>
         </Stack>

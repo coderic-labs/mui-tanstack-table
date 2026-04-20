@@ -15,7 +15,7 @@ tableDemos.forEach(({ name, Component }) => {
         it(`highlights the configured row`, () => {
             cy.mount(<Providers><Component highlightRow={'1000'} /></Providers>);
             getByDataTestId(`${dataTests.table.dataCell}.1000.select`)
-                .should('have.css', 'background-color', 'rgb(255, 152, 0)');
+                .should('have.css', 'background-color', 'rgb(251, 225, 204)');
         });
 
     });

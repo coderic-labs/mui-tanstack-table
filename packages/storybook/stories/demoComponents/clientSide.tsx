@@ -9,6 +9,7 @@ import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
+import { getCellStyle } from '../common/_getCellStyle';
 
 type TableMeta = {
     showConfirmDialog: (ids: string[]) => void;
@@ -146,11 +147,6 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         }
     });
 
-    const getCellStyle: MTT.GetCellStyle<Developer> = (cell) => {
-        if (cell.row.original.id === highlightRow)
-            return (theme) => ({ backgroundColor: theme.palette.warning.light });
-    };
-
     return (
         <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <MTT.TableToolbar mb={2}>
@@ -181,7 +177,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle}
+                        getCellStyle={getCellStyle(highlightRow)}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}

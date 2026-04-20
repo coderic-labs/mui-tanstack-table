@@ -1,16 +1,16 @@
-import { Theme, darken, lighten, useTheme } from '@mui/material';
+import { useSortable } from '@dnd-kit/sortable';
+import { Theme, alpha, useTheme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 import { Column, ColumnPinningPosition, Table as TanstackTable } from '@tanstack/react-table';
+import { CSSProperties, useMemo } from 'react';
 import { getLeftOffset, getRightOffset } from '../../utils/pinning';
 import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSSProperties, useMemo } from 'react';
 
-export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, even?: boolean) => {
+export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>) => {
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => even ? getEvenRowColor(theme) : theme.palette.background.paper,
+        backgroundColor: theme => theme.palette.background.paper,
         position: 'relative'
     };
 
@@ -23,7 +23,7 @@ export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => theme.palette.background.paper,
+        backgroundColor: theme => theme.palette.background.paper,
         verticalAlign: 'top',
         position: 'relative'
     };
@@ -43,7 +43,7 @@ export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => theme.palette.background.paper,
+        backgroundColor: theme => theme.palette.background.paper,
         position: 'relative'
     };
 
@@ -98,22 +98,22 @@ export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, table: Tansta
         zIndex,
         left,
         right,
-        boxShadow: isBoundary ? getPinnedShadow(pinnedPosition) : undefined
+        backgroundImage: getPinnedCellBackground,
+        boxShadow: isBoundary
+            ? theme => getPinnedShadow(pinnedPosition, theme)
+            : undefined
     };
 };
 
-export const getPinnedShadow = (pinned: ColumnPinningPosition) => {
+export const getPinnedShadow = (pinned: ColumnPinningPosition, theme: Theme) => {
     if (pinned === 'left')
-        return '4px 0 4px -4px rgba(0,0,0,0.1)';
+        return `-4px 0px 4px -4px ${theme.palette.divider} inset`;
     if (pinned === 'right')
-        return '-4px 0 4px -4px rgba(0,0,0,0.1)';
+        return `4px 0px 4px -4px ${theme.palette.divider} inset`;
     return undefined;
 };
 
-export const getEvenRowColor = (theme: Theme) => {
-    if (theme.palette.mode === 'light')
-        return darken(theme.palette.background.paper, 0.03);
-    if (theme.palette.mode === 'dark')
-        return lighten(theme.palette.background.paper, 0.03);
-    return theme.palette.background.paper;
+export const getPinnedCellBackground = (theme: Theme) => {
+    const overlayColor = theme.palette.mode === 'dark' ? alpha('#fff', 0.03) : alpha('#000', 0.01);
+    return `linear-gradient(${overlayColor}, ${overlayColor})`
 };
