@@ -1,8 +1,7 @@
-import { useSortable } from '@dnd-kit/sortable';
 import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Header, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { useBodyCellStyle, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
+import { useBodyCellStyle, useDraggingStyles, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
 import type { GetCellStyle } from './types';
 
 export type TableBodyCellProps<T> = {
@@ -16,11 +15,14 @@ export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
 
     const bodyCellStyle = useBodyCellStyle(cell.column, cell.getContext().table, row.index % 2 === 0);
     const bodyCellStyleOverride = getCellStyle?.(cell) ?? {};
+    const { draggingStyles, setNodeRef } = useDraggingStyles(cell.column.id, 5);
 
     return (
         <MuiTableCell
+            ref={setNodeRef}
             {...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-            sx={[bodyCellStyle, bodyCellStyleOverride]}>
+            sx={[bodyCellStyle, bodyCellStyleOverride]}
+            style={draggingStyles}>
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </MuiTableCell>
     );
@@ -35,20 +37,15 @@ export type TableHeaderCellProps<T> = {
 export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
     const { header, stickyHeader, tableCellRef } = props;
 
-    const { isDragging, setNodeRef, transform } = useSortable({ id: header.column.id });
-
     const headerCellStyle = useHeaderCellStyle(header.column, header.getContext().table, stickyHeader);
+    const { draggingStyles, setNodeRef } = useDraggingStyles(header.column.id, 6);
 
     return (
         <MuiTableCell
             ref={(node: HTMLTableCellElement | null) => { setNodeRef(node); tableCellRef(node); }}
             colSpan={header.colSpan}
             {...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
-            style={{
-                opacity: isDragging ? 0.8 : 1,
-                zIndex: isDragging ? 5 : undefined,
-                transform: `translate(${transform?.x ?? 0}px, ${transform?.y ?? 0}px)`
-            }}
+            style={draggingStyles}
             sx={headerCellStyle}>
             {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
         </MuiTableCell>
@@ -64,13 +61,17 @@ export const TableFooterCell = <T,>(props: TableFooterCellProps<T>) => {
     const { header, stickyFooter } = props;
 
     const footerCellStyle = useFooterCellStyle(header.column, header.getContext().table, stickyFooter);
+    const { draggingStyles, setNodeRef } = useDraggingStyles(header.column.id, 6);
 
     return (
         <MuiTableCell
+            ref={setNodeRef}
             colSpan={header.colSpan}
             {...getDataTestAttrs(dataTests.table.footerCell, header.column.id)}
-            sx={footerCellStyle}>
+            sx={footerCellStyle}
+            style={draggingStyles}>
             {flexRender(header.column.columnDef.footer, header.getContext())}
         </MuiTableCell>
     );
 };
+

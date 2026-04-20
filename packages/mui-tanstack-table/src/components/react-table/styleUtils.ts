@@ -1,14 +1,17 @@
-import { Theme, darken, lighten } from '@mui/material';
+import { Theme, darken, lighten, useTheme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 import { Column, ColumnPinningPosition, Table as TanstackTable } from '@tanstack/react-table';
-import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
 import { getLeftOffset, getRightOffset } from '../../utils/pinning';
+import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSSProperties, useMemo } from 'react';
 
 export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, even?: boolean) => {
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => even ? getEvenRowColor(theme) : theme.palette.background.paper
+        background: theme => even ? getEvenRowColor(theme) : theme.palette.background.paper,
+        position: 'relative'
     };
 
     styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 1) };
@@ -21,7 +24,8 @@ export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
 
     let styles: SystemStyleObject<Theme> = {
         background: theme => theme.palette.background.paper,
-        verticalAlign: 'top'
+        verticalAlign: 'top',
+        position: 'relative'
     };
 
     if (sticky) {
@@ -39,7 +43,8 @@ export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        background: theme => theme.palette.background.paper
+        background: theme => theme.palette.background.paper,
+        position: 'relative'
     };
 
     if (sticky) {
@@ -51,6 +56,24 @@ export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
     styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
 
     return styles;
+};
+
+export const useDraggingStyles = (columnId: string, dragZIndex: number) => {
+    const { isDragging, transform, setNodeRef } = useSortable({ id: columnId });
+    const theme = useTheme();
+
+    const draggingStyles = useMemo((): CSSProperties => ({
+        borderLeftStyle: isDragging ? 'dashed' : undefined,
+        borderRightStyle: isDragging ? 'dashed' : undefined,
+        borderLeftColor: isDragging ? theme.palette.secondary.main : undefined,
+        borderLeftWidth: isDragging ? 1 : undefined,
+        borderRightColor: isDragging ? theme.palette.secondary.main : undefined,
+        borderRightWidth: isDragging ? 1 : undefined,
+        transform: `translateX(${transform?.x ?? 0}px)`,
+        zIndex: isDragging ? dragZIndex : undefined,
+    }), [isDragging, transform, dragZIndex, theme]);
+
+    return { draggingStyles, setNodeRef };
 };
 
 export const getPinnedCellStyle = <T,>(column: Column<T, unknown>, table: TanstackTable<T>, widths: ColumnWidths, zIndex: number): SystemStyleObject<Theme> => {

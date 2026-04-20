@@ -53,12 +53,17 @@ export function Table<T>(props: TableProps<T>) {
                             <Fragment key={row.id}>
                                 <MuiTableRow {...getDataTestAttrs(dataTests.table.dataRow, row.id)}>
                                     {row.getVisibleCells().map((cell: Cell<T, unknown>) =>
-                                        <TableBodyCell
+                                        <SortableContext
                                             key={cell.id}
-                                            cell={cell}
-                                            row={row}
-                                            getCellStyle={getCellStyle}
-                                        />
+                                            items={columnOrder}
+                                            strategy={horizontalListSortingStrategy}>
+                                            <TableBodyCell
+                                                key={cell.id}
+                                                cell={cell}
+                                                row={row}
+                                                getCellStyle={getCellStyle}
+                                            />
+                                        </SortableContext>
                                     )}
                                 </MuiTableRow>
                                 {row.getIsExpanded() && rowDetail && <TableDetailRow row={row} rowDetail={rowDetail} />}
@@ -72,11 +77,16 @@ export function Table<T>(props: TableProps<T>) {
                             {table.getFooterGroups().map((footerGroup, footerGroupIndex) => (
                                 <MuiTableRow key={footerGroup.id} {...getDataTestAttrs(dataTests.table.footerRow, footerGroupIndex + 1)}>
                                     {footerGroup.headers.map((header) =>
-                                        <TableFooterCell
+                                        <SortableContext
                                             key={header.id}
-                                            header={header}
-                                            stickyFooter={stickyFooter}
-                                        />
+                                            items={columnOrder}
+                                            strategy={horizontalListSortingStrategy}>
+                                            <TableFooterCell
+                                                key={header.id}
+                                                header={header}
+                                                stickyFooter={stickyFooter}
+                                            />
+                                        </SortableContext>
                                     )}
                                 </MuiTableRow>
                             ))}
