@@ -25,7 +25,8 @@ export const dataTests = {
         filterContainer: 'mtt-header-filter-container',
         filterClearButton: 'mtt-header-filter-clear-button',
         filterPopoverTrigger: 'mtt-header-filter-popover-trigger',
-        filterPopover: 'mtt-header-filter-popover'
+        filterPopover: 'mtt-header-filter-popover',
+        reorderHandle: 'mtt-header-reorder-handle'
     },
     pagination: {
         root: 'mtt-table-pagination',

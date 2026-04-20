@@ -61,7 +61,13 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
         </Stack>
 
     const dragIndicator =
-        <DragIndicator {...attributes} {...listeners} fontSize='small' sx={{ cursor: 'grab', ml: 'auto' }} />
+        <DragIndicator
+            {...attributes}
+            {...listeners}
+            fontSize='small'
+            sx={{ cursor: 'grab', ml: 'auto' }}
+            {...getDataTestAttrs(dataTests.header.reorderHandle, column.id)}
+        />
 
     return (
         <Stack gap={0.5} {...rest}>
