@@ -1,6 +1,6 @@
+import { useSortable } from '@dnd-kit/sortable';
 import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Header, Row } from '@tanstack/react-table';
-import { ForwardedRef, forwardRef } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useBodyCellStyle, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
 import type { GetCellStyle } from './types';
@@ -29,27 +29,31 @@ export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
 export type TableHeaderCellProps<T> = {
     header: Header<T, unknown>;
     stickyHeader?: boolean;
+    tableCellRef: (node: HTMLTableCellElement | null) => void;
 };
 
-const TableHeaderCellComponent = <T,>(props: TableHeaderCellProps<T>, ref: ForwardedRef<HTMLTableCellElement>) => {
-    const { header, stickyHeader } = props;
+export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
+    const { header, stickyHeader, tableCellRef } = props;
+
+    const { isDragging, setNodeRef, transform } = useSortable({ id: header.column.id });
 
     const headerCellStyle = useHeaderCellStyle(header.column, header.getContext().table, stickyHeader);
 
     return (
         <MuiTableCell
-            ref={ref}
+            ref={(node: HTMLTableCellElement | null) => { setNodeRef(node); tableCellRef(node); }}
             colSpan={header.colSpan}
             {...getDataTestAttrs(dataTests.table.headerCell, header.column.id)}
+            style={{
+                opacity: isDragging ? 0.8 : 1,
+                zIndex: isDragging ? 5 : undefined,
+                transform: `translate(${transform?.x ?? 0}px, ${transform?.y ?? 0}px)`
+            }}
             sx={headerCellStyle}>
             {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
         </MuiTableCell>
     );
 };
-
-export const TableHeaderCell = forwardRef(TableHeaderCellComponent) as <T>(
-    props: TableHeaderCellProps<T> & { ref?: ForwardedRef<HTMLTableCellElement> }
-) => JSX.Element;
 
 export type TableFooterCellProps<T> = {
     header: Header<T, unknown>;
