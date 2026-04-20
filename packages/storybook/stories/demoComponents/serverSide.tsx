@@ -138,7 +138,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
         getExpandedRowModel: getExpandedRowModel(),
         meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
         initialState: {
-            columnPinning: { left: ['select'], right: ['actions'] }
+            columnPinning: { left: ['select'], right: ['actions'] },
+            columnOrder: ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions']
         },
         state: {
             pagination,

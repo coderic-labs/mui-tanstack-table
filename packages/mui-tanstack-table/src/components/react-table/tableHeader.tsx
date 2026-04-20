@@ -1,4 +1,5 @@
-import { Close } from '@mui/icons-material';
+import { useSortable } from '@dnd-kit/sortable';
+import { Close, DragIndicator } from '@mui/icons-material';
 import { IconButton, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
@@ -20,6 +21,9 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const isSorted = column.getIsSorted();
     const isMultiSort = column.getCanMultiSort();
     const sortIndex = column.getSortIndex();
+    const canOrder = table.getState().columnOrder.includes(column.id);
+
+    const { attributes, listeners } = useSortable({ id: column.id });
 
     const headerTitle =
         <Stack direction='row' gap={0.5} alignItems='center' whiteSpace='nowrap'>
@@ -56,14 +60,25 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
                 </Zoom>}
         </Stack>
 
+    const dragIndicator =
+        <DragIndicator
+            {...attributes}
+            {...listeners}
+            fontSize='small'
+            sx={{ cursor: 'grab', ml: 'auto' }}
+            {...getDataTestAttrs(dataTests.header.reorderHandle, column.id)}
+        />
+
     return (
         <Stack gap={0.5} {...rest}>
             <Stack direction='row' alignItems='center' gap={1}>
                 {headerTitle}
                 {canSort && headerSorting}
                 {headerColumnOptions}
+                {canOrder && dragIndicator}
             </Stack>
             {canFilter && column.columnDef.filter && headerFilter}
         </Stack>
     );
 }
+

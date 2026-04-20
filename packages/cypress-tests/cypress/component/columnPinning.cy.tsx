@@ -52,7 +52,7 @@ tableDemos.forEach(({ name, Component }) => {
             openHeaderOptions('id');
             getByDataTest(dataTests.header.unpinOption).click();
 
-            getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'static');
+            getByDataTestId(`${dataTests.table.dataCell}.1000.id`).should('have.css', 'position', 'relative');
         });
 
         it('applies cumulative left offsets when multiple columns are pinned left', () => {
@@ -66,7 +66,7 @@ tableDemos.forEach(({ name, Component }) => {
 
             assertStickyColumnProps('select', 0, 'left');
             assertStickyColumnProps('id', 98, 'left');
-            assertStickyColumnProps('name', 197, 'left');
+            assertStickyColumnProps('name', 225, 'left');
         });
 
         it('re-stacks pinned offsets after hiding a middle pinned column', () => {
@@ -112,15 +112,15 @@ tableDemos.forEach(({ name, Component }) => {
             getByDataTest(dataTests.header.pinLeftOption).click();
 
             assertStickyColumnProps('id', 98, 'left', 1000);
-            assertStickyColumnProps('technologies', 197, 'left', 1000);
-            assertStickyColumnProps('name', 458, 'left', 1000);
+            assertStickyColumnProps('technologies', 225, 'left', 1000);
+            assertStickyColumnProps('name', 486, 'left', 1000);
 
             getByDataTest(dataTests.paginationV2.nextButton).click();
             getByDataTestId(`${dataTests.table.dataCell}.1010.id`).should('exist');
 
             assertStickyColumnProps('id', 98, 'left', 1010);
-            assertStickyColumnProps('technologies', 197, 'left', 1010);
-            assertStickyColumnProps('name', 515, 'left', 1010);
+            assertStickyColumnProps('technologies', 225, 'left', 1010);
+            assertStickyColumnProps('name', 543, 'left', 1010);
         });
 
     });

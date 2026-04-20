@@ -44,13 +44,12 @@ const columns = [
     }),
     columnHelper.accessor('id', {
         header: MTT.TableHeader,
-        footer: MTT.TableHeader
     }),
     columnHelper.accessor('name', {
         header: MTT.TableHeader,
         filter: TextFilter,
         filterFn: 'includesString',
-        sortingFn: 'alphanumeric'
+        sortingFn: 'alphanumeric',
     }),
     columnHelper.accessor('hireDate', {
         header: MTT.TableHeader,
@@ -58,14 +57,14 @@ const columns = [
         cell: ({ getValue }) => getValue().toDate().toLocaleDateString(),
         filter: DateRangeFilter,
         filterFn: filterHireDate,
-        sortingFn: 'datetime'
+        sortingFn: 'datetime',
     }),
     columnHelper.accessor('employmentType', {
         header: MTT.TableHeader,
         title: 'Employment type',
         filter: (context) => <SelectFilter {...context} options={employmentOptions} />,
         filterFn: 'equals',
-        sortingFn: 'alphanumeric'
+        sortingFn: 'alphanumeric',
     }),
     columnHelper.accessor('technologies', {
         header: MTT.TableHeader,
@@ -73,14 +72,14 @@ const columns = [
         cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
         tooltip: 'Last updated 1.1.2025',
         filterFn: 'arrIncludesAll',
-        sortingFn: 'auto'
+        sortingFn: 'auto',
     }),
     columnHelper.accessor('projects', {
         header: MTT.TableHeader,
         filter: TextFilter,
         cell: ({ getValue }) => <Chip size='small' label={getValue()} />,
         filterFn: 'weakEquals',
-        sortingFn: 'alphanumeric'
+        sortingFn: 'alphanumeric',
     }),
     columnHelper.accessor('verified', {
         header: MTT.TableHeader,
@@ -88,12 +87,12 @@ const columns = [
         filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
         cell: MTT.TableBooleanCell,
         filterFn: 'equals',
-        sortingFn: 'auto'
+        sortingFn: 'auto',
     }),
     columnHelper.display({
         id: 'actions',
         header: MTT.TableHeader,
-        enableHiding: false, // this column visibility state cannot be changed
+        enableHiding: false,
         cell: ({ row, table }) => {
             return (
                 <Stack direction='row' gap={1}>
@@ -142,7 +141,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         getExpandedRowModel: getExpandedRowModel(),
         meta: MTT.makeMeta<TableMeta>({ showConfirmDialog }),
         initialState: {
-            columnPinning: { left: ['select'], right: ['actions'] }
+            columnPinning: { left: ['select'], right: ['actions'] },
+            columnOrder: ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions']
         }
     });
 
