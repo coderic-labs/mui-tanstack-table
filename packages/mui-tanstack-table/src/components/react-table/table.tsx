@@ -21,13 +21,14 @@ export function Table<T>(props: TableProps<T>) {
     const { table, rowDetail, getCellStyle, stickyFooter, ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
     const { registerHeaderCell, widths } = useColumnWidthsObserver();
+
     const headerGroups = table.getHeaderGroups();
+    const columnOrder = table.getState().columnOrder;
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event;
         if (active && over && active.id !== over.id) {
             // reorder columns after drag & drop
-            const columnOrder = table.getState().columnOrder;
             const oldIndex = columnOrder.indexOf(active.id as string);
             const newIndex = columnOrder.indexOf(over.id as string);
             const newColumnOrder = arrayMove(columnOrder, oldIndex, newIndex);
@@ -36,7 +37,7 @@ export function Table<T>(props: TableProps<T>) {
             const overColumn = table.getColumn(over.id as string) as Column<T, unknown>;
             const activeColumn = table.getColumn(active.id as string) as Column<T, unknown>;
             const isOverPinned = overColumn.getIsPinned();
-            activeColumn.pin(isOverPinned)
+            if (activeColumn.getCanPin()) activeColumn.pin(isOverPinned)
             // update pinned columns to match the new order
             table.setColumnPinning(({ left = [], right = [] }) => ({
                 left: newColumnOrder.filter((header) => left.includes(header)),
@@ -66,9 +67,8 @@ export function Table<T>(props: TableProps<T>) {
                                 key={headerGroup.id}
                                 {...getDataTestAttrs(dataTests.table.headerRow, headerGroupIndex + 1)}>
                                 <SortableContext
-                                    items={table.getState().columnOrder}
-                                    strategy={horizontalListSortingStrategy}
-                                >
+                                    items={columnOrder}
+                                    strategy={horizontalListSortingStrategy}>
                                     {headerGroup.headers.map((header) =>
                                         <TableHeaderCell
                                             key={header.id}
