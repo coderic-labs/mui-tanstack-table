@@ -6,7 +6,7 @@ import { Meta } from '@storybook/blocks';
 
 ## Usage description
 
-Use as a column header renderer for inline sorting and filtering interactions.
+Use as a column header renderer for inline sorting, filtering, and column reordering.
 
 ## Shape
 
@@ -25,6 +25,18 @@ type TableHeaderProps<TData, TValue> = HeaderContext<TData, TValue> & StackProps
 ### Own props
 
 No custom props are defined by this library; this component consumes TanStack header context (plus Stack props).
+
+## Column order drag handle
+
+If the table supports column order (reordering), a drag handle icon will appear at the end of the header row for columns that can be reordered. Users can drag this handle to change the order of columns. The new order is reflected in the `columnOrder` state of the table instance.
+
+The drag handle is only shown for columns included in the current `columnOrder` state. It uses the `@dnd-kit/sortable` library for drag-and-drop interactions.
+
+### Example appearance
+
+![Column order drag handle](https://mui.com/static/branding/material-ui-logo.svg)
+
+See the [Column Order feature docs](../features/columnOrder) for a full demo and usage details.
 
 ## Related demos
 
