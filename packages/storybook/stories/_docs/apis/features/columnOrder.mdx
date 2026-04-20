@@ -1,0 +1,40 @@
+import { Meta, Source } from '@storybook/blocks';
+import ColumnsOrderDemoRaw from '../../../demoComponents/columsOrder?raw';
+
+<Meta title="Apis/Features/Columns Order" />
+
+# Column Order
+
+Column order lets users rearrange columns by changing their order in the UI. This works alongside column pinning and sticky headers/footers.
+
+## How it works
+
+Column reordering uses TanStack Table's state-based model. The order of column IDs in the `columnOrder` array determines the visible order:
+
+```typescript
+columnOrder: ['id', 'name', 'employmentType', 'verified', 'city']
+```
+
+When columns are reordered:
+- The new order is reflected in the UI immediately
+- Pinned columns remain pinned, but their order within pinned sections can change
+- Works with sticky header and sticky footer
+
+
+Users can change the order of columns using the UI. The new order updates the `columnOrder` state in TanStack Table.
+
+## Usage notes
+
+- Enable by setting the `columnOrder` state on the table instance
+- Control the order with the `columnOrder` state (see demo for example)
+- Works with column pinning and sticky header/footer
+
+## Example
+
+<Source code={ColumnsOrderDemoRaw} language="tsx" dark />
+
+## Related
+
+- [Demo / Columns Order](?path=/story/demo-columns-order--columns-order)
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)
