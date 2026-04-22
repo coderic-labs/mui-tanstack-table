@@ -1,4 +1,4 @@
-import { ClientSideTableDemo, ServerSideTableDemo } from '@demo-components';
+import { ClientSideTableDemo, ServerSideTableDemo, columnSizes } from '@demo-components';
 import { dataTests } from '@coderic-labs/mui-tanstack-table';
 import { Providers } from '../support/providers';
 import { assertStickyColumnProps, getByDataTest, getByDataTestId } from '../support/utils';
@@ -27,7 +27,7 @@ tableDemos.forEach(({ name, Component }) => {
     describe(name, () => {
 
         it(`renders pinned left and right cells as sticky`, () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'position', 'sticky');
             getByDataTestId(`${dataTests.table.dataCell}.1000.select`).should('have.css', 'left', '0px');
@@ -37,7 +37,7 @@ tableDemos.forEach(({ name, Component }) => {
         });
 
         it('pins and unpins a column using header column options', () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             openHeaderOptions('id');
             getByDataTest(dataTests.header.pinLeftOption).click();
@@ -56,7 +56,7 @@ tableDemos.forEach(({ name, Component }) => {
         });
 
         it('applies cumulative left offsets when multiple columns are pinned left', () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             openHeaderOptions('id');
             getByDataTest(dataTests.header.pinLeftOption).click();
@@ -65,12 +65,12 @@ tableDemos.forEach(({ name, Component }) => {
             getByDataTest(dataTests.header.pinLeftOption).click();
 
             assertStickyColumnProps('select', 0, 'left');
-            assertStickyColumnProps('id', 98, 'left');
-            assertStickyColumnProps('name', 225, 'left');
+            assertStickyColumnProps('id', columnSizes.select, 'left');
+            assertStickyColumnProps('name', columnSizes.select + columnSizes.id, 'left');
         });
 
         it('re-stacks pinned offsets after hiding a middle pinned column', () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             openHeaderOptions('id');
             getByDataTest(dataTests.header.pinLeftOption).click();
@@ -86,21 +86,21 @@ tableDemos.forEach(({ name, Component }) => {
             getByDataTestId(`${dataTests.table.footerCell}.id`).should('not.exist');
 
             assertStickyColumnProps('select', 0, 'left', 1000);
-            assertStickyColumnProps('name', 98, 'left', 1000);
+            assertStickyColumnProps('name', columnSizes.select, 'left', 1000);
         });
 
         it('applies cumulative right offsets when multiple columns are pinned right', () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             openHeaderOptions('projects');
             getByDataTest(dataTests.header.pinRightOption).click();
 
             assertStickyColumnProps('projects', 0, 'right');
-            assertStickyColumnProps('actions', 182, 'right');
+            assertStickyColumnProps('actions', columnSizes.projects, 'right');
         });
 
         it('updates stacked pinned positions after dataset/page change', () => {
-            cy.mount(<Providers><Component /></Providers>);
+            cy.mount(<Providers><Component enableColumnResizing/></Providers>);
 
             openHeaderOptions('id');
             getByDataTest(dataTests.header.pinLeftOption).click();
@@ -111,16 +111,16 @@ tableDemos.forEach(({ name, Component }) => {
             openHeaderOptions('name');
             getByDataTest(dataTests.header.pinLeftOption).click();
 
-            assertStickyColumnProps('id', 98, 'left', 1000);
-            assertStickyColumnProps('technologies', 225, 'left', 1000);
-            assertStickyColumnProps('name', 486, 'left', 1000);
+            assertStickyColumnProps('id', columnSizes.select, 'left', 1000);
+            assertStickyColumnProps('technologies', columnSizes.select + columnSizes.id, 'left', 1000);
+            assertStickyColumnProps('name', columnSizes.select + columnSizes.id + columnSizes.technologies, 'left', 1000);
 
             getByDataTest(dataTests.paginationV2.nextButton).click();
             getByDataTestId(`${dataTests.table.dataCell}.1010.id`).should('exist');
 
-            assertStickyColumnProps('id', 98, 'left', 1010);
-            assertStickyColumnProps('technologies', 225, 'left', 1010);
-            assertStickyColumnProps('name', 543, 'left', 1010);
+            assertStickyColumnProps('id', columnSizes.select, 'left', 1010);
+            assertStickyColumnProps('technologies', columnSizes.select + columnSizes.id, 'left', 1010);
+            assertStickyColumnProps('name', columnSizes.select + columnSizes.id + columnSizes.technologies, 'left', 1010);
         });
 
     });

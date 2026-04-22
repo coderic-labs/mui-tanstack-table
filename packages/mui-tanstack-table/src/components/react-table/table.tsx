@@ -39,7 +39,8 @@ export function Table<T>(props: TableProps<T>) {
                 <MuiTable
                     {...getDataTestAttrs(dataTests.table.root)}
                     {...tableProps}
-                    sx={{ borderCollapse: 'separate', tableLayout, ...tableProps.sx, ...columnSizeVars }}>
+                    sx={{ borderCollapse: 'separate', tableLayout, ...tableProps.sx }}
+                    style={{ ...columnSizeVars }}>
                     <TableHead {...getDataTestAttrs(dataTests.table.head)}>
                         {headerGroups.map((headerGroup, headerGroupIndex) => (
                             <MuiTableRow

@@ -17,3 +17,7 @@ export { RowActionsDemo } from './rowActions';
 export { ConfirmModalDemo } from './confirmModal';
 export { ColumnVisibilityDemo } from './columnVisibility';
 export { ResetHeaderDemo } from './resetHeader';
+
+import { columnSizes } from '../common/_colSizes';
+export { columnSizes };
+

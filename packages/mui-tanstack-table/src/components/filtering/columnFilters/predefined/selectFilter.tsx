@@ -9,7 +9,7 @@ export type SelectFilterProps<F> = {
 
 export function SelectFilter<T, F extends string | number>(props: HeaderContext<T, unknown> & SelectFilterProps<F>) {
     const { options, selectProps = {}, ...headerContext } = props;
-    const { multiple, sx, ...rest } = selectProps;
+    const { multiple, ...rest } = selectProps;
     const { column } = headerContext;
     const { setFilterValue, getFilterValue } = column;
 

@@ -10,6 +10,9 @@ export const ColumnSizesContext = createContext<ColumnSizesVars>(def);
 export const useColumnSizes = () => useContext(ColumnSizesContext);
 
 export const useColumnSizesVars = <T,>(table: TanstackTable<T>) => {
+    const columnSizingInfo = table.getState().columnSizingInfo;
+    const columnSizing = table.getState().columnSizing;
+
     const columnSizeVars = useMemo(() => {
         const headers = table.getFlatHeaders()
         const colSizes: { [key: string]: number } = {}
@@ -19,6 +22,8 @@ export const useColumnSizesVars = <T,>(table: TanstackTable<T>) => {
             colSizes[`--col-${header.column.id}-size`] = header.column.getSize()
         }
         return colSizes
-    }, [table.getState().columnSizingInfo, table.getState().columnSizing]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [columnSizingInfo, columnSizing, table]);
+
     return { columnSizeVars };
 }
