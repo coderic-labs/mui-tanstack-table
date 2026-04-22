@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { Theme, alpha, useTheme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
-import { Column, ColumnPinningPosition, Table as TanstackTable } from '@tanstack/react-table';
+import { Column, ColumnPinningPosition, Header, Table as TanstackTable } from '@tanstack/react-table';
 import { CSSProperties, useMemo } from 'react';
 import { getLeftOffset, getRightOffset } from '../../utils/pinning';
 import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
@@ -11,7 +11,8 @@ export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>)
 
     let styles: SystemStyleObject<Theme> = {
         backgroundColor: theme => theme.palette.background.paper,
-        position: 'relative'
+        position: 'relative',
+        width: `calc(var(--col-${column.id}-size) * 1px)`,
     };
 
     styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 1) };
@@ -19,13 +20,14 @@ export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>)
     return styles;
 };
 
-export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>, sticky?: boolean) => {
+export const useHeaderCellStyle = <T,>(header: Header<T, unknown>, table: TanstackTable<T>, sticky?: boolean) => {
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
         backgroundColor: theme => theme.palette.background.paper,
         verticalAlign: 'top',
-        position: 'relative'
+        position: 'relative',
+        width: `calc(var(--header-${header?.id}-size) * 1px)`
     };
 
     if (sticky) {
@@ -34,7 +36,7 @@ export const useHeaderCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
         styles.top = 0;
     }
 
-    styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 3) };
+    styles = { ...styles, ...getPinnedCellStyle(header.column, table, widths, 3) };
 
     return styles;
 };

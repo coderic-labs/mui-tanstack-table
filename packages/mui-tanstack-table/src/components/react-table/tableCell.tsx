@@ -2,6 +2,7 @@ import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Header, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useBodyCellStyle, useDraggingStyles, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
+import { TableColumnResizeHandler } from './tableColumnResizeHandler';
 import type { GetCellStyle } from './types';
 
 export type TableBodyCellProps<T> = {
@@ -32,12 +33,18 @@ export type TableHeaderCellProps<T> = {
     header: Header<T, unknown>;
     stickyHeader?: boolean;
     tableCellRef: (node: HTMLTableCellElement | null) => void;
+    tableLayout?: 'auto' | 'fixed';
 };
 
 export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
-    const { header, stickyHeader, tableCellRef } = props;
+    const { header, stickyHeader, tableCellRef, tableLayout } = props;
 
-    const headerCellStyle = useHeaderCellStyle(header.column, header.getContext().table, stickyHeader);
+    const canResize =
+        tableLayout === 'fixed' &&
+        header.column.getCanResize() &&
+        header.getContext().table.options.enableColumnResizing;
+
+    const headerCellStyle = useHeaderCellStyle(header, header.getContext().table, stickyHeader);
     const { draggingStyles, setNodeRef } = useDraggingStyles(header.column.id, 6);
 
     return (
@@ -48,6 +55,7 @@ export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
             style={draggingStyles}
             sx={headerCellStyle}>
             {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
+            {canResize && <TableColumnResizeHandler header={header} className='resize-handler'/>}
         </MuiTableCell>
     );
 };

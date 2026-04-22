@@ -3,6 +3,7 @@ import { Table as MuiTable, TableProps as MuiTableProps, TableRow as MuiTableRow
 import { Cell, Table as TanstackTable } from '@tanstack/react-table';
 import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
+import { useColumnSizesVars } from './columnSizesContext';
 import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
 import { TableBodyCell, TableFooterCell, TableHeaderCell } from './tableCell';
 import { TableDndContext } from './tableDndContext';
@@ -14,12 +15,20 @@ export type TableProps<T> = MuiTableProps & {
     rowDetail?: RowDetailComponent<T>;
     getCellStyle?: GetCellStyle<T>;
     stickyFooter?: boolean;
+    /**
+     * The CSS `table-layout` property of the table. Defaults to `auto`.
+     * auto - The column width is determined by the content of the cells. This is the default behavior of HTML tables.
+     * fixed - The column width is determined by tanstack columnWidths state.
+     */
+    tableLayout?: 'auto' | 'fixed';
 };
 
 export function Table<T>(props: TableProps<T>) {
-    const { table, rowDetail, getCellStyle, stickyFooter, ...tableProps } = props;
+    const { table, rowDetail, getCellStyle, stickyFooter, tableLayout = 'auto', ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
+
     const { registerHeaderCell, widths } = useColumnWidthsObserver();
+    const { columnSizeVars } = useColumnSizesVars(table);
 
     const headerGroups = table.getHeaderGroups();
     const columnOrder = table.getState().columnOrder;
@@ -27,7 +36,10 @@ export function Table<T>(props: TableProps<T>) {
     return (
         <TableDndContext table={table}>
             <ColumnWidthsContext.Provider value={widths}>
-                <MuiTable {...getDataTestAttrs(dataTests.table.root)} {...tableProps} sx={{ borderCollapse: 'separate', ...tableProps.sx }}>
+                <MuiTable
+                    {...getDataTestAttrs(dataTests.table.root)}
+                    {...tableProps}
+                    sx={{ borderCollapse: 'separate', tableLayout, ...tableProps.sx, ...columnSizeVars }}>
                     <TableHead {...getDataTestAttrs(dataTests.table.head)}>
                         {headerGroups.map((headerGroup, headerGroupIndex) => (
                             <MuiTableRow
@@ -42,6 +54,7 @@ export function Table<T>(props: TableProps<T>) {
                                             tableCellRef={el => registerHeaderCell(header.column.id, el)}
                                             header={header}
                                             stickyHeader={tableProps.stickyHeader}
+                                            tableLayout={tableLayout}
                                         />
                                     )}
                                 </SortableContext>

@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { Close, DragIndicator } from '@mui/icons-material';
-import { IconButton, Stack, StackProps, Zoom } from '@mui/material';
+import { DragIndicator } from '@mui/icons-material';
+import { Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
@@ -49,17 +49,6 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const headerColumnOptions =
         <TableColumnOptionsButton column={column} />
 
-    const headerFilter =
-        <Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
-            {flexRender(column.columnDef.filter, context)}
-            {context.column.getIsFiltered() &&
-                <Zoom in={context.column.getIsFiltered()}>
-                    <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
-                        <Close />
-                    </IconButton>
-                </Zoom>}
-        </Stack>
-
     const dragIndicator =
         <DragIndicator
             {...attributes}
@@ -77,7 +66,8 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
                 {headerColumnOptions}
                 {canOrder && dragIndicator}
             </Stack>
-            {canFilter && column.columnDef.filter && headerFilter}
+            {canFilter && column.columnDef.filter &&
+                flexRender(column.columnDef.filter, context)}
         </Stack>
     );
 }

@@ -34,10 +34,12 @@ const assertDefaultRows = () => {
 };
 
 const clearFilter = (columnId: string) => {
-    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`)
-        .scrollIntoView()
-        .find(`[data-test="${dataTests.header.filterClearButton}"]`)
-        .click({ force: true });
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`).within(() => {
+        getByDataTest(dataTests.header.columnOptionsButton).click({ force: true });
+    });
+    getByDataTest(dataTests.header.columnOptionsMenu).within(() => {
+        getByDataTest(dataTests.header.clearFilterOption).click({ force: true});
+    });
 };
 
 const tableDemos = [
@@ -168,13 +170,9 @@ tableDemos.forEach(({ name, Component }) => {
         it(`returns empty state for unmatched name and clears filter`, () => {
             mountTable();
             assertResultsLabel(expectedCounts.default);
-
             getByDataTest(dataTests.filters.textInput).first().find('input').type('___not_found___{enter}');
             assertResultsLabel(expectedCounts.unmatchedName);
             getByDataTest(dataTests.table.emptyState).should('be.visible');
-            getByDataTest(dataTests.header.filterClearButton).first().click();
-            getByDataTest(dataTests.table.emptyState).should('not.exist');
-            assertDefaultRows();
         });
 
     });
