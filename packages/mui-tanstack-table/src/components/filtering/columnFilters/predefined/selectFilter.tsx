@@ -25,7 +25,6 @@ export function SelectFilter<T, F extends string | number>(props: HeaderContext<
                 setFilterValue(fixedValue);
             }}
             multiple={multiple}
-            sx={{ minWidth: 150, maxWidth: 300, ...sx }}
             {...rest}>
             {options.map(option =>
                 <MenuItem

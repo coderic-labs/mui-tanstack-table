@@ -5,4 +5,5 @@ export type DemoTableProps = Omit<TableProps<Developer>, 'table'> & {
     enableMultiSort?: boolean;
     maxMultiSortColCount?: number,
     highlightRow?: string;
+    enableColumnResizing?: boolean;
 }

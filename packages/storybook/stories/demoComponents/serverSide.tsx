@@ -24,7 +24,9 @@ const columns = [
     columnHelper.display({
         id: 'select',
         enableHiding: false, // this column visibility state cannot be changed
-        enablePinning: false, // this column pinned state cannot be changed
+        enablePinning: false, // this column pinned state cannot be changed,
+        enableResizing: false, // this column resizing state cannot be changed
+        size: 100,
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -39,7 +41,7 @@ const columns = [
     columnHelper.accessor('id', {
         // render same content in header and footer
         header: MTT.TableHeader,
-        footer: MTT.TableHeader
+        footer: MTT.TableHeader,
     }),
     columnHelper.accessor('name', {
         header: MTT.TableHeader,
@@ -49,7 +51,8 @@ const columns = [
         title: 'hire date',
         header: MTT.TableHeader,
         filter: DateRangeFilter,
-        cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
+        cell: ({ getValue }) => getValue().toDate().toLocaleDateString(),
+        size: 350
     }),
     columnHelper.accessor('employmentType', {
         title: 'employment type',
@@ -60,7 +63,8 @@ const columns = [
         header: MTT.TableHeader,
         filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
         cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
-        tooltip: 'Last updated 1.1.2025'
+        tooltip: 'Last updated 1.1.2025',
+        size: 350
     }),
     columnHelper.accessor('projects', {
         header: MTT.TableHeader,
@@ -80,6 +84,8 @@ const columns = [
         id: 'actions',
         header: MTT.TableHeader,
         enableHiding: false, // this column visibility state cannot be changed
+        enableResizing: false, // this column resizing state cannot be changed
+        size: 130,
         cell: (cellContext) => {
             const { row, table } = cellContext;
             return (
@@ -101,7 +107,7 @@ const columns = [
 ];
 
 export const ServerSideTableDemo = (props: DemoTableProps) => {
-    const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
+    const { enableMultiSort, maxMultiSortColCount, highlightRow, enableColumnResizing, ...baseTableProps } = props;
 
     // table state
     const {
@@ -130,6 +136,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
         enableMultiSort,
         maxMultiSortColCount,
         enableExpanding: true,
+        enableColumnResizing,
+        columnResizeMode: 'onChange',
         getRowCanExpand: () => true,
         getRowId: (row) => row.id.toString(),
         onPaginationChange,
@@ -180,6 +188,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
                         table={table}
                         rowDetail={RowDetail}
                         getCellStyle={getCellStyle(highlightRow)}
+                        tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}

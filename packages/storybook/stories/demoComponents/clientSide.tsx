@@ -32,6 +32,8 @@ const columns = [
         id: 'select',
         enableHiding: false, // this column visibility state cannot be changed
         enablePinning: false, // this column pinned state cannot be changed
+        enableResizing: false, // this column resizing state cannot be changed
+        size: 100,
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -59,6 +61,7 @@ const columns = [
         filter: DateRangeFilter,
         filterFn: filterHireDate,
         sortingFn: 'datetime',
+        size: 350
     }),
     columnHelper.accessor('employmentType', {
         header: MTT.TableHeader,
@@ -74,6 +77,7 @@ const columns = [
         tooltip: 'Last updated 1.1.2025',
         filterFn: 'arrIncludesAll',
         sortingFn: 'auto',
+        size: 350
     }),
     columnHelper.accessor('projects', {
         header: MTT.TableHeader,
@@ -94,6 +98,8 @@ const columns = [
         id: 'actions',
         header: MTT.TableHeader,
         enableHiding: false,
+        enableResizing: false, // this column resizing state cannot be changed
+        size: 130,
         cell: ({ row, table }) => {
             return (
                 <Stack direction='row' gap={1}>
@@ -116,7 +122,7 @@ const columns = [
 ];
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
-    const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
+    const { enableMultiSort, maxMultiSortColCount, highlightRow, enableColumnResizing, ...baseTableProps } = props;
 
     const { data, deleteItems } = useItems();
 
@@ -133,6 +139,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         maxMultiSortColCount,
         enableColumnPinning: true,
         enableExpanding: true,
+        enableColumnResizing,
+        columnResizeMode: 'onChange',
         getRowCanExpand: () => true,
         getRowId: (row) => row.id.toString(),
         getCoreRowModel: getCoreRowModel(),
@@ -178,6 +186,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
                         table={table}
                         rowDetail={RowDetail}
                         getCellStyle={getCellStyle(highlightRow)}
+                        tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}
