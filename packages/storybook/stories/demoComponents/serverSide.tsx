@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react';
 import { columnSizes } from '../common/_colSizes';
 import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { Developer, useItems } from '../common/_data';
-import { getCellStyle } from '../common/_getCellStyle';
+import { getRowStyle } from '../common/_getCellStyle';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
@@ -196,7 +196,7 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle(highlightRow)}
+                        getRowStyle={getRowStyle(highlightRow)}
                         tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter

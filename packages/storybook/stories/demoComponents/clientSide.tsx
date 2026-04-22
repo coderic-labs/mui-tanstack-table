@@ -9,7 +9,7 @@ import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
-import { getCellStyle } from '../common/_getCellStyle';
+import { getRowStyle } from '../common/_getCellStyle';
 import { columnSizes } from '../common/_colSizes';
 
 type TableMeta = {
@@ -195,7 +195,7 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle(highlightRow)}
+                        getRowStyle={getRowStyle(highlightRow)}
                         tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter

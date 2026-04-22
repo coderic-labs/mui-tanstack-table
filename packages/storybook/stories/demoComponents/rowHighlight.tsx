@@ -2,7 +2,7 @@ import * as MTT from '@coderic-labs/mui-tanstack-table';
 import { Paper, Stack, TableContainer } from '@mui/material';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Developer, useItems } from '../common/_data';
-import { getCellStyle } from '../common/_getCellStyle';
+import { getRowStyle } from '../common/_getCellStyle';
 
 const columnHelper = createColumnHelper<Developer>();
 
@@ -40,7 +40,7 @@ export const RowHighlightDemo = () => {
         <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <Stack component={Paper} overflow='auto'>
                 <TableContainer>
-                    <MTT.Table table={table} getCellStyle={getCellStyle('1001')} />
+                    <MTT.Table table={table} getRowStyle={getRowStyle('1001')} />
                 </TableContainer>
             </Stack>
         </Stack>

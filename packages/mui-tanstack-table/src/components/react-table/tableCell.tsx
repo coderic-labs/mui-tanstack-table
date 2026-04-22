@@ -1,30 +1,40 @@
 import { TableCell as MuiTableCell } from '@mui/material';
 import { Cell, flexRender, Header, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { useBodyCellStyle, useDraggingStyles, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
+import { getPinnedCellBackground, useBodyCellStyle, useDraggingStyles, useFooterCellStyle, useHeaderCellStyle } from './styleUtils';
 import { TableColumnResizeHandler } from './tableColumnResizeHandler';
-import type { GetCellStyle } from './types';
 
 export type TableBodyCellProps<T> = {
     cell: Cell<T, unknown>;
     row: Row<T>;
-    getCellStyle?: GetCellStyle<T>;
 };
 
 export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
-    const { cell, row, getCellStyle } = props;
+    const { cell, row, } = props;
 
     const bodyCellStyle = useBodyCellStyle(cell.column, cell.getContext().table);
-    const bodyCellStyleOverride = getCellStyle?.(cell) ?? {};
     const { draggingStyles, setNodeRef } = useDraggingStyles(cell.column.id, 5);
 
     return (
         <MuiTableCell
             ref={setNodeRef}
             {...getDataTestAttrs(dataTests.table.dataCell, `${row.id}.${cell.column.id}`)}
-            sx={[bodyCellStyle, bodyCellStyleOverride]}
+            sx={[bodyCellStyle]}
             style={draggingStyles}>
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </MuiTableCell>
+    );
+};
+
+export const TableBodyFillerCell = () => {
+    return (
+        <MuiTableCell
+            {...getDataTestAttrs(dataTests.table.dataCell)}
+            sx={{
+                backgroundColor: `var(--rowcolor)`,
+                backgroundImage: getPinnedCellBackground,
+                padding: 0
+            }}>
         </MuiTableCell>
     );
 };
@@ -55,7 +65,27 @@ export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
             style={draggingStyles}
             sx={headerCellStyle}>
             {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
-            {canResize && <TableColumnResizeHandler header={header} className='resize-handler'/>}
+            {canResize && <TableColumnResizeHandler header={header} className='resize-handler' />}
+        </MuiTableCell>
+    );
+};
+
+type TableHeaderFillerCellProps = {
+    stickyHeader?: boolean;
+};
+
+export const TableHeaderFillerCell = (props: TableHeaderFillerCellProps) => {
+    const { stickyHeader } = props;
+
+    return (
+        <MuiTableCell
+            {...getDataTestAttrs(dataTests.table.headerCell)}
+            sx={{
+                backgroundColor: `var(--rowcolor)`,
+                padding: 0,
+                zIndex: stickyHeader ? 1 : undefined,
+                backgroundImage: getPinnedCellBackground
+            }}>
         </MuiTableCell>
     );
 };
@@ -83,3 +113,24 @@ export const TableFooterCell = <T,>(props: TableFooterCellProps<T>) => {
     );
 };
 
+type TableFooterFillerCellProps = {
+    stickyFooter?: boolean;
+};
+
+export const TableFooterFillerCell = (props: TableFooterFillerCellProps) => {
+    const { stickyFooter } = props;
+
+    return (
+        <MuiTableCell
+            {...getDataTestAttrs(dataTests.table.footerCell)}
+            sx={{
+                backgroundColor: `var(--rowcolor)`,
+                padding: 0,
+                position: stickyFooter ? 'sticky' : 'relative',
+                zIndex: stickyFooter ? 1 : undefined,
+                bottom: stickyFooter ? 0 : undefined,
+                backgroundImage: getPinnedCellBackground
+            }}>
+        </MuiTableCell>
+    );
+};

@@ -10,9 +10,10 @@ export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>)
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        backgroundColor: theme => theme.palette.background.paper,
+        backgroundColor: `var(--rowcolor)`,
         position: 'relative',
         width: `calc(var(--col-${column.id}-size) * 1px)`,
+        overflow: 'hidden',
     };
 
     styles = { ...styles, ...getPinnedCellStyle(column, table, widths, 1) };
@@ -24,10 +25,11 @@ export const useHeaderCellStyle = <T,>(header: Header<T, unknown>, table: Tansta
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        backgroundColor: theme => theme.palette.background.paper,
+        backgroundColor: `var(--rowcolor)`,
         verticalAlign: 'top',
         position: 'relative',
-        width: `calc(var(--header-${header?.id}-size) * 1px)`
+        width: `calc(var(--header-${header?.id}-size) * 1px)`,
+        overflow: 'hidden',
     };
 
     if (sticky) {
@@ -45,8 +47,9 @@ export const useFooterCellStyle = <T,>(column: Column<T>, table: TanstackTable<T
     const widths = useColumnWidths();
 
     let styles: SystemStyleObject<Theme> = {
-        backgroundColor: theme => theme.palette.background.paper,
-        position: 'relative'
+        backgroundColor: `var(--rowcolor)`,
+        position: 'relative',
+        overflow: 'hidden',
     };
 
     if (sticky) {

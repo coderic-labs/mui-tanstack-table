@@ -12,6 +12,7 @@ export const useColumnSizes = () => useContext(ColumnSizesContext);
 export const useColumnSizesVars = <T,>(table: TanstackTable<T>) => {
     const columnSizingInfo = table.getState().columnSizingInfo;
     const columnSizing = table.getState().columnSizing;
+    const columnVisibility = table.getState().columnVisibility;
 
     const columnSizeVars = useMemo(() => {
         const headers = table.getFlatHeaders()
@@ -23,7 +24,7 @@ export const useColumnSizesVars = <T,>(table: TanstackTable<T>) => {
         }
         return colSizes
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [columnSizingInfo, columnSizing, table]);
+    }, [columnSizingInfo, columnSizing, columnVisibility, table]);
 
     return { columnSizeVars };
 }
