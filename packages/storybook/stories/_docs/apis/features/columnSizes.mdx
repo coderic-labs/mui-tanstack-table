@@ -1,0 +1,75 @@
+import { Meta, Source } from '@storybook/blocks';
+import DemoRaw from '../../../demoComponents/clientSide?raw';
+
+<Meta title="Apis/Features/Columns Size" />
+
+# Column Size
+
+By default, columns have an automatic width based on their content. To enable column sizing features, set the table layout to `'fixed'` and provide explicit size values for columns.
+
+## Table layout: auto
+
+With the default `'auto'` layout, columns size themselves based on their content. This allows for dynamic widths but does not support explicit sizing or resizing.
+
+## Table layout: fixed
+
+Setting the table layout to `'fixed'` allows you to control column widths using the `size` property on column definitions. Column size is managed via TanStack Table's `columnSizing` state. By default, columns are 150px wide unless otherwise specified.
+
+
+**Example: Setting column sizes and min/max sizes**
+
+```typescript
+
+const columns = [
+    columnHelper.display({
+        id: 'select',
+        enableResizing: false,
+        // default size is 150px
+    }),
+    columnHelper.accessor('id', {
+        header: MTT.TableHeader,
+        size: columnSizes.id,
+        minSize: 70,
+    }),
+    // ...other columns
+];
+```
+
+## Column resizing
+
+To enable column resizing, set `tableLayout` to `'fixed'` and enable the feature in TanStack Table via `enableColumnResizing`.
+This will render resize handles in column headers that users can drag to adjust column widths at runtime.
+
+
+**Example: Enabling column resizing and toggling table layout**
+
+```typescript
+const table = useReactTable({
+    columns,
+    data,
+    enableColumnResizing: true,
+    columnResizeMode: 'onChange', // or 'onEnd'
+    ...other_options
+});
+
+<MTT.Table
+    table={table}
+    tableLayout={'fixed'}
+    ...other_props
+/>
+```
+
+To disable resizing for specific columns, set `enableResizing: false` on the column definition:
+
+```typescript
+columnHelper.display({
+    id: 'select',
+    enableResizing: false,
+    size: 100
+})
+```
+
+## Related demos
+
+- [Demo / Client Side Table](?path=/story/demo-client-side-table--client-side-table)
+- [Demo / Server Side Table](?path=/story/demo-server-side-table--server-side-table)
