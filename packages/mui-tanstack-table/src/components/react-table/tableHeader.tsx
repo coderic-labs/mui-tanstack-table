@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { Close, DragIndicator } from '@mui/icons-material';
-import { IconButton, Stack, StackProps, Zoom } from '@mui/material';
+import { DragIndicator } from '@mui/icons-material';
+import { Box, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
@@ -26,11 +26,12 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const { attributes, listeners } = useSortable({ id: column.id });
 
     const headerTitle =
-        <Stack direction='row' gap={0.5} alignItems='center' whiteSpace='nowrap'>
+        <Box whiteSpace='nowrap'
+            flexShrink={1} overflow='hidden' textOverflow='ellipsis'>
             {column.columnDef.title ?? column.id}
             {column.columnDef.tooltip &&
-                <InfoTooltip title={flexRender(column.columnDef.tooltip, context)} />}
-        </Stack>;
+                <InfoTooltip sx={{ mb: -0.2, ml: 0.2 }} title={flexRender(column.columnDef.tooltip, context)} />}
+        </Box>;
 
     const headerSorting =
         <Stack direction='row' alignItems='center' position={'relative'}>
@@ -49,23 +50,12 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const headerColumnOptions =
         <TableColumnOptionsButton column={column} />
 
-    const headerFilter =
-        <Stack direction='row' alignItems='center' gap={1} {...getDataTestAttrs(dataTests.header.filterContainer)}>
-            {flexRender(column.columnDef.filter, context)}
-            {context.column.getIsFiltered() &&
-                <Zoom in={context.column.getIsFiltered()}>
-                    <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
-                        <Close />
-                    </IconButton>
-                </Zoom>}
-        </Stack>
-
     const dragIndicator =
         <DragIndicator
             {...attributes}
             {...listeners}
             fontSize='small'
-            sx={{ cursor: 'grab', ml: 'auto' }}
+            sx={{ cursor: 'grab' }}
             {...getDataTestAttrs(dataTests.header.reorderHandle, column.id)}
         />
 
@@ -77,7 +67,8 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
                 {headerColumnOptions}
                 {canOrder && dragIndicator}
             </Stack>
-            {canFilter && column.columnDef.filter && headerFilter}
+            {canFilter && column.columnDef.filter &&
+                flexRender(column.columnDef.filter, context)}
         </Stack>
     );
 }

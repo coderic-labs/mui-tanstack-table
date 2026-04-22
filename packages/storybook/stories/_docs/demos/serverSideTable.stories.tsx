@@ -23,10 +23,10 @@ type Story = StoryObj<typeof ServerSideTableDemo>;
 export const ServerSideTable: Story = {
     args: {
         enableMultiSort: true,
+        enableColumnResizing: true,
         maxMultiSortColCount: 3,
         size: 'medium',
         padding: 'normal',
         stickyHeader: true,
     },
 };
-

@@ -21,9 +21,9 @@ export const dataTests = {
         pinLeftOption: 'mtt-header-pin-left-option',
         pinRightOption: 'mtt-header-pin-right-option',
         unpinOption: 'mtt-header-unpin-option',
+        clearFilterOption: 'mtt-header-clear-filter-option',
         hideColumnOption: 'mtt-header-hide-column-option',
         filterContainer: 'mtt-header-filter-container',
-        filterClearButton: 'mtt-header-filter-clear-button',
         filterPopoverTrigger: 'mtt-header-filter-popover-trigger',
         filterPopover: 'mtt-header-filter-popover',
         reorderHandle: 'mtt-header-reorder-handle'

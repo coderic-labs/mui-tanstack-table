@@ -113,7 +113,7 @@ const Filter = <TData, TValue>(context: HeaderContext<TData, TValue>) => {
             {flexRender(header.column.columnDef.filter, context)}
             {isFiltered &&
                 <Zoom in={context.column.getIsFiltered()}>
-                    <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)} {...getDataTestAttrs(dataTests.header.filterClearButton)}>
+                    <IconButton size='small' onClick={() => context.column.setFilterValue(undefined)}>
                         <Close />
                     </IconButton>
                 </Zoom>}

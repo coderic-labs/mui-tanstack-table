@@ -4,13 +4,13 @@ import { Button, Chip, IconButton, Paper, Stack, TableContainer } from '@mui/mat
 import type { ColumnFiltersState, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
 import { createColumnHelper, getCoreRowModel, getExpandedRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
+import { columnSizes } from '../common/_colSizes';
 import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { Developer, useItems } from '../common/_data';
-import { getCellStyle } from '../common/_getCellStyle';
+import { getRowStyle } from '../common/_getCellStyle';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
-
 
 type TableMeta = {
     showConfirmDialog: (ids: string[]) => void;
@@ -24,7 +24,9 @@ const columns = [
     columnHelper.display({
         id: 'select',
         enableHiding: false, // this column visibility state cannot be changed
-        enablePinning: false, // this column pinned state cannot be changed
+        enablePinning: false, // this column pinned state cannot be changed,
+        enableResizing: false, // this column resizing state cannot be changed
+        size: columnSizes.select,
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -39,33 +41,43 @@ const columns = [
     columnHelper.accessor('id', {
         // render same content in header and footer
         header: MTT.TableHeader,
-        footer: MTT.TableHeader
+        footer: MTT.TableHeader,
+        size: columnSizes.id,
+        minSize: 70,
     }),
     columnHelper.accessor('name', {
         header: MTT.TableHeader,
-        filter: TextFilter
+        filter: TextFilter,
+        size: columnSizes.name,
     }),
     columnHelper.accessor('hireDate', {
         title: 'hire date',
         header: MTT.TableHeader,
         filter: DateRangeFilter,
-        cell: ({ getValue }) => getValue().toDate().toLocaleDateString()
+        cell: ({ getValue }) => getValue().toDate().toLocaleDateString(),
+        size: columnSizes.hireDate,
     }),
     columnHelper.accessor('employmentType', {
         title: 'employment type',
         header: MTT.TableHeader,
-        filter: (context) => <SelectFilter {...context} options={employmentOptions} />
+        filter: (context) => <SelectFilter {...context} options={employmentOptions} />,
+        size: columnSizes.employmentType,
     }),
     columnHelper.accessor('technologies', {
         header: MTT.TableHeader,
         filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
-        cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
-        tooltip: 'Last updated 1.1.2025'
+        cell: ({ getValue }) =>
+            <Stack direction='row' flexWrap='wrap' gap={1}>
+                {getValue().map(x => <Chip size='small' key={x} label={x} />)}
+            </Stack>,
+        tooltip: 'Last updated 1.1.2025',
+        size: columnSizes.technologies,
     }),
     columnHelper.accessor('projects', {
         header: MTT.TableHeader,
         filter: TextFilter,
-        cell: ({ getValue }) => <Chip size='small' label={getValue()} />
+        cell: ({ getValue }) => <Chip size='small' label={getValue()} />,
+        size: columnSizes.projects,
     }),
     columnHelper.accessor('verified', {
         header: MTT.TableHeader,
@@ -74,12 +86,15 @@ const columns = [
             return `verified:${verifiedCount}`;
         },
         filter: (context) => <BooleanFilter {...context} labels={verifiedLabels} />,
-        cell: MTT.TableBooleanCell
+        cell: MTT.TableBooleanCell,
+        size: columnSizes.verified,
     }),
     columnHelper.display({
         id: 'actions',
         header: MTT.TableHeader,
         enableHiding: false, // this column visibility state cannot be changed
+        enableResizing: false, // this column resizing state cannot be changed
+        size: columnSizes.actions,
         cell: (cellContext) => {
             const { row, table } = cellContext;
             return (
@@ -101,7 +116,7 @@ const columns = [
 ];
 
 export const ServerSideTableDemo = (props: DemoTableProps) => {
-    const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
+    const { enableMultiSort, maxMultiSortColCount, highlightRow, enableColumnResizing, ...baseTableProps } = props;
 
     // table state
     const {
@@ -130,6 +145,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
         enableMultiSort,
         maxMultiSortColCount,
         enableExpanding: true,
+        enableColumnResizing,
+        columnResizeMode: 'onChange',
         getRowCanExpand: () => true,
         getRowId: (row) => row.id.toString(),
         onPaginationChange,
@@ -179,7 +196,8 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle(highlightRow)}
+                        getRowStyle={getRowStyle(highlightRow)}
+                        tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}

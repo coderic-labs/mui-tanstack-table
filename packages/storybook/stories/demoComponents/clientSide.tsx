@@ -9,7 +9,8 @@ import { ConfirmDeleteDialog } from '../common/_confirmDeleteDialog';
 import { employmentOptions, techOptions, verifiedLabels } from '../common/_options';
 import { RowDetail } from '../common/_rowDetail';
 import { DemoTableProps } from '../common/_types';
-import { getCellStyle } from '../common/_getCellStyle';
+import { getRowStyle } from '../common/_getCellStyle';
+import { columnSizes } from '../common/_colSizes';
 
 type TableMeta = {
     showConfirmDialog: (ids: string[]) => void;
@@ -32,6 +33,8 @@ const columns = [
         id: 'select',
         enableHiding: false, // this column visibility state cannot be changed
         enablePinning: false, // this column pinned state cannot be changed
+        enableResizing: false, // this column resizing state cannot be changed
+        size: columnSizes.select,
         header: (context) =>
             <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
                 <MTT.TableRowExpansionHeader {...context} />
@@ -45,12 +48,15 @@ const columns = [
     }),
     columnHelper.accessor('id', {
         header: MTT.TableHeader,
+        size: columnSizes.id,
+        minSize: 70
     }),
     columnHelper.accessor('name', {
         header: MTT.TableHeader,
         filter: TextFilter,
         filterFn: 'includesString',
         sortingFn: 'alphanumeric',
+        size: columnSizes.name
     }),
     columnHelper.accessor('hireDate', {
         header: MTT.TableHeader,
@@ -59,6 +65,7 @@ const columns = [
         filter: DateRangeFilter,
         filterFn: filterHireDate,
         sortingFn: 'datetime',
+        size: columnSizes.hireDate
     }),
     columnHelper.accessor('employmentType', {
         header: MTT.TableHeader,
@@ -66,14 +73,19 @@ const columns = [
         filter: (context) => <SelectFilter {...context} options={employmentOptions} />,
         filterFn: 'equals',
         sortingFn: 'alphanumeric',
+        size: columnSizes.employmentType
     }),
     columnHelper.accessor('technologies', {
         header: MTT.TableHeader,
         filter: (context) => <SelectFilter {...context} options={techOptions} selectProps={{ multiple: true }} />,
-        cell: ({ getValue }) => <Stack direction='row' gap={1}>{getValue().map(x => <Chip size='small' key={x} label={x} />)}</Stack>,
+        cell: ({ getValue }) =>
+            <Stack direction='row' flexWrap='wrap' gap={1}>
+                {getValue().map(x => <Chip size='small' key={x} label={x} />)}
+            </Stack>,
         tooltip: 'Last updated 1.1.2025',
         filterFn: 'arrIncludesAll',
         sortingFn: 'auto',
+        size: columnSizes.technologies
     }),
     columnHelper.accessor('projects', {
         header: MTT.TableHeader,
@@ -81,6 +93,7 @@ const columns = [
         cell: ({ getValue }) => <Chip size='small' label={getValue()} />,
         filterFn: 'weakEquals',
         sortingFn: 'alphanumeric',
+        size: columnSizes.projects
     }),
     columnHelper.accessor('verified', {
         header: MTT.TableHeader,
@@ -89,11 +102,14 @@ const columns = [
         cell: MTT.TableBooleanCell,
         filterFn: 'equals',
         sortingFn: 'auto',
+        size: columnSizes.verified
     }),
     columnHelper.display({
         id: 'actions',
         header: MTT.TableHeader,
         enableHiding: false,
+        enableResizing: false, // this column resizing state cannot be changed
+        size: columnSizes.actions,
         cell: ({ row, table }) => {
             return (
                 <Stack direction='row' gap={1}>
@@ -116,7 +132,7 @@ const columns = [
 ];
 
 export const ClientSideTableDemo = (props: DemoTableProps) => {
-    const { enableMultiSort, maxMultiSortColCount, highlightRow, ...baseTableProps } = props;
+    const { enableMultiSort, maxMultiSortColCount, highlightRow, enableColumnResizing, ...baseTableProps } = props;
 
     const { data, deleteItems } = useItems();
 
@@ -133,6 +149,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
         maxMultiSortColCount,
         enableColumnPinning: true,
         enableExpanding: true,
+        enableColumnResizing,
+        columnResizeMode: 'onChange',
         getRowCanExpand: () => true,
         getRowId: (row) => row.id.toString(),
         getCoreRowModel: getCoreRowModel(),
@@ -177,7 +195,8 @@ export const ClientSideTableDemo = (props: DemoTableProps) => {
                     <MTT.Table
                         table={table}
                         rowDetail={RowDetail}
-                        getCellStyle={getCellStyle(highlightRow)}
+                        getRowStyle={getRowStyle(highlightRow)}
+                        tableLayout={enableColumnResizing ? 'fixed' : 'auto'}
                         stickyHeader
                         stickyFooter
                         {...baseTableProps}

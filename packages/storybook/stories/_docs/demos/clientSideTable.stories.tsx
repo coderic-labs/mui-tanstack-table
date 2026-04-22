@@ -23,6 +23,7 @@ type Story = StoryObj<typeof ClientSideTableDemo>;
 export const ClientSideTable: Story = {
     args: {
         enableMultiSort: true,
+        enableColumnResizing: true,
         maxMultiSortColCount: 3,
         size: 'medium',
         padding: 'normal',

@@ -5,7 +5,8 @@ import RowHighlightDemoRaw from '../../../demoComponents/rowHighlight?raw';
 
 # Row Highlighting
 
-The `Table` component accepts a `getCellStyle` prop that lets you apply conditional styles to individual cells. Use it to highlight entire rows by returning the same style for all cells in a row based on `cell.row.original` data.
+The `Table` component accepts a `getRowStyle` prop that lets you apply conditional styles to individual cells. Use it to highlight entire rows by returning the same style for all cells in a row based on `cell.row.original` data.
+By setting variable `--rowcolor` in the returned style, you can control the background color of the entire row. Cells in this row will use 'var(--rowcolor)' as their background color.
 
 ## Type
 
@@ -17,23 +18,22 @@ Where `StyleValue` is an MUI `sx` style object: `SystemStyleObject<Theme> | ((th
 
 ## Usage
 
-Pass a `getCellStyle` function to `<Table>`:
+Pass a `getRowStyle` function to `<Table>`:
 
 ```tsx
-const getCellStyle = (cell: Cell<Developer, unknown>) => {
-  if (cell.row.original.employmentType === EmploymentType.intern) {
-    return { backgroundColor: 'warning.light', color: 'warning.contrastText' };
+const getRowStyle = (row: Row<Developer>) => {
+  if (row.original.employmentType === EmploymentType.intern) {
+    return { '--rowcolor': 'warning.light' };
   }
-  return undefined;
 };
 
-<Table table={table} getCellStyle={getCellStyle} />
+<Table table={table} getRowStyle={getRowStyle} />
 ```
 
 - Return a style object to apply it, or `undefined` to leave the cell unstyled.
-- Use `cell.row.original` to access row data for conditional logic.
+- Use `row.original` to access row data for conditional logic.
 - Use MUI theme tokens (`warning.light`, `error.main`, etc.) to stay consistent with the theme.
-- To highlight a full row, apply the same condition regardless of which column the cell belongs to.
+- Use `--rowcolor` variable to set the background colors for all cells in a row.
 
 ## Demo
 

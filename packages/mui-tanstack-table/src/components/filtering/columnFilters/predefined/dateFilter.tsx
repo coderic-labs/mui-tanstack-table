@@ -34,10 +34,10 @@ export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: Hea
     [column]);
 
     return (
-        <Stack direction='row' gap={1}>
+        <Stack direction='row' gap={2}>
             <DatePicker
                 {...getDataTestAttrs(dataTests.filters.dateRangeFrom)}
-                sx={{ minWidth: 150 }}
+                sx={{ width: 130, flex: 1 }}
                 value={from}
                 slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
                 onChange={(value) => handleChange(value, 'from')}
@@ -45,7 +45,7 @@ export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: Hea
             />
             <DatePicker
                 {...getDataTestAttrs(dataTests.filters.dateRangeTo)}
-                sx={{ minWidth: 150 }}
+                sx={{ width: 130, flex: 1 }}
                 value={to}
                 slotProps={{ textField: { size: 'small', variant: 'standard' }, openPickerButton: { size: 'small', sx: { margin: -1 } } }}
                 onChange={(value) => handleChange(value, 'to')}

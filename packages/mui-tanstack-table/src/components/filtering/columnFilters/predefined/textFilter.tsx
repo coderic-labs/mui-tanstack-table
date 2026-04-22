@@ -55,7 +55,6 @@ export function TextFilter<T>(props: HeaderContext<T, string | number> & { textF
             onBlur={() => { setValue(localValue); setFocused(false); }}
             slotProps={{ input: { endAdornment: focused ? adornmentApplyFilter : undefined } }}
             onKeyDown={handleKeyDown}
-            sx={{ minWidth: 150 }}
             {...textFieldProps}
         />
     );
