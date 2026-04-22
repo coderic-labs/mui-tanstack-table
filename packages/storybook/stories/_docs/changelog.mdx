@@ -4,6 +4,21 @@ import { Meta } from '@storybook/blocks';
 
 # Changelog
 
+## 0.0.9
+
+- The `getCellStyle` prop has been replaced by `getRowStyle`. Update your table usage to provide row-level styles via `getRowStyle`.
+- The CSS variable `--rowcolor` is now used for cell background color and can be set via `getRowStyle` for custom row highlighting or theming.
+- Added column resizing support:
+  - Users can resize columns by dragging the edge of column headers.
+  - Double-clicking the resize handle resets the column to its default size.
+  - Resizing is fully controlled by TanStack Table state; UI is provided via a draggable vertical divider in the header.
+  - Works with column pinning, column order, and visibility features.
+  - Cypress tests and Storybook demos updated to cover resizing scenarios.
+
+### Upgrade Notes
+
+- To enable column resizing, set `enableColumnResizing` in your table options and use `tableLayout="fixed"` on the table component.
+
 ## 0.0.8
 
 - Added column order (column reordering) support:
@@ -57,9 +72,11 @@ import { Meta } from '@storybook/blocks';
 - Refined row-selection behavior to use stable string row IDs across table interactions.
 - Expanded Cypress component coverage for pagination, row detail, row selection, and cross-page bulk deletion flows.
 
+
 ### Upgrade Notes
 
-- If you were using row-level styling APIs from previous pre-release builds, migrate to the current cell styling approach (`getRowStyle`).
+- The `getCellStyle` prop has been replaced by `getRowStyle`. Update your table usage to provide row-level styles via `getRowStyle`.
+- The CSS variable `--rowcolor` is now used for row background color and can be set via `getRowStyle` for custom row highlighting or theming.
 - Selection state keys are now normalized as string row IDs; custom integrations that inspect `rowSelection` directly should treat keys as strings.
 
 ## 0.0.4
