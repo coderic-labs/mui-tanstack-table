@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { DragIndicator } from '@mui/icons-material';
-import { Stack, StackProps, Zoom } from '@mui/material';
+import { Box, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
@@ -26,11 +26,12 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
     const { attributes, listeners } = useSortable({ id: column.id });
 
     const headerTitle =
-        <Stack direction='row' gap={0.5} alignItems='center' whiteSpace='nowrap'>
+        <Box whiteSpace='nowrap'
+            flexShrink={1} overflow='hidden' textOverflow='ellipsis'>
             {column.columnDef.title ?? column.id}
             {column.columnDef.tooltip &&
-                <InfoTooltip title={flexRender(column.columnDef.tooltip, context)} />}
-        </Stack>;
+                <InfoTooltip sx={{ mb: -0.2, ml: 0.2 }} title={flexRender(column.columnDef.tooltip, context)} />}
+        </Box>;
 
     const headerSorting =
         <Stack direction='row' alignItems='center' position={'relative'}>
@@ -54,7 +55,7 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
             {...attributes}
             {...listeners}
             fontSize='small'
-            sx={{ cursor: 'grab', ml: 'auto' }}
+            sx={{ cursor: 'grab' }}
             {...getDataTestAttrs(dataTests.header.reorderHandle, column.id)}
         />
 
