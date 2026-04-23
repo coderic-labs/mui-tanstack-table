@@ -11,7 +11,7 @@
     "bugs": {
         "url": "https://github.com/coderic-labs/mui-tanstack-table/issues"
     },
-    "homepage": "https://github.com/coderic-labs/mui-tanstack-table#readme",
+    "homepage": "https://coderic-labs.github.io/mui-tanstack-table",
     "publishConfig": {
         "access": "public"
     },
