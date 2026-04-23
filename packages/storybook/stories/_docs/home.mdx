@@ -1,4 +1,6 @@
-import { Meta } from '@storybook/blocks';
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import { Banner } from '../docComponents/banner';
+import { ClientSideTableDemo } from '../demoComponents/clientSide';
 
 <Meta title="Home" />
 
@@ -8,6 +10,8 @@ import { Meta } from '@storybook/blocks';
 
 This library provides a lightweight, render-only MUI layer for `@tanstack/react-table`. It lets you compose advanced table UIs using reusable MUI components while keeping all table state and logic inside TanStack Table.
 
+<Banner />
+
 ## Start here
 
 - **Getting Started** — Learn how to configure TanStack Table and render it with MUI components.
@@ -15,13 +19,7 @@ This library provides a lightweight, render-only MUI layer for `@tanstack/react-
 - **APIs** — Detailed reference for architecture, exports, filtering, sorting, and paging contracts.
 - **Roadmap** — What features are planned next.
 - **Changelog** — Current release notes and version history.
-
-## Why use this package?
-
-- **Render-only UI** — UI components consume a configured table instance, they do not contain table logic.
-- **Modular components** — Use only the toolbar, filtering, pagination, selection, expansion, column visibility, or column order (reordering) features you need.
-- **MUI styling** — Built for Material UI so tables fit into MUI-based applications.
-- **TanStack Table compatibility** — Works with TanStack Table v8 logic.
+- **Demo** — various demos showcasing different features and use cases.
 
 ## Quick links
 

@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Preview } from "@storybook/react";
-import { themes } from 'storybook/internal/theming';
+import { ThemedDocsContainer } from './docsContainer';
 import { themeDark } from './themes/dark';
 import { themeLight } from './themes/light';
 
@@ -25,7 +25,7 @@ const preview: Preview = {
     },
     parameters: {
         viewMode: 'docs',
-        docs: { theme: themes.dark },
+        docs: { container: ThemedDocsContainer },
         options: {
             storySort: {
                 order: [
