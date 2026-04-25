@@ -1,7 +1,18 @@
 # 📋 MUI TanStack Table
 
-> **A modular UI components library that provides pre-built Material-UI rendering for TanStack Table.**
-> **Render-only philosophy:** Configure TanStack Table, render with MUI components.
+Material UI components for TanStack Table - without owning your table logic.
+Build your table with TanStack. Render it with clean, composable MUI components.
+
+## 🤔 Why MUI TanStack Table?
+
+Most table libraries mix logic and UI together. With this library:
+
+- You own all table logic (TanStack Table)
+- We handle only rendering (MUI)
+
+✅ No hidden state
+✅ No lock-in
+✅ Full control
 
 ## 📚 Documentation
 
