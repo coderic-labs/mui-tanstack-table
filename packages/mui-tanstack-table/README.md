@@ -1,35 +1,28 @@
 # 📋 MUI TanStack Table
 
-Material UI components for TanStack Table - without owning your table logic.
-Build your table with TanStack. Render it with clean, composable MUI components.
+Material UI components for TanStack Table. You own the logic — we handle the UI.
+
+![Demo](https://raw.githubusercontent.com/coderic-labs/mui-tanstack-table/master/demo.gif)
 
 ## 🤔 Why MUI TanStack Table?
 
-Most table libraries mix logic and UI together. With this library:
+Define your table with TanStack Table. Render it with MTT.
 
-- You own all table logic (TanStack Table)
-- We handle only rendering (MUI)
-
-✅ No hidden state
-✅ No lock-in
-✅ Full control
+No hidden state • No lock-in • Full control
 
 ## 📚 Documentation
 
 See the [Documentation](https://coderic-labs.github.io/mui-tanstack-table) for examples and detailed API documentation.
 
-This package is a UI rendering layer for TanStack Table. Be sure to review the TanStack Table docs at [https://tanstack.com/table/v8](https://tanstack.com/table/v8)
+> ⚠️ This library assumes familiarity with `@tanstack/react-table`. Be sure to review the TanStack Table docs at [https://tanstack.com/table/v8](https://tanstack.com/table/v8)
 
 ## ⭐ Key Features
 
-- **🔧 Modular Design** - Mix and match components. Use filtering without pagination, or pagination without sorting—it's up to you.
-- **🔐 Zero Coupling** - Complete isolation between table logic and UI. Configure TanStack Table once with `useReactTable`, and let the UI components simply consume and render it.
-- **📊 Render-Only Components** - All MUI components are pure presentational. They trigger state changes through the TanStack Table headless model
-- **⚡ Built on TanStack Table** - Leverage the power of TanStack's headless table logic.
-- **🧩 Maximum flexibility and composability** - Ideal for advanced users and teams wanting to own all table logic and have full control.
-- **🔎 No hidden state or logic** - Everything is explicit and transparent; you control all table behavior.
-- **📘 Requires TanStack Table knowledge** - This library assumes you already understand `@tanstack/react-table` basics.
-- **🎨 Material-UI Components** - Styled with MUI for consistency and accessibility.
+- **🔧 Modular & Composable** – Use only what you need. Mix features freely.
+- **🔐 Zero Coupling** – Full separation between logic and UI.
+- **📊 Render-Only Components** – Pure UI, powered by TanStack Table state.
+- **⚡ Built on TanStack Table** – Keep full control of your data and behavior.
+- **🎨 Material UI** – Consistent, accessible design out of the box.
 
 ## 🚀 Quick Start
 
