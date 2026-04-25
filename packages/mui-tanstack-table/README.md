@@ -102,14 +102,14 @@ These are implemented or demonstrated in the current library:
 - Pagination
 - Row selection and bulk operations
 - Row expansion with detail rows
+- Row highlighting
 - Column visibility
 - Column pinning
 - Column ordering
-- columns resizing
+- Columns resizing
 - Sticky header/footer
 - Client-side and server-side usage
-- Various handlers
-- set of predefined filters
+- Ready-to-use filters and table controls.
 
 ## ❌ Features missing
 
