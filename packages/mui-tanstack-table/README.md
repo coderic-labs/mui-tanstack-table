@@ -20,76 +20,80 @@ This package is a UI rendering layer for TanStack Table. Be sure to review the T
 - **📘 Requires TanStack Table knowledge** - This library assumes you already understand `@tanstack/react-table` basics.
 - **🎨 Material-UI Components** - Styled with MUI for consistency and accessibility.
 
-## Quick Start
+## 🚀 Quick Start
 
-### Installation
+Install package and peer dependencies.
 
 ```bash
-npm install @coderic-labs/mui-tanstack-table
+npm install @coderic-labs/mui-tanstack-table @mui/material @mui/x-date-pickers @tanstack/react-table react react-dom @mui/icons-material @emotion/react @emotion/styled react-intl
 ```
 
-### Basic Usage
+Define columns.
 
 ```tsx
 import * as MTT from '@coderic-labs/mui-tanstack-table';
-import { createColumnHelper, useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 
-function MyTable() {
+const columnHelper = createColumnHelper<Developer>();
 
-  // Step 1: Configure TanStack Table (all logic, no UI)
-  const columnHelper = createColumnHelper<Developer>();
+const columns = [
+  columnHelper.display({
+    id: 'select',
+    header: MTT.TableRowSelectionHeader,
+    cell: MTT.TableRowSelectionCell,
+  }),
+  columnHelper.accessor('name', {
+    header: MTT.TableHeader,
+    filter: MTT.predefinedColumnFilters.TextFilter,
+    filterFn: 'includesString',
+  })
+];
+```
 
-  const columns = [
-    columnHelper.display({
-      id: 'select',
-      header: MTT.TableRowSelectionHeader,
-      cell: MTT.TableRowSelectionCell,
-    }),
-    columnHelper.accessor('name', {
-      header: MTT.TableHeader,
-      filter: MTT.predefinedColumnFilters.TextFilter,
-      filterFn: 'includesString',
-    }),
-    ...
-  ];
+Create a TanStack table.
 
-  const table = useReactTable({
-    data: myData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+```tsx
+import { useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table';
 
-  // Step 2: Use MUI components for rendering
-  return (
-    <Stack>
-      <MTT.TableToolbar>
-        <MTT.TableResultsLabel table={table} />
-        <MTT.TableColumnVisibilityToggle table={table} />
-      </MTT.TableToolbar>
-      <TableContainer component={Paper}>
-        <MTT.Table table={table} />
-      </TableContainer>
-      <MTT.TablePaginationV2 table={table} />
-    </Stack>
-  );
-}
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+});
+```
+
+Render table.
+
+```tsx
+import * as MTT from '@coderic-labs/mui-tanstack-table';
+
+<Stack>
+  <MTT.TableToolbar>
+    <MTT.TableResultsLabel table={table} />
+    <MTT.TableColumnVisibilityToggle table={table} />
+  </MTT.TableToolbar>
+  <TableContainer component={Paper}>
+    <MTT.Table table={table} />
+  </TableContainer>
+  <MTT.TablePaginationV2 table={table} />
+</Stack>
 ```
 
 ## 🏗️ Architecture: Clean Separation
 
 > **⚠️ CRITICAL PRINCIPLE:** This library follows a **strict render-only philosophy.** Table logic and UI rendering are completely isolated.
 
-### Responsibility Breakdown:
+### Responsibility Breakdown
 
 | Layer | Responsibility | Framework |
-|-------|---|---|
-| **Table Logic** | All filtering, sorting, pagination, state, row selection | TanStack Table (`useReactTable`) |
-| **UI Rendering** | Pure presentation of configured data | MUI Components |
+| --- | --- | --- |
+| **Table Logic** | All filtering, sorting, pagination, state | TanStack Table (`useReactTable`) |
+| **Table Render** | Table UI | MTT Components |
 
-## Features that are present
+## ✅ Features that are present
 
 These are implemented or demonstrated in the current library:
 
@@ -107,7 +111,7 @@ These are implemented or demonstrated in the current library:
 - Various handlers
 - set of predefined filters
 
-## Features missing
+## ❌ Features missing
 
 These common table capabilities are not yet provided by the UI layer:
 
@@ -120,6 +124,6 @@ These common table capabilities are not yet provided by the UI layer:
 
 If this project helps you, consider supporting its development.
 
-👉 https://github.com/sponsors/ErikParso
+👉 <https://github.com/sponsors/ErikParso>
 
 Suggestions, feedback, and contributions are welcome!
