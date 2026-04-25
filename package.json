@@ -1,6 +1,6 @@
 {
 	"name": "@coderic-labs/mui-tanstack-table-monorepo",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"description": "Mui tanstack table monorepo.",
 	"scripts": {
 		"build": "npm run build -ws --if-present",
