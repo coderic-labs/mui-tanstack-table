@@ -18,8 +18,8 @@ Run from the repo root. If either fails for reasons unrelated to your change, re
 ## React Component Source Rules
 
 - Always declare component arguments as `props: PropsType` and destructure in the first line of the function body — never destructure in the function signature.
-- Extract a component into its own file when it has named props, conditional rendering paths, event handling, or enough JSX to merit a standalone unit.
-- Keep small inline render helpers only when private, used once, and extraction adds no value.
+- Each component lives in its own dedicated file. Inline components are only acceptable when private, used exactly once, and extraction would add indirection without any benefit.
+- Extract into its own file when a component has named props, conditional rendering paths, event handling, or enough JSX to merit a standalone unit.
 - Colocate related component files in the same feature folder (e.g. `cells/`, `rows/`).
 - Keep hooks, pure helpers, and constants out of component files unless tightly scoped to that single component.
 - Component files render UI and delegate table state and behavior to TanStack inputs and existing helpers — never own state.
