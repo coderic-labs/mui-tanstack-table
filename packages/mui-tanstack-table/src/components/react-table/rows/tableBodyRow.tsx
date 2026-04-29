@@ -1,10 +1,10 @@
 import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { TableRow as MuiTableRow, styled } from '@mui/material';
 import { Cell, Row, Table as TanstackTable } from '@tanstack/react-table';
-import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { TableBodyCell, TableBodyFillerCell } from './tableCell';
+import { dataTests, getDataTestAttrs } from '../../../dataTests';
+import { TableBodyCell, TableBodyFillerCell } from '../cells/tableBodyCell';
 import { TableDetailRow } from './tableDetailRow';
-import type { GetRowStyle, RowDetailComponent } from './types';
+import type { GetRowStyle, RowDetailComponent } from '../types';
 
 type TableBodyRowProps<T> = {
     row: Row<T>;

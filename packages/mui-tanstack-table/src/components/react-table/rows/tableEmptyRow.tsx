@@ -1,7 +1,7 @@
 import { TableCell as MuiTableCell, TableRow as MuiTableRow, Stack, Typography } from '@mui/material';
 import { Table } from '@tanstack/react-table';
-import { useTableIntl } from '../../context/tableIntl';
-import { dataTests, getDataTestAttrs } from '../../dataTests';
+import { useTableIntl } from '../../../context/tableIntl';
+import { dataTests, getDataTestAttrs } from '../../../dataTests';
 
 export type TableEmptyRowProps<T> = {
     table: Table<T>,

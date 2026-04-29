@@ -1,8 +1,8 @@
 import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { TableRow as MuiTableRow } from '@mui/material';
 import { HeaderGroup, Table as TanstackTable } from '@tanstack/react-table';
-import { dataTests, getDataTestAttrs } from '../../dataTests';
-import { TableFooterCell, TableFooterFillerCell } from './tableCell';
+import { dataTests, getDataTestAttrs } from '../../../dataTests';
+import { TableFooterCell, TableFooterFillerCell } from '../cells/tableFooterCell';
 
 type TableFooterRowProps<T> = {
     footerGroup: HeaderGroup<T>;

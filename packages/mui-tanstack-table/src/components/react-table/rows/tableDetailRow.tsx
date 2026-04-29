@@ -1,7 +1,7 @@
 import { TableCell as MuiTableCell, TableRow as MuiTableRow } from '@mui/material';
 import { Row } from '@tanstack/react-table';
-import { dataTests, getDataTestAttrs } from '../../dataTests';
-import type { RowDetailComponent } from './types';
+import { dataTests, getDataTestAttrs } from '../../../dataTests';
+import type { RowDetailComponent } from '../types';
 
 export type TableDetailRowProps<T> = {
     row: Row<T>,

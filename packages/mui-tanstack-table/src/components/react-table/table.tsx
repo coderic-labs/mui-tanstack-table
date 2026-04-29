@@ -3,11 +3,11 @@ import { Table as TanstackTable } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useColumnSizesVars } from './columnSizesContext';
 import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
-import { TableBodyRow } from './tableBodyRow';
 import { TableDndContext } from './tableDndContext';
-import { TableEmptyRow } from './tableEmptyRow';
-import { TableFooterRow } from './tableFooterRow';
-import { TableHeaderRow } from './tableHeaderRow';
+import { TableBodyRow } from './rows/tableBodyRow';
+import { TableEmptyRow } from './rows/tableEmptyRow';
+import { TableFooterRow } from './rows/tableFooterRow';
+import { TableHeaderRow } from './rows/tableHeaderRow';
 import type { GetRowStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
