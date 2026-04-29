@@ -24,6 +24,7 @@ type TableProps<T> = MuiTableProps & {
   rowDetail?: RowDetailComponent<T>;
   getRowStyle?: GetRowStyle<T>;
   stickyFooter?: boolean;
+  tableLayout?: 'auto' | 'fixed';
 };
 ```
 
@@ -37,10 +38,13 @@ type TableProps<T> = MuiTableProps & {
   Optional renderer for expanded row detail content.
 - `getRowStyle`
   Type: `GetRowStyle<T> | undefined`
-  Optional callback for per-cell style customization.
+  Optional callback for per-row style customization.
 - `stickyFooter`
   Type: `boolean | undefined`
   Optional flag to keep footer cells sticky at the bottom when the table is rendered in a scrollable container.
+- `tableLayout`
+  Type: `'auto' | 'fixed' | undefined`
+  Optional table layout mode. Defaults to `'auto'`. Use `'fixed'` to enable column sizing funcs.
 
 ## Related demos
 

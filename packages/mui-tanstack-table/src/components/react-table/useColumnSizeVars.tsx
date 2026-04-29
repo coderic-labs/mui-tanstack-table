@@ -1,13 +1,5 @@
 import { Table as TanstackTable } from '@tanstack/react-table';
-import { createContext, useContext, useMemo } from 'react';
-
-export type ColumnSizesVars = Record<string, number>;
-
-const def: ColumnSizesVars = {};
-
-export const ColumnSizesContext = createContext<ColumnSizesVars>(def);
-
-export const useColumnSizes = () => useContext(ColumnSizesContext);
+import { useMemo } from 'react';
 
 export const useColumnSizesVars = <T,>(table: TanstackTable<T>) => {
     const columnSizingInfo = table.getState().columnSizingInfo;
