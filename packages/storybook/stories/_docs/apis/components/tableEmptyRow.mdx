@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableEmptyRow" />
+
+# TableEmptyRow
+
+## Usage description
+
+Render a full-width empty state row when the table has no data rows. Displays a localized "no results" message centered in the cell.
+
+## Shape
+
+```ts
+TableEmptyRow<T>(props: TableEmptyRowProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableEmptyRowProps<T> = {
+  table: Table<T>;
+  tableLayout: 'fixed' | 'auto';
+};
+```
+
+### Own props
+
+- `table`
+  Type: `Table<T>`
+  Required TanStack table instance used to compute colspan across visible leaf columns.
+- `tableLayout`
+  Type: `'fixed' | 'auto'`
+  Controls colspan calculation — adds one extra column in `fixed` layout to cover the filler cell.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

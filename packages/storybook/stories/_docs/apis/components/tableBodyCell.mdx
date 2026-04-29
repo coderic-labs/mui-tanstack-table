@@ -1,0 +1,58 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableBodyCell" />
+
+# TableBodyCell
+
+## Usage description
+
+Render a single data cell within a body row. Applies column width, pinning styles, and drag visual transform. Used internally by `TableBodyRow`.
+
+## Shape
+
+```ts
+TableBodyCell<T>(props: TableBodyCellProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableBodyCellProps<T> = {
+  cell: Cell<T, unknown>;
+  row: Row<T>;
+};
+```
+
+### Own props
+
+- `cell`
+  Type: `Cell<T, unknown>`
+  Required TanStack cell instance used to render cell content and apply column styles.
+- `row`
+  Type: `Row<T>`
+  Required TanStack row instance used for test attribute identification.
+
+---
+
+# TableBodyFillerCell
+
+## Usage description
+
+Render a spacer cell appended at the end of a body row when `tableLayout="fixed"`. Maintains background and pinning styling to fill remaining horizontal space.
+
+## Shape
+
+```ts
+TableBodyFillerCell()
+```
+
+## Props
+
+No props.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)
