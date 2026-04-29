@@ -40,7 +40,7 @@ export const TableEmptyRow = <T,>(props: TableEmptyRowProps<T>) => {
             <MuiTableCell colSpan={colspan}>
                 <Stack width={'100%'} height={'100px'} alignItems={'center'} justifyContent={'center'} padding={2} {...getDataTestAttrs(dataTests.table.emptyState)}>
                     <Typography variant='body2' fontStyle='italic'>
-                        {formatMessage({ id: 'components.reactTable.noResults' })}
+                        {formatMessage({ id: 'reactTable.noResults' })}
                     </Typography>
                 </Stack>
             </MuiTableCell>

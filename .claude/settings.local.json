@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -rn \"\\\\\\\\[\\\\\\\\]\" packages/mui-tanstack-table/src/components/react-table/columnSizesContext.tsx)"
+    ]
+  }
+}
