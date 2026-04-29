@@ -7,7 +7,8 @@ import { useColumnSizesVars } from './columnSizesContext';
 import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
 import { TableBodyCell, TableBodyFillerCell, TableFooterCell, TableFooterFillerCell, TableHeaderCell, TableHeaderFillerCell } from './tableCell';
 import { TableDndContext } from './tableDndContext';
-import { TableDetailRow, TableEmptyRow } from './tableRow';
+import { TableDetailRow } from './tableDetailRow';
+import { TableEmptyRow } from './tableEmptyRow';
 import type { GetRowStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {

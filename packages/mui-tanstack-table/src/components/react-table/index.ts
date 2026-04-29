@@ -12,5 +12,7 @@ export * from './tableToolbar';
 export * from './tableResetHeader';
 export * from './tableRowExpansion';
 export * from './tableRowSelection';
+export * from './tableDetailRow';
+export * from './tableEmptyRow';
 export * from './utils';
 export * from './types';
