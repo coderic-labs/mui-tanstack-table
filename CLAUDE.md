@@ -8,7 +8,7 @@
 
 ## Pre-commit Checks (always run both after any TS/TSX/JS/config change)
 
-```
+```sh
 npm run tsc
 npm run lint-fix
 ```
@@ -17,6 +17,7 @@ Run from the repo root. If either fails for reasons unrelated to your change, re
 
 ## React Component Source Rules
 
+- Always declare component arguments as `props: PropsType` and destructure in the first line of the function body — never destructure in the function signature.
 - Extract a component into its own file when it has named props, conditional rendering paths, event handling, or enough JSX to merit a standalone unit.
 - Keep small inline render helpers only when private, used once, and extraction adds no value.
 - Colocate related component files in the same feature folder (e.g. `cells/`, `rows/`).
