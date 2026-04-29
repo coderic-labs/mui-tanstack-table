@@ -1,6 +1,5 @@
-import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { TableRow as MuiTableRow, styled } from '@mui/material';
-import { Cell, Row, Table as TanstackTable } from '@tanstack/react-table';
+import { Cell, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../../dataTests';
 import { TableBodyCell, TableBodyFillerCell } from '../cells/tableBodyCell';
 import { TableDetailRow } from './tableDetailRow';
@@ -8,15 +7,13 @@ import type { GetRowStyle, RowDetailComponent } from '../types';
 
 type TableBodyRowProps<T> = {
     row: Row<T>;
-    table: TanstackTable<T>;
     rowDetail?: RowDetailComponent<T>;
     getRowStyle?: GetRowStyle<T>;
     tableLayout: 'auto' | 'fixed';
 }
 
 export const TableBodyRow = <T,>(props: TableBodyRowProps<T>) => {
-    const { row, table, rowDetail, getRowStyle, tableLayout } = props;
-    const columnOrder = table.getState().columnOrder;
+    const { row, rowDetail, getRowStyle, tableLayout } = props;
 
     return (
         <>
@@ -24,16 +21,11 @@ export const TableBodyRow = <T,>(props: TableBodyRowProps<T>) => {
                 {...getDataTestAttrs(dataTests.table.dataRow, row.id)}
                 sx={getRowStyle ? getRowStyle(row) : undefined}>
                 {row.getVisibleCells().map((cell: Cell<T, unknown>) =>
-                    <SortableContext
+                    <TableBodyCell
                         key={cell.id}
-                        items={columnOrder}
-                        strategy={horizontalListSortingStrategy}>
-                        <TableBodyCell
-                            key={cell.id}
-                            cell={cell}
-                            row={row}
-                        />
-                    </SortableContext>
+                        cell={cell}
+                        row={row}
+                    />
                 )}
                 {tableLayout === 'fixed' && <TableBodyFillerCell />}
             </DataRowStyled>

@@ -1,5 +1,6 @@
 import { Table as MuiTable, TableProps as MuiTableProps, TableBody, TableFooter, TableHead } from '@mui/material';
 import { Table as TanstackTable } from '@tanstack/react-table';
+import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useColumnSizesVars } from './columnSizesContext';
 import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
@@ -22,59 +23,59 @@ export function Table<T>(props: TableProps<T>) {
     const { table, rowDetail, getRowStyle, stickyFooter, tableLayout = 'auto', ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);
 
+    const columnOrder = table.getState().columnOrder;
     const { registerHeaderCell, widths } = useColumnWidthsObserver();
     const { columnSizeVars } = useColumnSizesVars(table);
 
     return (
         <TableDndContext table={table}>
             <ColumnWidthsContext.Provider value={widths}>
-                <MuiTable
-                    {...getDataTestAttrs(dataTests.table.root)}
-                    {...tableProps}
-                    sx={{ borderCollapse: 'separate', tableLayout, ...tableProps.sx }}
-                    style={{ ...columnSizeVars }}>
-                    <TableHead {...getDataTestAttrs(dataTests.table.head)}>
-                        {table.getHeaderGroups().map((headerGroup, headerGroupIndex) =>
-                            <TableHeaderRow
-                                key={headerGroup.id}
-                                headerGroup={headerGroup}
-                                table={table}
-                                stickyHeader={tableProps.stickyHeader}
-                                tableLayout={tableLayout}
-                                registerHeaderCell={registerHeaderCell}
-                                headerGroupIndex={headerGroupIndex}
-                            />
-                        )}
-                    </TableHead>
-                    <TableBody {...getDataTestAttrs(dataTests.table.body)}>
-                        {table.getRowModel().rows.map(row =>
-                            <TableBodyRow
-                                key={row.id}
-                                row={row}
-                                table={table}
-                                rowDetail={rowDetail}
-                                getRowStyle={getRowStyle}
-                                tableLayout={tableLayout}
-                            />
-                        )}
-                        {!table.getRowModel().rows.length &&
+                <SortableContext items={columnOrder} strategy={horizontalListSortingStrategy}>
+                    <MuiTable
+                        {...getDataTestAttrs(dataTests.table.root)}
+                        {...tableProps}
+                        sx={{ borderCollapse: 'separate', tableLayout, ...tableProps.sx }}
+                        style={{ ...columnSizeVars }}>
+                        <TableHead {...getDataTestAttrs(dataTests.table.head)}>
+                            {table.getHeaderGroups().map((headerGroup, headerGroupIndex) =>
+                                <TableHeaderRow
+                                    key={headerGroup.id}
+                                    headerGroup={headerGroup}
+                                    stickyHeader={tableProps.stickyHeader}
+                                    tableLayout={tableLayout}
+                                    registerHeaderCell={registerHeaderCell}
+                                    headerGroupIndex={headerGroupIndex}
+                                />
+                            )}
+                        </TableHead>
+                        <TableBody {...getDataTestAttrs(dataTests.table.body)}>
+                            {table.getRowModel().rows.map(row =>
+                                <TableBodyRow
+                                    key={row.id}
+                                    row={row}
+                                    rowDetail={rowDetail}
+                                    getRowStyle={getRowStyle}
+                                    tableLayout={tableLayout}
+                                />
+                            )}
+                            {!table.getRowModel().rows.length &&
                             <TableEmptyRow table={table} tableLayout={tableLayout} />}
-                    </TableBody>
-                    {showFooter &&
+                        </TableBody>
+                        {showFooter &&
                         <TableFooter {...getDataTestAttrs(dataTests.table.footer)}>
                             {table.getFooterGroups().map((footerGroup, footerGroupIndex) =>
                                 <TableFooterRow
                                     key={footerGroup.id}
                                     footerGroup={footerGroup}
-                                    table={table}
                                     stickyFooter={stickyFooter}
                                     tableLayout={tableLayout}
                                     footerGroupIndex={footerGroupIndex}
                                 />
                             )}
                         </TableFooter>
-                    }
-                </MuiTable>
+                        }
+                    </MuiTable>
+                </SortableContext>
             </ColumnWidthsContext.Provider>
         </TableDndContext>
     );
