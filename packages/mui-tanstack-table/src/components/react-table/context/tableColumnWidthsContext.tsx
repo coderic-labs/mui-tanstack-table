@@ -14,6 +14,12 @@ export type TableColumnWidthsContextProviderProps = {
     children: (registerHeaderCell: RegisterHeaderCell) => React.ReactNode;
 }
 
+/**
+ * Provides column widths based on the widths of header cells.
+ * The header cells need to be registered using the `registerHeaderCell` function provided.
+ * @param props
+ * @returns
+ */
 export const TableColumnWidthsContextProvider = (props: TableColumnWidthsContextProviderProps) => {
     const { children } = props;
     const { registerHeaderCell, widths } = useColumnWidthsObserver();
