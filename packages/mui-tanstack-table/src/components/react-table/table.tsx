@@ -1,14 +1,16 @@
+import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { Table as MuiTable, TableProps as MuiTableProps, TableBody, TableFooter, TableHead } from '@mui/material';
 import { Table as TanstackTable } from '@tanstack/react-table';
-import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+import { Fragment } from 'react';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useColumnSizesVars } from './columnSizesContext';
 import { ColumnWidthsContext, useColumnWidthsObserver } from './columnWidthsContext';
-import { TableDndContext } from './tableDndContext';
 import { TableBodyRow } from './rows/tableBodyRow';
+import { TableDetailRow } from './rows/tableDetailRow';
 import { TableEmptyRow } from './rows/tableEmptyRow';
 import { TableFooterRow } from './rows/tableFooterRow';
 import { TableHeaderRow } from './rows/tableHeaderRow';
+import { TableDndContext } from './tableDndContext';
 import type { GetRowStyle, RowDetailComponent } from './types';
 
 export type TableProps<T> = MuiTableProps & {
@@ -50,29 +52,34 @@ export function Table<T>(props: TableProps<T>) {
                         </TableHead>
                         <TableBody {...getDataTestAttrs(dataTests.table.body)}>
                             {table.getRowModel().rows.map(row =>
-                                <TableBodyRow
-                                    key={row.id}
-                                    row={row}
-                                    rowDetail={rowDetail}
-                                    getRowStyle={getRowStyle}
-                                    tableLayout={tableLayout}
-                                />
+                                <Fragment key={row.id}>
+                                    <TableBodyRow
+                                        row={row}
+                                        getRowStyle={getRowStyle}
+                                        tableLayout={tableLayout}
+                                    />
+                                    {row.getIsExpanded() && rowDetail &&
+                                        <TableDetailRow
+                                            row={row}
+                                            rowDetail={rowDetail}
+                                            tableLayout={tableLayout} />}
+                                </Fragment>
                             )}
                             {!table.getRowModel().rows.length &&
-                            <TableEmptyRow table={table} tableLayout={tableLayout} />}
+                                <TableEmptyRow table={table} tableLayout={tableLayout} />}
                         </TableBody>
                         {showFooter &&
-                        <TableFooter {...getDataTestAttrs(dataTests.table.footer)}>
-                            {table.getFooterGroups().map((footerGroup, footerGroupIndex) =>
-                                <TableFooterRow
-                                    key={footerGroup.id}
-                                    footerGroup={footerGroup}
-                                    stickyFooter={stickyFooter}
-                                    tableLayout={tableLayout}
-                                    footerGroupIndex={footerGroupIndex}
-                                />
-                            )}
-                        </TableFooter>
+                            <TableFooter {...getDataTestAttrs(dataTests.table.footer)}>
+                                {table.getFooterGroups().map((footerGroup, footerGroupIndex) =>
+                                    <TableFooterRow
+                                        key={footerGroup.id}
+                                        footerGroup={footerGroup}
+                                        stickyFooter={stickyFooter}
+                                        tableLayout={tableLayout}
+                                        footerGroupIndex={footerGroupIndex}
+                                    />
+                                )}
+                            </TableFooter>
                         }
                     </MuiTable>
                 </SortableContext>
