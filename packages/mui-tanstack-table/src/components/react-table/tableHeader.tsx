@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { DragIndicator } from '@mui/icons-material';
-import { Box, Stack, StackProps, Zoom } from '@mui/material';
+import { Box, IconButton, Stack, StackProps, Zoom } from '@mui/material';
 import { flexRender, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { InfoTooltip } from '../infoTooltip';
@@ -51,13 +51,14 @@ export function TableHeader<TData, TValue>(context: HeaderContext<TData, TValue>
         <TableColumnOptionsButton column={column} />
 
     const dragIndicator =
-        <DragIndicator
-            {...attributes}
-            {...listeners}
-            fontSize='small'
-            sx={{ cursor: 'grab' }}
+        <IconButton
             {...getDataTestAttrs(dataTests.header.reorderHandle, column.id)}
-        />
+            size='small'
+            sx={{ margin: -5 / 8, cursor: 'grab' }}
+            {...attributes}
+            {...listeners}>
+            <DragIndicator fontSize='small' />
+        </IconButton>
 
     return (
         <Stack gap={0.5} {...rest}>

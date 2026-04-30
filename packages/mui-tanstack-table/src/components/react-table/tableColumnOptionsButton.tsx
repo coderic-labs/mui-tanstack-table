@@ -1,5 +1,5 @@
 import { FilterAltOff, MoreHoriz, PushPin, PushPinOutlined, VisibilityOff } from '@mui/icons-material';
-import { Divider, ListItemIcon, Menu, MenuItem, SvgIconProps } from '@mui/material';
+import { Divider, IconButton, ListItemIcon, Menu, MenuItem, SvgIconProps } from '@mui/material';
 import { Column } from '@tanstack/react-table';
 import { useMemo, useRef, useState } from 'react';
 import { useTableIntl } from '../../context/tableIntl';
@@ -22,7 +22,7 @@ type TableColumnOptionsButtonProps<TData, TValue> = {
 export const TableColumnOptionsButton = <TData, TValue>(props: TableColumnOptionsButtonProps<TData, TValue>) => {
     const { column } = props;
     const { formatMessage } = useTableIntl();
-    const anchorRef = useRef<SVGSVGElement | null>(null);
+    const anchorRef = useRef<HTMLButtonElement | null>(null);
     const [open, setOpen] = useState(false);
 
     const canPin = column.getCanPin();
@@ -90,14 +90,15 @@ export const TableColumnOptionsButton = <TData, TValue>(props: TableColumnOption
 
     return (
         <>
-            <MoreHoriz
+            <IconButton
                 ref={anchorRef}
                 {...getDataTestAttrs(dataTests.header.columnOptionsButton)}
                 aria-label='Column options'
-                onClick={() => setOpen(true)}
-                sx={{ cursor: 'pointer', color: 'inherit', }}
-                fontSize='small'
-            />
+                size='small'
+                sx={{ margin: -5 / 8 }}
+                onClick={() => setOpen(true)}>
+                <MoreHoriz fontSize='small' />
+            </IconButton>
             <Menu
                 {...getDataTestAttrs(dataTests.header.columnOptionsMenu)}
                 anchorEl={anchorRef.current}
