@@ -81,6 +81,25 @@ export const assertSelectedRowsLabel = (selectedCount: number, totalCount: numbe
 
 export const allColumns = ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions'] as const;
 
+export const assertColumnOrder = (expectedOrder: readonly string[]) => {
+    getByDataTest(dataTests.table.headerCell).then($cells => {
+        const actualIds = Array.from($cells)
+            .map(el => (el.getAttribute('data-testid') ?? '').replace(`${dataTests.table.headerCell}.`, ''))
+            .filter(id => id !== '');
+        expect(actualIds).to.deep.equal([...expectedOrder]);
+    });
+};
+
+// Drag a column handle using keyboard: focuses the handle, presses Space to pick up,
+// then presses the arrow key `times` times, then presses Space to drop.
+export const dragAndDropCol = (columnId: string, direction: 'left' | 'right', times: number) => {
+    const arrowKey = direction === 'left' ? '{leftarrow}' : '{rightarrow}';
+    getByDataTestId(`${dataTests.header.reorderHandle}.${columnId}`)
+        .first()
+        .focus()
+        .type(`{enter}${arrowKey.repeat(times)}{enter}`);
+};
+
 export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
     const visibleSet = new Set(visibleColumns);
 
