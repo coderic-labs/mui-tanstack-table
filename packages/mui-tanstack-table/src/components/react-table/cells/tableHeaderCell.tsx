@@ -4,13 +4,23 @@ import { dataTests, getDataTestAttrs } from '../../../dataTests';
 import { getPinnedCellBackground, useDraggingStyles, useHeaderCellStyle } from '../styleUtils';
 import { TableColumnResizeHandler } from '../tableColumnResizeHandler';
 
+/**
+ * Props for {@link TableHeaderCell}.
+ */
 export type TableHeaderCellProps<T> = {
+    /** TanStack `Header` instance for this header cell. */
     header: Header<T, unknown>;
+    /** When `true`, applies sticky positioning so the header stays visible while scrolling. */
     stickyHeader?: boolean;
+    /** Callback ref used by the column-widths context to measure the cell's DOM width. */
     tableCellRef: (node: HTMLTableCellElement | null) => void;
+    /** CSS `table-layout` value inherited from the parent `<Table>`. Enables resize handles when `"fixed"`. */
     tableLayout?: 'auto' | 'fixed';
 };
 
+/**
+ * Renders a header table cell, including pinning, drag-reorder styles, and optional resize handle.
+ */
 export const TableHeaderCell = <T,>(props: TableHeaderCellProps<T>) => {
     const { header, stickyHeader, tableCellRef, tableLayout } = props;
 
@@ -39,6 +49,7 @@ type TableHeaderFillerCellProps = {
     stickyHeader?: boolean;
 };
 
+/** Empty filler cell used to fill remaining space in header rows with pinned columns. */
 export const TableHeaderFillerCell = (props: TableHeaderFillerCellProps) => {
     const { stickyHeader } = props;
 

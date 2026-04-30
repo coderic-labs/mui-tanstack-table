@@ -13,14 +13,27 @@ import { TableHeaderRow } from './rows/tableHeaderRow';
 import type { GetRowStyle, RowDetailComponent } from './types';
 import { useColumnSizesVars } from './useColumnSizeVars';
 
+/** Props for the root {@link Table} component. */
 export type TableProps<T> = MuiTableProps & {
     table: TanstackTable<T>;
+    /** Component rendered in an expanded detail row beneath a body row. */
     rowDetail?: RowDetailComponent<T>;
+    /** Per-row `sx` style resolver. Return `undefined` to use default row styling. */
     getRowStyle?: GetRowStyle<T>;
+    /** Pins the footer to the bottom of the scroll container. */
     stickyFooter?: boolean;
+    /**
+     * CSS `table-layout` value.
+     * Use `"fixed"` when column resizing is enabled (required by the resize handler).
+     * @default "auto"
+     */
     tableLayout?: 'auto' | 'fixed';
 };
 
+/**
+ * Root table component. Renders the full MUI `Table` head, body, and footer from the provided TanStack table instance.
+ * Wrap in {@link TableLocalizationProvider} and MUI x-date-pickers `<LocalizationProvider>` as needed.
+ */
 export function Table<T>(props: TableProps<T>) {
     const { table, rowDetail, getRowStyle, stickyFooter, tableLayout = 'auto', ...tableProps } = props;
     const showFooter = table.getAllColumns().some(c => c.getIsVisible() && c.columnDef.footer);

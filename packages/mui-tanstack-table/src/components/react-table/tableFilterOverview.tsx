@@ -4,11 +4,21 @@ import { ColumnFilter, Table } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 import { useTableIntl } from '../../context/tableIntl';
 
+/** Props for {@link TableFilterOverview}. */
 export type TableFilterOverviewProps<T> = Omit<TypographyProps, 'children'> & {
     table: Table<T>,
+    /**
+     * Custom formatter for the filter chip label.
+     * Receives the raw `ColumnFilter`; return a human-readable string.
+     * Falls back to `String(filter.value)` when omitted.
+     */
     formatFilterValue?: (filter: ColumnFilter) => string
 }
 
+/**
+ * Shows active column filters as dismissible `Chip` elements and a reset link.
+ * Returns `null` when there are no active filters.
+ */
 export const TableFilterOverview = <T, >(props: TableFilterOverviewProps<T>) => {
     const { table, formatFilterValue, ...rest } = props;
     const columnFilters = table.getState().columnFilters;

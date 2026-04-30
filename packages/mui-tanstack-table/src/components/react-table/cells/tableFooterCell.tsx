@@ -3,11 +3,19 @@ import { flexRender, Header } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../../dataTests';
 import { getPinnedCellBackground, useDraggingStyles, useFooterCellStyle } from '../styleUtils';
 
+/**
+ * Props for {@link TableFooterCell}.
+ */
 export type TableFooterCellProps<T> = {
+    /** TanStack `Header` instance for this footer cell. */
     header: Header<T, unknown>;
+    /** When `true`, applies `position: sticky; bottom: 0` to keep the footer visible while scrolling. */
     stickyFooter?: boolean;
 };
 
+/**
+ * Renders a footer table cell, including pinning and drag-reorder styles.
+ */
 export const TableFooterCell = <T,>(props: TableFooterCellProps<T>) => {
     const { header, stickyFooter } = props;
 
@@ -30,6 +38,7 @@ type TableFooterFillerCellProps = {
     stickyFooter?: boolean;
 };
 
+/** Empty filler cell used to fill remaining space in footer rows with pinned columns. */
 export const TableFooterFillerCell = (props: TableFooterFillerCellProps) => {
     const { stickyFooter } = props;
 

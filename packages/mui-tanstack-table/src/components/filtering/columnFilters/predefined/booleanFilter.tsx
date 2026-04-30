@@ -3,14 +3,26 @@ import { HeaderContext } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
+/** Label overrides for the tri-state checkbox values in {@link BooleanFilter}. */
 export type BooleanFilterProps = {
+    /**
+     * Labels for each checkbox state.
+     * Omit to hide state labels.
+     */
     labels?: {
+        /** Label shown when no filter is active (indeterminate). */
         undetermined: string;
+        /** Label shown when the filter is `true`. */
         checked: string;
+        /** Label shown when the filter is `false`. */
         unchecked: string;
     }
 };
 
+/**
+ * Tri-state checkbox filter for boolean columns.
+ * Use as `columnDef.filter` to enable boolean filtering in the header.
+ */
 export function BooleanFilter<T>(props: HeaderContext<T, boolean> & BooleanFilterProps) {
     const { labels, ...headerContext } = props;
     const { column } = headerContext;

@@ -4,6 +4,11 @@ import { HeaderContext } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
+/**
+ * Text input column filter with deferred commit (applies on blur or Enter).
+ * Use as `columnDef.filter` to enable text filtering in the header.
+ * @param textFieldProps - Forwarded to the underlying MUI `TextField`.
+ */
 export function TextFilter<T>(props: HeaderContext<T, string | number> & { textFieldProps?: TextFieldProps }) {
     const { textFieldProps, ...headerContext } = props;
     const { column } = headerContext;

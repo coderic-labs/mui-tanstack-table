@@ -5,6 +5,11 @@ import { useCallback } from 'react';
 import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 import { DateRangeFilterProps, DateRangeFilterValue } from '../../types';
 
+/**
+ * Single-date column filter using a MUI `DatePicker`.
+ * Use as `columnDef.filter` to enable date filtering in the header.
+ * @param datePickerProps - Forwarded directly to the MUI `DatePicker`.
+ */
 export function DateFilter<TData, TDate extends PickerValidDate>(props: HeaderContext<TData, unknown> & { datePickerProps: DatePickerProps<TDate> }) {
     const { datePickerProps, ...headerContext } = props;
     const { column } = headerContext;
@@ -23,6 +28,11 @@ export function DateFilter<TData, TDate extends PickerValidDate>(props: HeaderCo
     );
 }
 
+/**
+ * Two-date range filter using two MUI `DatePicker` widgets.
+ * Stores a {@link DateRangeFilterValue} in the column filter state.
+ * Use as `columnDef.filter` to enable range filtering in the header.
+ */
 export function DateRangeFilter<TData, TDate extends PickerValidDate>(props: HeaderContext<TData, unknown> & DateRangeFilterProps<TDate>) {
     const { fromProps, toProps, ...headerContext } = props;
     const { column } = headerContext;

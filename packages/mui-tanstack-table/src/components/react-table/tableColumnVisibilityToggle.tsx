@@ -8,6 +8,10 @@ type TableColumnVisibilityToggleProps<T> = IconButtonProps & {
     table: Table<T>;
 };
 
+/**
+ * Icon button that opens a column-visibility menu listing all hideable columns.
+ * Includes a "toggle all" checkbox at the top. Renders `null` when no columns can be hidden.
+ */
 export function TableColumnVisibilityToggle<T>(props: TableColumnVisibilityToggleProps<T>) {
     const { table, ...rest } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -5,11 +5,17 @@ import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 const defaultOptions = [10, 25, 50, 100];
 
+/** Props for {@link TablePagination}. */
 export type TablePaginationProps<TData> = StackProps & {
     table: Table<TData>;
+    /** Page-size options shown in the rows-per-page dropdown. @default [10, 25, 50, 100] */
     options?: number[];
 }
 
+/**
+ * Pagination bar with MUI `Pagination` and a rows-per-page `Select`.
+ * Reads and writes pagination state directly through the table instance.
+ */
 export const TablePagination = <TData, >(props: TablePaginationProps<TData>) => {
     const { table, options = defaultOptions, ...rest } = props;
     const pageOptions = table.getPageOptions();

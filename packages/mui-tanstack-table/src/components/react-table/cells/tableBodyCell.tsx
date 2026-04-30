@@ -3,11 +3,19 @@ import { Cell, flexRender, Row } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../../dataTests';
 import { getPinnedCellBackground, useBodyCellStyle, useDraggingStyles } from '../styleUtils';
 
+/**
+ * Props for {@link TableBodyCell}.
+ */
 export type TableBodyCellProps<T> = {
+    /** TanStack `Cell` instance for this column/row intersection. */
     cell: Cell<T, unknown>;
+    /** TanStack `Row` instance for the containing row. */
     row: Row<T>;
 };
 
+/**
+ * Renders a body table cell, including pinning and drag-reorder styles.
+ */
 export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
     const { cell, row, } = props;
 
@@ -25,6 +33,7 @@ export const TableBodyCell = <T,>(props: TableBodyCellProps<T>) => {
     );
 };
 
+/** Empty filler cell used to fill remaining space in body rows with pinned columns. */
 export const TableBodyFillerCell = () => {
     return (
         <MuiTableCell
