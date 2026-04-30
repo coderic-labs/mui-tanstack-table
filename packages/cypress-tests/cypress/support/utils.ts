@@ -81,6 +81,47 @@ export const assertSelectedRowsLabel = (selectedCount: number, totalCount: numbe
 
 export const allColumns = ['select', 'id', 'name', 'hireDate', 'employmentType', 'technologies', 'projects', 'verified', 'actions'] as const;
 
+export const assertColumnOrder = (expectedOrder: readonly string[]) => {
+    getByDataTest(dataTests.table.headerCell).then($cells => {
+        const actualIds = Array.from($cells)
+            .map(el => (el.getAttribute('data-testid') ?? '').replace(`${dataTests.table.headerCell}.`, ''))
+            .filter(id => id !== '');
+        expect(actualIds).to.deep.equal([...expectedOrder]);
+    });
+};
+
+// Drag a column handle using keyboard: focuses the handle, presses Space to pick up,
+// then presses the arrow key `times` times, then presses Space to drop.
+export const dragAndDropCol = (columnId: string, direction: 'left' | 'right', times: number) => {
+    const arrowKey = direction === 'left' ? '{leftarrow}' : '{rightarrow}';
+    getByDataTestId(`${dataTests.header.reorderHandle}.${columnId}`)
+        .first()
+        .focus()
+        .type(`{enter}${arrowKey.repeat(times)}{enter}`);
+};
+
+export const assertColWidth = (columnId: string, expectedPx: number) => {
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`)
+        .last()
+        .should($cell => {
+            expect(Math.round($cell[0].getBoundingClientRect().width)).to.equal(expectedPx);
+        });
+};
+
+// Resize a column by simulating mousedown on its resize handle then a mousemove on the document.
+// deltaX is the number of pixels to add (positive = wider, negative = narrower).
+// mousemove/mouseup are dispatched via .then() so React flushes the mousedown state (startSize)
+// before the move handler runs — otherwise TanStack divides by startSize=null and ignores the delta.
+export const resizeCol = (columnId: string, deltaX: number) => {
+    getByDataTestId(`${dataTests.header.resizeHandle}.${columnId}`)
+        .first()
+        .trigger('mousedown', { clientX: 0, force: true });
+    cy.document().then(doc => {
+        doc.dispatchEvent(new MouseEvent('mousemove', { clientX: deltaX, bubbles: true, cancelable: true }));
+        doc.dispatchEvent(new MouseEvent('mouseup', { clientX: deltaX, bubbles: true, cancelable: true }));
+    });
+};
+
 export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
     const visibleSet = new Set(visibleColumns);
 
@@ -92,4 +133,11 @@ export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
         }
         getByDataTestId(selector).should('not.exist');
     });
+};
+
+export const openHeaderOptions = (columnId: string) => {
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`).within(() => {
+        getByDataTest(dataTests.header.columnOptionsButton).click({ force: true });
+    });
+    getByDataTest(dataTests.header.columnOptionsMenu).should('be.visible');
 };

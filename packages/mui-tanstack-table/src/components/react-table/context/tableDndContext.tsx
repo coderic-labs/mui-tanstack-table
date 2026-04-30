@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
  * TableDndContext component wraps DndContext and manages drag handler for column reordering and pinning.
  * Passes DnD props to children via render prop.
  */
-export function TableDndContext<T>({ table, children }: { table: TanstackTable<T>; children: ReactNode; }) {
+export function TableDndContextProvider<T>({ table, children }: { table: TanstackTable<T>; children: ReactNode; }) {
     const sensors = useSensors(
         useSensor(MouseSensor, {}),
         useSensor(TouchSensor, {}),

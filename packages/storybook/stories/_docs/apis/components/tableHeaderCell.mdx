@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableHeaderCell" />
+
+# TableHeaderCell
+
+## Usage description
+
+Render a single header cell. Applies column width, sticky styles, pinning, drag visual transform, and an optional resize handler. Used internally by `TableHeaderRow`.
+
+## Shape
+
+```ts
+TableHeaderCell<T>(props: TableHeaderCellProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableHeaderCellProps<T> = {
+  header: Header<T, unknown>;
+  stickyHeader?: boolean;
+  tableCellRef: (node: HTMLTableCellElement | null) => void;
+  tableLayout?: 'auto' | 'fixed';
+};
+```
+
+### Own props
+
+- `header`
+  Type: `Header<T, unknown>`
+  Required TanStack header instance used to render header content and apply column styles.
+- `stickyHeader`
+  Type: `boolean | undefined`
+  Optional flag passed through to apply sticky positioning styles.
+- `tableCellRef`
+  Type: `(node: HTMLTableCellElement | null) => void`
+  Callback that registers the cell DOM element with the column widths observer.
+- `tableLayout`
+  Type: `'auto' | 'fixed' | undefined`
+  Controls whether the column resize handler is rendered.
+
+---
+
+# TableHeaderFillerCell
+
+## Usage description
+
+Render a spacer cell appended at the end of a header row when `tableLayout="fixed"`. Maintains background and sticky styles to fill remaining horizontal space.
+
+## Shape
+
+```ts
+TableHeaderFillerCell(props: { stickyHeader?: boolean })
+```
+
+## Props
+
+- `stickyHeader`
+  Type: `boolean | undefined`
+  Optional flag to apply sticky `zIndex` on the filler cell.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

@@ -1,5 +1,5 @@
 import { Column, Table as TanstackTable } from '@tanstack/react-table';
-import { ColumnWidths } from '../components/react-table/columnWidthsContext';
+import { ColumnWidths } from '../components/react-table/context/tableColumnWidthsContext';
 
 export const getLeftOffset = <T,>(column: Column<T, unknown>, table: TanstackTable<T>, widths: ColumnWidths) => {
     const leftPinned = table.getLeftVisibleLeafColumns();

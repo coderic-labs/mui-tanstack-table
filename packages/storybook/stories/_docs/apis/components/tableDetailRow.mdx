@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableDetailRow" />
+
+# TableDetailRow
+
+## Usage description
+
+Render an expanded detail row beneath a body row. Spans all visible columns and renders the provided `rowDetail` component. Used internally by `Table` and can be used to build custom row expansion layouts.
+
+## Shape
+
+```ts
+TableDetailRow<T>(props: TableDetailRowProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableDetailRowProps<T> = {
+  row: Row<T>;
+  rowDetail: RowDetailComponent<T>;
+  tableLayout: 'fixed' | 'auto';
+};
+```
+
+### Own props
+
+- `row`
+  Type: `Row<T>`
+  Required TanStack row instance used to compute colspan and pass to the detail renderer.
+- `rowDetail`
+  Type: `RowDetailComponent<T>`
+  Required render function invoked with the row to produce detail content.
+- `tableLayout`
+  Type: `'fixed' | 'auto'`
+  Controls colspan calculation — adds one extra column in `fixed` layout to cover the filler cell.
+
+## Related demos
+
+- [Row Detail demo](?path=/story/demo-row-detail--row-detail)

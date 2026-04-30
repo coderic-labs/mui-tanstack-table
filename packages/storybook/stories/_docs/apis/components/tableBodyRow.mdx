@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableBodyRow" />
+
+# TableBodyRow
+
+## Usage description
+
+Render a single data row within the table body. Used internally by `Table` and available for composing custom table layouts.
+
+## Shape
+
+```ts
+TableBodyRow<T>(props: TableBodyRowProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableBodyRowProps<T> = {
+  row: Row<T>;
+  getRowStyle?: GetRowStyle<T>;
+  tableLayout: 'auto' | 'fixed';
+};
+```
+
+### Own props
+
+- `row`
+  Type: `Row<T>`
+  Required TanStack row instance used to render visible cells.
+- `getRowStyle`
+  Type: `GetRowStyle<T> | undefined`
+  Optional callback returning per-row MUI `sx` styles.
+- `tableLayout`
+  Type: `'auto' | 'fixed'`
+  Controls whether a filler cell is appended in `fixed` layout mode.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

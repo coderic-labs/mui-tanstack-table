@@ -1,0 +1,59 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableFooterCell" />
+
+# TableFooterCell
+
+## Usage description
+
+Render a single footer cell. Applies column pinning styles and drag visual transform. Used internally by `TableFooterRow`.
+
+## Shape
+
+```ts
+TableFooterCell<T>(props: TableFooterCellProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableFooterCellProps<T> = {
+  header: Header<T, unknown>;
+  stickyFooter?: boolean;
+};
+```
+
+### Own props
+
+- `header`
+  Type: `Header<T, unknown>`
+  Required TanStack header instance used to render footer content and column styles.
+- `stickyFooter`
+  Type: `boolean | undefined`
+  Optional flag to apply sticky positioning to the footer cell.
+
+---
+
+# TableFooterFillerCell
+
+## Usage description
+
+Render a spacer cell appended at the end of a footer row when `tableLayout="fixed"`. Maintains background and sticky styles to fill remaining horizontal space.
+
+## Shape
+
+```ts
+TableFooterFillerCell(props: { stickyFooter?: boolean })
+```
+
+## Props
+
+- `stickyFooter`
+  Type: `boolean | undefined`
+  Optional flag to apply sticky positioning on the filler cell.
+
+## Related demos
+
+- [Footer demo](?path=/story/demo-footer--footer)

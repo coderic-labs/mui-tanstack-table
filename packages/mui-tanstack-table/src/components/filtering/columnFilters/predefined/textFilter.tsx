@@ -23,7 +23,6 @@ export function TextFilter<T>(props: HeaderContext<T, string | number> & { textF
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            console.log('blur on enter', e.currentTarget);
             ref?.blur();
         }
     };
@@ -35,7 +34,7 @@ export function TextFilter<T>(props: HeaderContext<T, string | number> & { textF
                     {...getDataTestAttrs(dataTests.filters.textApplyButton)}
                     size="small"
                     sx={{ marginRight: -1.5 }}
-                    onClick={ref?.blur}>
+                    onClick={() => ref?.blur()}>
                     <Search />
                 </IconButton>
             </Zoom>

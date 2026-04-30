@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Apis/Components/TableHeaderRow" />
+
+# TableHeaderRow
+
+## Usage description
+
+Render a single header group row within the table head. Used internally by `Table` and available for composing custom table layouts.
+
+## Shape
+
+```ts
+TableHeaderRow<T>(props: TableHeaderRowProps<T>)
+```
+
+## Props
+
+### Type definition
+
+```ts
+type TableHeaderRowProps<T> = {
+  headerGroup: HeaderGroup<T>;
+  stickyHeader?: boolean;
+  tableLayout: 'auto' | 'fixed';
+  registerHeaderCell: (columnId: string, el: HTMLTableCellElement | null) => void;
+  headerGroupIndex: number;
+};
+```
+
+### Own props
+
+- `headerGroup`
+  Type: `HeaderGroup<T>`
+  Required TanStack header group defining the columns to render.
+- `stickyHeader`
+  Type: `boolean | undefined`
+  Optional flag to keep header cells sticky at the top.
+- `tableLayout`
+  Type: `'auto' | 'fixed'`
+  Controls whether a filler cell is appended in `fixed` layout mode.
+- `registerHeaderCell`
+  Type: `(columnId: string, el: HTMLTableCellElement | null) => void`
+  Callback used by the column widths context to observe header cell DOM elements.
+- `headerGroupIndex`
+  Type: `number`
+  Zero-based index of the header group, used for test attribute assignment.
+
+## Related demos
+
+- [Client Side related demo](?path=/story/demo-client-side-table--client-side-table)
+- [Server Side related demo](?path=/story/demo-server-side-table--server-side-table)

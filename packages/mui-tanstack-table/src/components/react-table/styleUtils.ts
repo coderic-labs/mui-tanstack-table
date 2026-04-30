@@ -4,7 +4,7 @@ import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 import { Column, ColumnPinningPosition, Header, Table as TanstackTable } from '@tanstack/react-table';
 import { CSSProperties, useMemo } from 'react';
 import { getLeftOffset, getRightOffset } from '../../utils/pinning';
-import { ColumnWidths, useColumnWidths } from './columnWidthsContext';
+import { ColumnWidths, useColumnWidths } from './context/tableColumnWidthsContext';
 
 export const useBodyCellStyle = <T,>(column: Column<T>, table: TanstackTable<T>) => {
     const widths = useColumnWidths();
