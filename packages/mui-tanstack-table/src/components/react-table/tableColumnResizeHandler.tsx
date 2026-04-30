@@ -1,5 +1,6 @@
 import { Divider, DividerProps } from "@mui/material";
 import { Header } from "@tanstack/react-table";
+import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 type TableColumnResizeHandlerProps<T> = {
     header: Header<T, unknown>;
@@ -10,6 +11,7 @@ export const TableColumnResizeHandler = <T,>(props: TableColumnResizeHandlerProp
 
     return (
         <Divider
+            {...getDataTestAttrs(dataTests.header.resizeHandle, header.column.id)}
             onDoubleClick={() => header.column.resetSize()}
             onMouseDown={header.getResizeHandler()}
             onTouchStart={header.getResizeHandler()}

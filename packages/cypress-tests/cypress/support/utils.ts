@@ -100,6 +100,28 @@ export const dragAndDropCol = (columnId: string, direction: 'left' | 'right', ti
         .type(`{enter}${arrowKey.repeat(times)}{enter}`);
 };
 
+export const assertColWidth = (columnId: string, expectedPx: number) => {
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`)
+        .last()
+        .should($cell => {
+            expect(Math.round($cell[0].getBoundingClientRect().width)).to.equal(expectedPx);
+        });
+};
+
+// Resize a column by simulating mousedown on its resize handle then a mousemove on the document.
+// deltaX is the number of pixels to add (positive = wider, negative = narrower).
+// mousemove/mouseup are dispatched via .then() so React flushes the mousedown state (startSize)
+// before the move handler runs — otherwise TanStack divides by startSize=null and ignores the delta.
+export const resizeCol = (columnId: string, deltaX: number) => {
+    getByDataTestId(`${dataTests.header.resizeHandle}.${columnId}`)
+        .first()
+        .trigger('mousedown', { clientX: 0, force: true });
+    cy.document().then(doc => {
+        doc.dispatchEvent(new MouseEvent('mousemove', { clientX: deltaX, bubbles: true, cancelable: true }));
+        doc.dispatchEvent(new MouseEvent('mouseup', { clientX: deltaX, bubbles: true, cancelable: true }));
+    });
+};
+
 export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
     const visibleSet = new Set(visibleColumns);
 
@@ -111,4 +133,11 @@ export const assertColumnVisibility = (visibleColumns: readonly string[]) => {
         }
         getByDataTestId(selector).should('not.exist');
     });
+};
+
+export const openHeaderOptions = (columnId: string) => {
+    getByDataTestId(`${dataTests.table.headerCell}.${columnId}`).within(() => {
+        getByDataTest(dataTests.header.columnOptionsButton).click({ force: true });
+    });
+    getByDataTest(dataTests.header.columnOptionsMenu).should('be.visible');
 };
