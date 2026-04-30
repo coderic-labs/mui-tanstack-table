@@ -4,6 +4,21 @@ import { Meta } from '@storybook/blocks';
 
 # Changelog
 
+## 0.0.11
+
+- Released version `0.0.11` with library stabilization and user-facing component export improvements.
+- Added public row component exports for `@coderic-labs/mui-tanstack-table/components/react-table/rows`:
+  - `TableBodyRow`
+  - `TableDetailRow`
+  - `TableEmptyRow`
+  - `TableFooterRow`
+  - `TableHeaderRow`
+- Updated the root `<Table>` implementation to render with row-level abstractions and new internal row components.
+- Improved row detail expansion, empty-state rendering, and footer rendering while preserving the existing `<Table>` API.
+- Updated Storybook API docs and developer documentation to reflect the new row component exports.
+- Improved Cypress coverage for column order and column resize flows.
+- No breaking changes were introduced in this release.
+
 ## 0.0.9
 
 - The `getCellStyle` prop has been replaced by `getRowStyle`. Update your table usage to provide row-level styles via `getRowStyle`.
