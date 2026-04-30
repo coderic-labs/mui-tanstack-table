@@ -6,10 +6,20 @@ import { TableResultsLabel } from './tableResultsLabel';
 
 const defaultOptions = [10, 25, 50, 100];
 
+/**
+ * Props for {@link TablePaginationV2}.
+ * Pagination-state props (`count`, `page`, `rowsPerPage`, change handlers) are omitted — managed internally.
+ */
 export type TablePaginationV2Props<TData> = Omit<TablePaginationProps, 'count' | 'rowsPerPage' | 'page' | 'onPageChange' | 'onRowsPerPageChange'> & {
     table: Table<TData>;
 }
 
+/**
+ * Pagination bar built on MUI's `TablePagination` component.
+ * Includes a results label and first/last/prev/next navigation buttons.
+ * Reads `rowCount` from `table.options` when provided (server-side pagination);
+ * falls back to the filtered row count for client-side pagination.
+ */
 export const TablePaginationV2 = <TData, >(props: TablePaginationV2Props<TData>) => {
     const { table, sx, ...rest } = props;
     const { pagination } = table.getState();

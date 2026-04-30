@@ -1,4 +1,4 @@
 node_modules
 build-storybook.log
 .vscode
-.claude
+.claude/settings.local.json

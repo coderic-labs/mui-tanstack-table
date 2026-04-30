@@ -3,6 +3,12 @@ import { IconButton } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 
+/**
+ * Column header cell that renders a reset (×) icon button.
+ * Clears expansion, filters, sorting, pagination index, and global filter.
+ * Disables when the table is already at its default state.
+ * Assign to a dedicated reset column's `header` property.
+ */
 export function TableResetHeader<T>({ table }: HeaderContext<T, unknown>) {
     return (
         <IconButton

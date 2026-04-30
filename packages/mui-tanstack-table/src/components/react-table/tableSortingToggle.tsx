@@ -1,4 +1,5 @@
 import { ArrowDownward, ArrowUpward, SwapVert } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 
 export type SortingToggleProps = {
@@ -9,25 +10,19 @@ export type SortingToggleProps = {
 export const TableSortingToggle = (props: SortingToggleProps) => {
     const { isSorted, onToggle } = props;
 
-    const commonIconProps = {
-        ...getDataTestAttrs(dataTests.header.sortLabel),
-        'aria-label': 'Toggle sorting',
-        'data-sort-state': isSorted || 'none',
-        onClick: onToggle,
-        sx: {
-            cursor: 'pointer',
-            color: 'inherit',
-        },
-        fontSize: 'small' as const,
-    };
+    let Icon = SwapVert;
+    if (isSorted === 'asc') Icon = ArrowUpward;
+    if (isSorted === 'desc') Icon = ArrowDownward;
 
-    if (isSorted === 'asc') {
-        return <ArrowUpward {...commonIconProps} />;
-    }
-
-    if (isSorted === 'desc') {
-        return <ArrowDownward {...commonIconProps} />;
-    }
-
-    return <SwapVert {...commonIconProps} sx={{ ...commonIconProps.sx, opacity: 0.45 }} />;
+    return (
+        <IconButton
+            {...getDataTestAttrs(dataTests.header.sortLabel)}
+            aria-label='Toggle sorting'
+            data-sort-state={isSorted || 'none'}
+            size='small'
+            sx={{ margin: -5 / 8 }}
+            onClick={onToggle}>
+            <Icon fontSize='small' sx={{ opacity: !isSorted ? 0.45 : undefined }} />
+        </IconButton>
+    )
 };

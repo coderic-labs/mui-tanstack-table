@@ -1,3 +1,8 @@
+/**
+ * Hierarchy of `data-test` / `data-testid` attribute string constants used by all MTT components.
+ * Reference these in Cypress tests via `getByDataTest` / `getByDataTestId` helpers — never use
+ * CSS selectors or visible text in tests.
+ */
 export const dataTests = {
     table: {
         root: 'mtt-table',
@@ -87,7 +92,13 @@ export const dataTests = {
 } as const;
 
 
-// Always emit data-test/data-testid attributes for all UI elements
+/**
+ * Builds a `data-test` / `data-testid` attribute object for a DOM element.
+ * Always emits `data-test`; appends `data-testid="value.id"` when `id` is provided.
+ * @param value - Base test-id string from {@link dataTests}.
+ * @param id - Optional row/column/item identifier appended after a dot.
+ * @returns Spread-ready attribute object.
+ */
 export const getDataTestAttrs = (value: string, id?: string | number) => ({
     'data-test': value,
     ...(id !== undefined ? { 'data-testid': `${value}.${id}` } : {})

@@ -2,11 +2,21 @@ import { MenuItem, Select, SelectProps } from '@mui/material';
 import { HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../../../dataTests';
 
+/**
+ * Extra props accepted by {@link SelectFilter}.
+ */
 export type SelectFilterProps<F> = {
+    /** Props forwarded to the underlying MUI `Select` component. */
     selectProps?: SelectProps;
+    /** List of option objects rendered as `MenuItem` elements. */
     options: { value: F, label: string }[];
 }
 
+/**
+ * Dropdown column filter backed by a MUI `Select`.
+ * Supports single and multi-select via `selectProps.multiple`.
+ * Use as `columnDef.filter` to enable select filtering in the header.
+ */
 export function SelectFilter<T, F extends string | number>(props: HeaderContext<T, unknown> & SelectFilterProps<F>) {
     const { options, selectProps = {}, ...headerContext } = props;
     const { multiple, ...rest } = selectProps;

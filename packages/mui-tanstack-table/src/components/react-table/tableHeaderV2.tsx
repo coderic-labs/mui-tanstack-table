@@ -8,10 +8,9 @@ import { InfoTooltip } from '../infoTooltip';
 import { TableSortingOrderBadge } from './tableSortingOrderBadge';
 
 /**
- * More compact renderer for table header in React Table. Renders column title, sorting and filter.
- * Filter is shown in a popover on filter icon click.
- * Use this component in the column definition's header property.
- * @param context tanstack table header context
+ * Compact column header renderer with title, multi-sort badge, and a filter icon that opens a `Popover`.
+ * Keeps header row height uniform regardless of filter type.
+ * Assign to `columnDef.header`.
  */
 export function TableHeaderV2<TData, TValue>(context: HeaderContext<TData, TValue>) {
     const { header } = context;

@@ -3,6 +3,11 @@ import { IconButton } from '@mui/material';
 import { CellContext, HeaderContext } from '@tanstack/react-table';
 import { dataTests, getDataTestAttrs } from '../../dataTests';
 
+/**
+ * Cell renderer that shows an expand/collapse icon button for rows that support expansion.
+ * Renders `null` when `row.getCanExpand()` is `false`.
+ * Assign to the `cell` property of a dedicated expansion column.
+ */
 export function TableRowExpansionCell<T>({ row }: CellContext<T, unknown>) {
     if (!row.getCanExpand())
         return null;
@@ -17,6 +22,11 @@ export function TableRowExpansionCell<T>({ row }: CellContext<T, unknown>) {
     );
 }
 
+/**
+ * Column header that renders a collapse-all icon button.
+ * The button is disabled when no rows are expanded.
+ * Assign to the `header` property of the expansion column.
+ */
 export function TableRowExpansionHeader<T>({ table }: HeaderContext<T, unknown>) {
     return (
         <IconButton
@@ -29,4 +39,5 @@ export function TableRowExpansionHeader<T>({ table }: HeaderContext<T, unknown>)
     );
 }
 
+/** Semantic alias for {@link TableRowExpansionCell}. */
 export const TableExpandRowButton = TableRowExpansionCell;

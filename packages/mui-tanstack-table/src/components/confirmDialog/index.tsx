@@ -1,5 +1,8 @@
 import { useCallback, useState } from "react";
 
+/**
+ * Props injected by {@link useConfirmDialog} into the dialog component.
+ */
 export type ConfirmDialogProps<TData,> = {
     open: boolean;
     data: TData;
@@ -7,11 +10,19 @@ export type ConfirmDialogProps<TData,> = {
     onConfirm: () => void;
 }
 
+/**
+ * Arguments accepted by {@link useConfirmDialog}.
+ */
 export type ConfirmDialogArgs<TData> = {
+    /** Dialog component rendered by {@link useConfirmDialog}. Receives {@link ConfirmDialogProps}. */
     Component: React.ComponentType<ConfirmDialogProps<TData>>,
     onConfirm: (data: TData) => void;
 }
 
+/**
+ * Manages confirmation dialog state and data.
+ * Returns the rendered `confirmDialog` element plus `showConfirmDialog(data)` to open the dialog for a record.
+ */
 export const useConfirmDialog = <TData,>(props: ConfirmDialogArgs<TData>) => {
     const { Component, onConfirm } = props;
     const [open, setOpen] = useState(false);
