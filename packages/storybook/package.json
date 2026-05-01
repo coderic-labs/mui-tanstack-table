@@ -1,7 +1,8 @@
 {
     "name": "@coderic-labs/mui-tanstack-table-storybook",
     "version": "0.0.11",
-    "description": "",
+    "description": "Interactive Storybook documentation for MUI TanStack Table, including usage examples, API reference, and demos.",
+    "homepage": "https://coderic-labs.github.io/mui-tanstack-table/",
     "main": "index.js",
     "scripts": {
         "storybook": "storybook dev -p 6006",
@@ -11,6 +12,18 @@
         "tsc": "tsc --noEmit --skipLibCheck"
     },
     "author": "coderic-labs",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/coderic-labs/mui-tanstack-table.git"
+    },
+    "keywords": [
+        "storybook",
+        "mui",
+        "tanstack-table",
+        "react-table",
+        "documentation",
+        "demo"
+    ],
     "devDependencies": {
         "@chromatic-com/storybook": "^3.2.4",
         "@storybook/addon-essentials": "^8.5.3",
