@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://coderic-labs.github.io/mui-tanstack-table/sitemap.xml
+Host: coderic-labs.github.io
