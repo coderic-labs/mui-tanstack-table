@@ -167,7 +167,9 @@ export const ServerSideTableDemo = (props: DemoTableProps) => {
     });
 
     return (
-        <Stack sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
+        <Stack
+            data-test='table-demo'
+            sx={{ overflow: 'hidden', p: 2, boxSizing: 'border-box', maxHeight: '100vh' }}>
             <MTT.TableToolbar mb={2}>
                 <MTT.TableToolbarInfo>
                     <MTT.TableResultsLabel table={table} />

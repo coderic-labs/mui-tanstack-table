@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/plugin';
 
 export default defineConfig({
     component: {
@@ -10,5 +11,11 @@ export default defineConfig({
         supportFile: 'cypress/support/component.tsx',
         viewportWidth: 1440,
         viewportHeight: 900,
+        env: {
+            failOnSnapshotDiff: false,
+        },
+        setupNodeEvents(on) {
+            addMatchImageSnapshotPlugin(on);
+        },
     },
 });

@@ -1,20 +1,19 @@
-import { ScopedCssBaseline, ThemeProvider } from '@mui/material';
+import { ScopedCssBaseline, ThemeProvider, createMuiTheme } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { createMuiTheme } from '@mui/material';
 import { ReactNode } from 'react';
 
-const theme = createMuiTheme({
+const createTheme = (mode: 'light' | 'dark') => createMuiTheme({
     palette: {
-        mode: 'light',
+        mode,
         primary: { main: '#1976D2' },
         secondary: { main: '#7B3FE4' },
     },
 });
 
-export const Providers = ({ children }: { children: ReactNode }) => (
+export const Providers = ({ children, mode = 'light' }: { children: ReactNode; mode?: 'light' | 'dark' }) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={createTheme(mode)}>
             <ScopedCssBaseline>
                 {children}
             </ScopedCssBaseline>
