@@ -34,26 +34,6 @@ Prefer the project's assertion utilities over raw Cypress assertions where avail
 - `assertResultsLabel(count: number)` — checks the results label text
 - `assertRowsRenderedInOrder(rows: object[])` — checks table row data order
 
-## Interaction patterns
-
-```tsx
-// Text filter
-getByDataTestId(dataTests.filters.textInput).type('search term');
-getByDataTestId(dataTests.filters.textApplyButton).click();
-
-// Select filter
-getByDataTestId(dataTests.filters.select).find('[role="combobox"]').click();
-
-// Date filter
-getByDataTestId(dataTests.filters.date).find('input').type('2024-01-01');
-
-// Boolean checkbox
-getByDataTestId(dataTests.filters.booleanCheckbox).click();
-
-// Drag column reorder
-dragAndDropCol(sourceColumnId, targetColumnId);
-```
-
 ## Test structure
 
 Group related assertions with `it()` blocks inside a `describe()`. When testing both client and server modes, use a `forEach` loop over `[ClientSideTableDemo, ServerSideTableDemo]` and mount/assert inside it:
@@ -69,10 +49,3 @@ Group related assertions with `it()` blocks inside a `describe()`. When testing 
 ## Viewport
 
 The Cypress config sets viewport to **1440×900**. Tests that depend on responsive layout or overflow behavior should account for this fixed size.
-
-## Running a single spec
-
-```bash
-cd packages/cypress-tests
-npx cypress run --component --spec "cypress/component/filtering.cy.tsx"
-```

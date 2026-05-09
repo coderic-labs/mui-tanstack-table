@@ -2,37 +2,11 @@
 
 ## Story location
 
-Stories live in [packages/storybook/stories/](../../packages/storybook/stories/). Demo component implementations (used by stories and by Cypress tests) live in `packages/storybook/demoComponents/`.
+Stories live in [packages/storybook/stories/](../../packages/storybook/stories/).
 
 ## Story file pattern
 
-```tsx
-import type { StoryObj } from '@storybook/react';
-import { MyFeatureDemo } from '../../demoComponents/myFeature';
-import MyFeatureDemoRaw from '../../demoComponents/myFeature?raw';
-
-const meta = {
-    title: 'Category/Story Name',
-    component: MyFeatureDemo,
-    parameters: {
-        layout: 'fullscreen',
-        docs: {
-            codePanel: true,
-            source: { code: MyFeatureDemoRaw },
-        },
-    },
-};
-
-export default meta;
-type Story = StoryObj<typeof MyFeatureDemo>;
-
-export const MyFeature: Story = {
-    args: { /* props */ },
-};
-```
-
-Key points:
-- Always import the demo component source with `?raw` suffix so the Docs panel shows the actual source code
+- Import the demo component source with `?raw` suffix so the Docs panel shows the actual source code
 - Use `layout: 'fullscreen'` for table demos
 - Set `docs.codePanel: true` with the raw source passed as `source.code`
 

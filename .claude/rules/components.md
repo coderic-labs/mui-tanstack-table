@@ -10,17 +10,9 @@ Components that render a column header receive a `HeaderContext<TData, TValue>` 
 
 ## ColumnMeta extensions
 
-To add new per-column config, augment `ColumnDefBase` in [packages/mui-tanstack-table/src/table.extension.ts](../../packages/mui-tanstack-table/src/table.extension.ts) — do not add ad-hoc props elsewhere. Current augmentations:
-- `filter` — `ColumnDefTemplate<HeaderContext>` for the filter UI rendered in the column header
-- `tooltip` — `ColumnDefTemplate<HeaderContext>` for an info tooltip
-- `title` — `string` override for the column header label
+To add new per-column config, augment `ColumnDefBase` in [packages/mui-tanstack-table/src/table.extension.ts](../../packages/mui-tanstack-table/src/table.extension.ts) — do not add ad-hoc props elsewhere.
 
 ## Context usage
-
-Three internal contexts exist in `components/react-table/context/`:
-- `tableColumnWidthsContext` — tracks DOM-measured column widths; use `useColumnWidths()`
-- `tableDndContext` — wraps `@dnd-kit/core` DndContext for column reordering drag events
-- `tableSortableContext` — wraps `@dnd-kit/sortable` SortableContext for column ordering strategy
 
 Do not add new contexts without a clear shared-state need that cannot be passed as props.
 
